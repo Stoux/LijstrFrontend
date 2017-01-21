@@ -5,6 +5,7 @@ import { HomeComponent } from "./home/home.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { RouterModule } from "@angular/router";
 import { UserService } from "./users/user.service";
+import { AuthService } from "./users/auth.service";
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { UserService } from "./users/user.service";
     HttpModule
   ],
   providers: [
+    AuthService,
     UserService
   ]
 })
