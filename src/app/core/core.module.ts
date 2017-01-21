@@ -4,8 +4,8 @@ import { HttpModule } from "@angular/http";
 import { HomeComponent } from "./home/home.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { RouterModule } from "@angular/router";
-import { UserService } from "./users/user.service";
-import { AuthService } from "./users/auth.service";
+import { UserService } from "./services/user.service";
+import { AuthService } from "./services/auth.service";
 import { ApiService } from "./api.service";
 
 @NgModule({

@@ -46,3 +46,12 @@ export class ResetPasswordRequest {
               public email : string) {
   }
 }
+
+/**
+ * Data object that contains the information for a new password request.
+ */
+export class NewPasswordRequest {
+  constructor(public resetToken : string,
+              public newPassword : string) {
+  }
+}
