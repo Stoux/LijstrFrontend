@@ -1,24 +1,24 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { AuthenticationToken, RefreshRequest } from "./models/authentication";
-import { Subject, Observable } from "rxjs";
-import Timer = NodeJS.Timer;
+import { Observable, ReplaySubject } from "rxjs";
+import { ApiService } from "../api.service";
+import { Headers } from "@angular/http";
 
 @Injectable()
-export class AuthService implements OnInit {
+export class AuthService {
 
   private static readonly TOKEN_KEY : string = "LijstrAuthToken";
   private static readonly REFRESH_BUFFER : number = 60 * 1000;
 
-  private tokenSubject : Subject<boolean>;
+  private tokenSubject : ReplaySubject<boolean>;
   private authToken : AuthenticationToken;
-  private refreshTimer : Timer;
+  private refreshTimer : any;
 
-  constructor() {
-    this.tokenSubject = new Subject();
-  }
+  constructor(private api : ApiService) {
+    console.log("Created AuthService");
+    this.tokenSubject = new ReplaySubject(1);
+    api.addHeaderInterceptor((headers, injectToken) => this.injectToken);
 
-  ngOnInit() : void {
-    console.log('Init AuthService');
     let foundToken = AuthService.retrieveStoredToken();
     if (foundToken == null) {
       this.tokenSubject.next(false);
@@ -28,16 +28,13 @@ export class AuthService implements OnInit {
     //Check if still valid
     let time = new Date().getTime();
     if (foundToken.validTill < time) {
-      this.tokenSubject.next(false);
-      AuthService.removeToken();
+      this.removeToken();
       return;
     }
 
     //Check if access expired
     if (foundToken.accessTill - AuthService.REFRESH_BUFFER < time) {
-      //TODO: Refresh the token
-      //TODO: If success -> Register timeout
-      //TODO:            -> tokenSubject.next(true)
+      this.refreshToken(foundToken.token);
       return;
     }
 
@@ -55,12 +52,36 @@ export class AuthService implements OnInit {
     return this.tokenSubject.asObservable();
   }
 
+  /**
+   * Get the userId associated with the current userId.
+   * @returns {number} the id or null
+   */
+  getUserId() : number {
+    return this.authToken != null ? this.authToken.userId : null;
+  }
+
   private refreshToken(currentToken : string) {
+    console.log("Refreshing token...");
     let refreshRequest = new RefreshRequest(currentToken);
-    //TODO: POST /auth/refresh
-    //TODO: Return promise for an AuthToken
-    //TODO: Store refreshToken in localStorage
-    //TODO: Activate refresh timeout
+    let post : Observable<AuthenticationToken> = this.api.post('/auth/refresh', refreshRequest, false);
+    post.subscribe(
+      newToken => {
+        AuthService.storeToken(newToken);
+        this.authToken = newToken;
+        this.tokenSubject.next(true);
+        this.startRefreshTimer();
+      },
+      error => {
+        console.log("Failed to refresh token... "); //TODO: Notify the user instead of the log?
+        this.removeToken();
+      }
+    );
+  }
+
+
+  private removeToken() {
+    this.tokenSubject.next(false);
+    AuthService.removeToken();
   }
 
   private startRefreshTimer() {
@@ -71,6 +92,12 @@ export class AuthService implements OnInit {
 
     let timeLeft = this.authToken.validTill - AuthService.REFRESH_BUFFER - (new Date().getTime());
     this.refreshTimer = setTimeout(() => this.refreshToken(this.authToken.token), timeLeft);
+  }
+
+  private injectToken(headers : Headers, shouldInjectToken : boolean) {
+    if (shouldInjectToken && this.authToken != null) {
+      headers.set("Authorization", this.authToken.token);
+    }
   }
 
   private static retrieveStoredToken() : AuthenticationToken {

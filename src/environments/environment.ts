@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  endpoint: 'api.lijstr.nl'
+  endpoint: 'api.lijstr.nl',
+  endpointSSL: true
 };
