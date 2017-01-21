@@ -5,6 +5,7 @@ import { MovieStatsComponent } from "./movie-stats/movie-stats.component";
 import { MovieSelectComponent } from "./movie-select/movie-select.component";
 import { MovieDetailComponent } from "./movie-detail/movie-detail.component";
 import { MoviesRoutingModule } from "./movies-routing.module";
+import { MovieListService } from "./services/movie-list.service";
 
 @NgModule({
   imports: [
@@ -16,6 +17,9 @@ import { MoviesRoutingModule } from "./movies-routing.module";
     MovieStatsComponent,
     MovieSelectComponent,
     MovieDetailComponent
+  ],
+  providers: [
+    MovieListService
   ]
 })
 export class MoviesModule {

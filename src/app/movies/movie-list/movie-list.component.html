@@ -1,5 +1,9 @@
-<p>
-  movie-list works!
-</p>
+<h1>Films</h1>
+
+<ul>
+  <li *ngFor="let summary of summaries">
+    {{summary.title}}
+  </li>
+</ul>
 
 <router-outlet></router-outlet>

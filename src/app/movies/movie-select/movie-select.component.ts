@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
   selector: 'lijstr-movie-select',
-  templateUrl: './movie-select.component.html',
-  styleUrls: ['./movie-select.component.css']
+  template: `<h4>Selecteer een film...</h4>`
 })
-export class MovieSelectComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class MovieSelectComponent {
 }

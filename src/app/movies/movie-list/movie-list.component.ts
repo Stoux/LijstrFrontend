@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MovieListService } from "../services/movie-list.service";
+import { MovieSummary } from "../models/movie-summary";
 
 @Component({
   selector: 'lijstr-movie-list',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovieListComponent implements OnInit {
 
-  constructor() { }
+  summaries : MovieSummary[];
+
+  constructor(public listService: MovieListService) { }
 
   ngOnInit() {
+    //TODO: Use observable
+    this.summaries = this.listService.getSummaries();
   }
 
 }
