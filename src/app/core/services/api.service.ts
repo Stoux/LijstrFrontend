@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
-import { environment } from "../../environments/environment";
-import { LijstrException } from "./exceptions";
+import { environment } from "../../../environments/environment";
+import { LijstrException } from "../exceptions";
 import { Observable } from "rxjs";
 
 /**

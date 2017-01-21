@@ -6,7 +6,7 @@ import { ErrorPageComponent } from "./error-page/error-page.component";
 import { RouterModule } from "@angular/router";
 import { UserService } from "./services/user.service";
 import { AuthService } from "./services/auth.service";
-import { ApiService } from "./api.service";
+import { ApiService } from "./services/api.service";
 
 @NgModule({
   imports: [
