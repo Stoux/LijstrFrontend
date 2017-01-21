@@ -1,8 +1,8 @@
 import { NgModule, SkipSelf, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from "@angular/http";
-import { HomeComponent } from "../home/home.component";
-import { ErrorPageComponent } from "../error-page/error-page.component";
+import { HomeComponent } from "./home/home.component";
+import { ErrorPageComponent } from "./error-page/error-page.component";
 
 @NgModule({
   imports: [
