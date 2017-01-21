@@ -4,6 +4,7 @@ import { HttpModule } from "@angular/http";
 import { HomeComponent } from "./home/home.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { RouterModule } from "@angular/router";
+import { UserService } from "./users/user.service";
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { RouterModule } from "@angular/router";
   ],
   exports: [
     HttpModule
+  ],
+  providers: [
+    UserService
   ]
 })
 export class CoreModule {
