@@ -45,10 +45,10 @@ export class AuthService {
   }
 
   /**
-   * Check whether the app currently has access to the API.
+   * Observable feed whether the app currently has access to the API (Authorized endpoints).
    * @returns {Observable<boolean>}
    */
-  hasAccess() : Observable<boolean> {
+  accessFeed() : Observable<boolean> {
     return this.tokenSubject.asObservable();
   }
 

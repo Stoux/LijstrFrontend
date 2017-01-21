@@ -7,6 +7,7 @@ import { RouterModule } from "@angular/router";
 import { UserService } from "./services/user.service";
 import { AuthService } from "./services/auth.service";
 import { ApiService } from "./services/api.service";
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   imports: [

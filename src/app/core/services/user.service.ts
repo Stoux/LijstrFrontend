@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
 import { FullUser } from "./models/user";
 import { ApiService } from "./api.service";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class UserService {
@@ -11,26 +11,28 @@ export class UserService {
   private authService : AuthService;
 
   private user : FullUser;
+  private userSubject : BehaviorSubject<FullUser>;
 
   constructor(api : ApiService, authService : AuthService) {
     console.log("Created UserService");
     this.api = api;
     this.authService = authService;
+    this.userSubject = new BehaviorSubject(this.user);
 
-    this.authService.hasAccess()
+    this.authService.accessFeed()
       .subscribe(hasToken => {
         if (hasToken) {
           console.log("[Auth] Token found");
           this.getLoggedInUser().subscribe(
-            user => this.user = user,
+            this.setUser,
             error => {
               console.error('[RIP] Failed to fetch user: ' + error.toString());
-              this.user = null;
+              this.setUser(null);
             }
           );
         } else {
           console.log("[Auth] No token found");
-          this.user = null;
+          this.setUser(null);
         }
       });
   }
@@ -51,6 +53,39 @@ export class UserService {
    */
   getUser(id : number) : Observable<FullUser> {
     return this.api.get('/users/' + id);
+  }
+
+  /**
+   * Check whether the user is currently logged in.
+   * @returns {boolean} is logged in
+   */
+  isLoggedIn() : boolean {
+    return this.user != null;
+  }
+
+  /**
+   * Check whether the user (if any) is logged in.
+   * @returns {boolean}
+   */
+  isAdmin() : boolean {
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+    //TODO: Implement
+    return true;
+  }
+
+  /**
+   * Observable feed of the current state of the logged in user.
+   * @returns {Observable<FullUser>}
+   */
+  userChangeFeed() : Observable<FullUser> {
+    return this.userSubject.asObservable();
+  }
+
+  private setUser(user : FullUser) {
+    this.user = user;
+    this.userSubject.next(user);
   }
 
 }
