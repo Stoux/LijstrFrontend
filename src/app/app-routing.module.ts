@@ -2,6 +2,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./core/home/home.component";
 import { NgModule } from "@angular/core";
 import { ErrorPageComponent } from "./core/error-page/error-page.component";
+import { AdminGuard } from "./core/guards/admin-guard.service";
 
 export const routes : Routes = [
   {
@@ -14,8 +15,8 @@ export const routes : Routes = [
   },
   {
     path: 'admin',
-    loadChildren: 'app/admin/admin.module#AdminModule'
-    //TODO: Add canLoad()
+    loadChildren: 'app/admin/admin.module#AdminModule',
+    canLoad: [AdminGuard]
   },
   {
     path: '**',
