@@ -19,6 +19,10 @@ export const routes : Routes = [
     canLoad: [AdminGuard]
   },
   {
+    path: 'dashboard',
+    loadChildren: 'app/dashboard/dashboard.module#DashboardModule'
+  },
+  {
     path: '**',
     component: ErrorPageComponent
   }

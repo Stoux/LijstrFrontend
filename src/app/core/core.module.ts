@@ -8,6 +8,8 @@ import { UserService } from "./services/user.service";
 import { AuthService } from "./services/auth.service";
 import { ApiService } from "./services/api.service";
 import { AdminGuard } from "./guards/admin-guard.service";
+import { UserGuard } from "./guards/user-guard.service";
+import { RedirectService } from "./services/redirect.service";
 
 @NgModule({
   imports: [
@@ -25,11 +27,13 @@ import { AdminGuard } from "./guards/admin-guard.service";
   providers: [
     //Guards
     AdminGuard,
+    UserGuard,
 
     //Services
     ApiService,
     AuthService,
-    UserService
+    UserService,
+    RedirectService
   ]
 })
 export class CoreModule {
