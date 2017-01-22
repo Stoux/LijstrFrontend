@@ -77,8 +77,7 @@ export class UserService {
     if (!this.isLoggedIn()) {
       return false;
     }
-    //TODO: Implement
-    return true;
+    return this.hasRole('ROLE_ADMIN');
   }
 
   /**
@@ -92,6 +91,16 @@ export class UserService {
   private setUser(user : FullUser) {
     this.user = user;
     this.userSubject.next(user);
+  }
+
+  private hasRole(...permissions : string[]) : boolean {
+    if (this.user == null) return false;
+    for (let permission of permissions) {
+      if (permissions.indexOf(permission) >= 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
