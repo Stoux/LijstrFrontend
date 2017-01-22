@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { AuthenticationRequest, AuthenticationToken } from "../models/authentication";
 import { AuthService } from "./auth.service";
 import { ApiService } from "./api.service";

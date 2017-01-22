@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Route, ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'lijstr-error-page',
