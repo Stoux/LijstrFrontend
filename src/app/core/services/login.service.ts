@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationRequest, AuthenticationToken } from "./models/authentication";
+import { AuthenticationRequest, AuthenticationToken } from "../models/authentication";
 import { AuthService } from "./auth.service";
 import { ApiService } from "./api.service";
 import { Subject, Observable } from "rxjs";
 import { UserService } from "./user.service";
-import { FullUser } from "./models/user";
+import { FullUser } from "../models/user";
 
 @Injectable()
 export class LoginService {

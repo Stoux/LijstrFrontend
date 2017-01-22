@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { AuthenticationRequest } from "../../core/services/models/authentication";
+import { AuthenticationRequest } from "../../core/models/authentication";
 import { LoginService } from "../../core/services/login.service";
 import { Observable } from "rxjs";
-import { FullUser } from "../../core/services/models/user";
+import { FullUser } from "../../core/models/user";
 import { RedirectService } from "../../core/services/redirect.service";
 import { Router } from "@angular/router";
 import { UserService } from "../../core/services/user.service";

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AuthenticationToken, RefreshRequest } from "./models/authentication";
+import { AuthenticationToken, RefreshRequest } from "../models/authentication";
 import { Observable, ReplaySubject } from "rxjs";
 import { ApiService } from "./api.service";
 import { Headers } from "@angular/http";

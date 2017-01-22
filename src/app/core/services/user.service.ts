@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
-import { FullUser } from "./models/user";
+import { FullUser } from "../models/user";
 import { ApiService } from "./api.service";
 import { Observable, BehaviorSubject } from "rxjs";
 
