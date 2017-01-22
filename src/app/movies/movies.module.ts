@@ -6,6 +6,8 @@ import { MovieDetailComponent } from "./movie-detail/movie-detail.component";
 import { MoviesRoutingModule } from "./movies-routing.module";
 import { MovieListService } from "./services/movie-list.service";
 import { SharedModule } from "../shared/shared.module";
+import { MoviesComponent } from "./movies.component";
+import { MovieDetailService } from "./services/movie-detail.service";
 
 @NgModule({
   imports: [
@@ -13,13 +15,15 @@ import { SharedModule } from "../shared/shared.module";
     MoviesRoutingModule
   ],
   declarations: [
+    MoviesComponent,
     MovieListComponent,
     MovieStatsComponent,
     MovieSelectComponent,
     MovieDetailComponent
   ],
   providers: [
-    MovieListService
+    MovieListService,
+    MovieDetailService
   ]
 })
 export class MoviesModule {

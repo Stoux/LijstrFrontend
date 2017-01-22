@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { MovieDetail } from "../models/movie";
 
 @Component({
   selector: 'lijstr-movie-detail',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovieDetailComponent implements OnInit {
 
-  constructor() { }
+  movie : MovieDetail;
+
+  constructor(private route : ActivatedRoute) {
+  }
 
   ngOnInit() {
+    this.route.data.subscribe(
+      (data : {movieDetail : MovieDetail}) => {
+        this.movie = data.movieDetail;
+      }
+    );
+  }
+
+  get debug() {
+    return JSON.stringify(this.movie, null, 2);
   }
 
 }

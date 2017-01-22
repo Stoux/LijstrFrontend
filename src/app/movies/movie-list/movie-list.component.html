@@ -1,9 +1,11 @@
 <h1>Films</h1>
 
 <ul>
-  <li *ngFor="let summary of summaries">
+  <li *ngFor="let summary of summaries" (click)="onSelect(summary)">
     {{summary.title}}
   </li>
 </ul>
+
+<hr />
 
 <router-outlet></router-outlet>

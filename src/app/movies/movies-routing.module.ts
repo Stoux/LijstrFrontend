@@ -4,23 +4,34 @@ import { MovieStatsComponent } from "./movie-stats/movie-stats.component";
 import { MovieListComponent } from "./movie-list/movie-list.component";
 import { MovieSelectComponent } from "./movie-select/movie-select.component";
 import { MovieDetailComponent } from "./movie-detail/movie-detail.component";
+import { MoviesComponent } from "./movies.component";
+import { MovieDetailResolver } from "./movie-detail/movie-detail-resolver.service";
 
 const routes : Routes = [
   {
-    path: 'stats',
-    component: MovieStatsComponent
-  },
-  {
     path: '',
-    component: MovieListComponent,
+    component: MoviesComponent,
     children: [
       {
-        path: ':id',
-        component: MovieDetailComponent
+        path: 'stats',
+        component: MovieStatsComponent
       },
       {
         path: '',
-        component: MovieSelectComponent
+        component: MovieListComponent,
+        children: [
+          {
+            path: ':id',
+            component: MovieDetailComponent,
+            resolve: {
+              movieDetail: MovieDetailResolver
+            }
+          },
+          {
+            path: '',
+            component: MovieSelectComponent
+          }
+        ]
       }
     ]
   }
@@ -28,7 +39,10 @@ const routes : Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    MovieDetailResolver
+  ]
 })
 export class MoviesRoutingModule {
 }
