@@ -4,9 +4,9 @@
  * See accessTill and validTill in AuthenticationToken.
  */
 export class AuthenticationRequest {
-  constructor(public username : string,
-              public password : string,
-              public rememberMe : boolean) {
+  constructor(public username? : string,
+              public password? : string,
+              public rememberMe : boolean = false) {
   }
 }
 

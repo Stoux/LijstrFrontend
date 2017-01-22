@@ -17,7 +17,12 @@ export class AuthService {
   constructor(private api : ApiService) {
     console.log("Created AuthService");
     this.tokenSubject = new ReplaySubject(1);
-    api.addHeaderInterceptor((headers, injectToken) => this.injectToken);
+    const auth = this;
+    api.addHeaderInterceptor({
+      inject(headers, shouldUseToken) {
+        return auth.injectToken(headers, shouldUseToken);
+      }
+    });
 
     let foundToken = AuthService.retrieveStoredToken();
     if (foundToken == null) {
@@ -60,16 +65,21 @@ export class AuthService {
     return this.authToken != null ? this.authToken.userId : null;
   }
 
+  /**
+   * Use a new token.
+   * @param authToken the token
+   */
+  useNewToken(authToken : AuthenticationToken) {
+    this.newToken(authToken);
+  }
+
   private refreshToken(currentToken : string) {
     console.log("Refreshing token...");
     let refreshRequest = new RefreshRequest(currentToken);
     let post : Observable<AuthenticationToken> = this.api.post('/auth/refresh', refreshRequest, false);
     post.subscribe(
-      newToken => {
-        AuthService.storeToken(newToken);
-        this.authToken = newToken;
-        this.tokenSubject.next(true);
-        this.startRefreshTimer();
+      token => {
+        this.newToken(token);
       },
       error => {
         console.log("Failed to refresh token... "); //TODO: Notify the user instead of the log?
@@ -78,10 +88,16 @@ export class AuthService {
     );
   }
 
-
-  private removeToken() {
+  removeToken() {
     this.tokenSubject.next(false);
     AuthService.removeToken();
+  }
+
+  private newToken(newToken : AuthenticationToken) {
+    AuthService.storeToken(newToken);
+    this.authToken = newToken;
+    this.tokenSubject.next(true);
+    this.startRefreshTimer();
   }
 
   private startRefreshTimer() {
@@ -90,7 +106,9 @@ export class AuthService {
       this.refreshTimer = null;
     }
 
-    let timeLeft = this.authToken.validTill - AuthService.REFRESH_BUFFER - (new Date().getTime());
+    let timeLeft = this.authToken.accessTill - AuthService.REFRESH_BUFFER - (new Date().getTime());
+    console.log("Refreshing token in " + (timeLeft / 1000) + " seconds.");
+    console.log("=> Which is " + Math.floor(timeLeft / 1000 / 60) + " minutes.");
     this.refreshTimer = setTimeout(() => this.refreshToken(this.authToken.token), timeLeft);
   }
 

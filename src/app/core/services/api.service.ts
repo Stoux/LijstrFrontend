@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
  * A request header injector.
  */
 export interface Injector {
-  call(headers : Headers, authToken : boolean) : void;
+  inject(headers : Headers, authToken : boolean) : void;
 }
 
 @Injectable()
@@ -17,14 +17,14 @@ export class ApiService {
   private readonly domain : string;
   private readonly endpoint : string;
   private http : Http;
-  private interceptors : Injector[];
+  private injectors : Injector[];
 
   constructor(http : Http) {
     console.log("Created ApiService");
     this.http = http;
     this.domain = environment.endpoint;
     this.endpoint = 'http' + (environment.endpointSSL ? 's' : '') + '://' + environment.endpoint;
-    this.interceptors = [];
+    this.injectors = [];
   }
 
   get<T>(path : string, authToken : boolean = true) : Observable<T> {
@@ -59,7 +59,7 @@ export class ApiService {
    * @param interceptor the function
    */
   addHeaderInterceptor(interceptor : Injector) {
-    this.interceptors.push(interceptor);
+    this.injectors.push(interceptor);
   }
 
   /**
@@ -74,8 +74,8 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Allow-Control-Allow-Origin': this.domain
     });
-    for (let interceptor of this.interceptors) {
-      interceptor.call(headers, authToken);
+    for (let injector of this.injectors) {
+      injector.inject(headers, authToken);
     }
     return new RequestOptions({headers: headers});
   }

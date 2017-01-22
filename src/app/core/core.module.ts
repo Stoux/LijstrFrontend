@@ -10,6 +10,7 @@ import { ApiService } from "./services/api.service";
 import { AdminGuard } from "./guards/admin-guard.service";
 import { UserGuard } from "./guards/user-guard.service";
 import { RedirectService } from "./services/redirect.service";
+import { LoginService } from "./services/login.service";
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { RedirectService } from "./services/redirect.service";
     ApiService,
     AuthService,
     UserService,
+    LoginService,
     RedirectService
   ]
 })

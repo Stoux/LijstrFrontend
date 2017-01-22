@@ -14,10 +14,14 @@ export class RedirectService {
     this.redirectUrl = url;
   }
 
-  getUrl() {
+  popUrl() {
     let url = this.redirectUrl;
     this.redirectUrl = null;
     return url;
+  }
+
+  hasUrl() : boolean {
+    return this.redirectUrl != null;
   }
 
 }

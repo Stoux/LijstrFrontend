@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject } from "rxjs";
 @Injectable()
 export class UserService {
 
+  private id = 1;
   private api : ApiService;
   private authService : AuthService;
 
@@ -18,23 +19,28 @@ export class UserService {
     this.api = api;
     this.authService = authService;
     this.userSubject = new BehaviorSubject(this.user);
+    this.id = 1;
+    this.authService.accessFeed().subscribe(hasToken => {
+      this.handleNewToken(hasToken);
+    });
+  }
 
-    this.authService.accessFeed()
-      .subscribe(hasToken => {
-        if (hasToken) {
-          console.log("[Auth] Token found");
-          this.getLoggedInUser().subscribe(
-            this.setUser,
-            error => {
-              console.error('[RIP] Failed to fetch user: ' + error.toString());
-              this.setUser(null);
-            }
-          );
-        } else {
-          console.log("[Auth] No token found");
+  private handleNewToken(hasToken) {
+    if (hasToken) {
+      console.log("[Auth] Token found");
+      this.getLoggedInUser().subscribe(
+        user => {
+          this.setUser(user)
+        },
+        error => {
+          console.error('[RIP] Failed to fetch user: ' + error.toString());
           this.setUser(null);
         }
-      });
+      );
+    } else {
+      console.log("[Auth] No token found");
+      this.setUser(null);
+    }
   }
 
   /**
