@@ -29,6 +29,11 @@
         <li *ngIf="!loggedIn" routerLinkActive="active">
           <a routerLink="dashboard/login">Login</a>
         </li>
+
+        <li *ngIf="admin" routerLinkActive="active">
+          <a routerLink="admin">Admin</a>
+        </li>
+
       </ul>
     </div>
 

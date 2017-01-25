@@ -1,0 +1,25 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Displayname</th>
+    <th>Permissions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users" (click)="toUser(user)">
+    <td>{{user.id}}</td>
+    <td>{{user.username}}</td>
+    <td>{{user.displayName}}</td>
+    <td>{{displayPermissions(user)}}</td>
+  </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<button class="btn btn-success" routerLink="add">Add user</button>
+
+<router-outlet></router-outlet>
+

@@ -7,7 +7,6 @@ import { Observable, BehaviorSubject } from "rxjs";
 @Injectable()
 export class UserService {
 
-  private id = 1;
   private api : ApiService;
   private authService : AuthService;
 
@@ -19,7 +18,6 @@ export class UserService {
     this.api = api;
     this.authService = authService;
     this.userSubject = new BehaviorSubject(this.user);
-    this.id = 1;
     this.authService.accessFeed().subscribe(hasToken => {
       this.handleNewToken(hasToken);
     });

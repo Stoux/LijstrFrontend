@@ -4,15 +4,11 @@ import { UserService } from "../services/user.service";
 import { RedirectService } from "../services/redirect.service";
 
 @Injectable()
-export class AdminGuard implements CanLoad, CanActivate {
+export class AdminGuard implements CanActivate {
 
   constructor(private userService : UserService,
               private redirect : RedirectService,
               private router: Router) {
-  }
-
-  canLoad(route : Route) : boolean {
-    return this.handle(route.path);
   }
 
   canActivate(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : boolean {
