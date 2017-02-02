@@ -30,10 +30,6 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  displayPermissions(user : FullUser) {
-    return user.grantedPermissions.map(gp => gp.authority);
-  }
-
   toUser(user : FullUser) {
     this.router.navigate([user.id], { relativeTo: this.route });
   }

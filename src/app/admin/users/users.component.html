@@ -12,7 +12,13 @@
     <td>{{user.id}}</td>
     <td>{{user.username}}</td>
     <td>{{user.displayName}}</td>
-    <td>{{displayPermissions(user)}}</td>
+    <td>
+      <ul class="list-unstyled">
+        <li *ngFor="let gp of user.grantedPermissions">
+          {{gp.authority | slice:5 | lowercase}}
+        </li>
+      </ul>
+    </td>
   </tr>
   </tbody>
 </table>
