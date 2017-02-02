@@ -9,21 +9,27 @@ import { SharedModule } from "../shared/shared.module";
 import { MoviesComponent } from "./movies.component";
 import { MovieDetailService } from "./services/movie-detail.service";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { ModalModule } from "ng2-bootstrap";
+import { ListSettingsComponent } from './movie-list/list-settings/list-settings.component';
+import { MovieUsersService } from "./services/movie-users.service";
 
 @NgModule({
   imports: [
     SharedModule,
     MoviesRoutingModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    ModalModule.forRoot()
   ],
   declarations: [
     MoviesComponent,
     MovieListComponent,
     MovieStatsComponent,
     MovieSelectComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    ListSettingsComponent
   ],
   providers: [
+    MovieUsersService,
     MovieListService,
     MovieDetailService
   ]

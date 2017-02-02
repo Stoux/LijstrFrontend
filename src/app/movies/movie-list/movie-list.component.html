@@ -3,7 +3,11 @@
     <h1 class="title">Films</h1>
   </div>
   <div class="col-xs-8 list-options">
-    <button class="btn btn-primary"><span class="glyphicon glyphicon-cog"></span></button>
+    <button class="btn btn-primary" [disabled]="!settingsEditable" (click)="settingsModal.show()">
+      <span class="glyphicon glyphicon-cog"></span>
+    </button>
+    <!--TODO: Add more filters (genres, languages, etc)
+    <!--<button class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span></button>-->
     <form class="form-inline">
       <div class="form-group">
         <label class="sr-only" for="filter">Filter</label>
@@ -13,10 +17,28 @@
     </form>
   </div>
 </div>
+
+<!-- DataTable cell templates -->
+<template let-value="value" #valueCell>
+  {{value}}
+</template>
+<template let-value="value" #imdbCell>
+  {{value ? (value | number:"1.1-1") : "N/A" }}
+</template>
+<template let-value="value" #metacriticCell>
+  {{value ? value : "N/A"}}
+</template>
+<template let-value="value" #userCell>
+  <u *ngIf="value && value.comment">{{representativeRating(value)}}</u>
+  <ng-container *ngIf="!value || !value.comment">{{representativeRating(value)}}</ng-container>
+</template>
+
+
 <ngx-datatable
   id="movie-list"
   class="material striped"
   [columnMode]="'flex'"
+  [columns]="columns"
   [rows]="summaries"
   [reorderable]="false"
   [scrollbarV]="true"
@@ -25,29 +47,30 @@
   [trackByProp]="'id'"
   (select)="onSelect($event)">
 
-  <ngx-datatable-column name="Titel" prop="title" [flexGrow]="3">
-    <template let-row="row" let-value="value" ngx-datatable-cell-template>
-      {{value}}
-    </template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Jaar" prop="year" [flexGrow]="1">
-    <template let-value="value" ngx-datatable-cell-template>
-      {{value}}
-    </template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="IMDB" prop="imdbRating" [flexGrow]="1">
-    <template let-value="value" ngx-datatable-cell-template>
-      {{value ? (value | number:"1.1-1") : "N/A" }}
-    </template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="MC" prop="metacriticScore" [flexGrow]="1">
-    <template let-value="value" ngx-datatable-cell-template>
-      {{value ? value : "N/A"}}
-    </template>
-  </ngx-datatable-column>
-
 </ngx-datatable>
 
 <hr />
 
 <router-outlet></router-outlet>
+
+<div class="modal fade" bsModal #settingsModal="bs-modal" role="dialog" (onHide)="listSettings.emit()" >
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Instellingen</h4>
+        <button type="button" class="close pull-right" (click)="settingsModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <lijstr-list-settings #listSettings
+                              [userTemplateRef]="userCell"
+                              [requiredColumns]="requiredColumns"
+                              [availableColumns]="availableColumns"
+                              (orderedColumns)="setColumns($event)"
+                              (editable)="setSettingsEditable($event)">
+        </lijstr-list-settings>
+      </div>
+    </div>
+  </div>
+</div>

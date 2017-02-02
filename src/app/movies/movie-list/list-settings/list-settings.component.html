@@ -1,0 +1,45 @@
+<table class="table">
+  <tbody>
+  <tr *ngFor="let column of enabledColumns; let i = index">
+    <th>{{column.title}}</th>
+    <td class="order-buttons">
+      <button class="btn btn-primary" [disabled]="i == enabledColumns.length - 1"
+              (click)="moveInArray(enabledColumns, i, i + 1);">
+        <span class="glyphicon glyphicon-triangle-bottom"></span>
+      </button>
+      <button class="btn btn-primary" [disabled]="i == 0" (click)="moveInArray(enabledColumns, i, i - 1);">
+        <span class="glyphicon glyphicon-triangle-top"></span>
+      </button>
+
+      <button class="btn btn-success" (click)="column.enabled = !column.enabled">
+        {{column.enabled ? "Zet uit" : "Zet aan"}}
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h4>Gebruikers</h4>
+
+<table class="table">
+  <tbody>
+  <tr *ngFor="let column of enabledUsers; let i = index">
+    <th>{{column.title}}</th>
+    <td class="order-buttons">
+      <button class="btn btn-primary" [disabled]="i == enabledUsers.length - 1"
+              (click)="moveInArray(enabledUsers, i, i + 1);">
+        <span class="glyphicon glyphicon-triangle-bottom"></span>
+      </button>
+      <button class="btn btn-primary" [disabled]="i == 0" (click)="moveInArray(enabledUsers, i, i - 1);">
+        <span class="glyphicon glyphicon-triangle-top"></span>
+      </button>
+
+      <button class="btn btn-success" (click)="column.enabled = !column.enabled">
+        {{column.enabled ? "Zet uit" : "Zet aan"}}
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
