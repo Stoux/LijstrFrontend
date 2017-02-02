@@ -4,6 +4,7 @@ import { DashboardComponent } from "./dashboard.component";
 import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
 import { UserGuard } from "../core/guards/user-guard.service";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 
 const routes : Routes = [
   {
@@ -17,7 +18,12 @@ const routes : Routes = [
   },
   {
     path: 'logout',
-    component: LogoutComponent
+    component: LogoutComponent,
+    canActivate: [UserGuard]
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
   }
 ];
 

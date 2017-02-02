@@ -1,15 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
+import { AuthService } from "../../core/services/auth.service";
+import { LoginService } from "../../core/services/login.service";
 
 @Component({
   selector: 'lijstr-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css']
 })
-export class LogoutComponent implements OnInit {
+export class LogoutComponent {
 
-  constructor() { }
+  constructor(private loginService : LoginService) {
+  }
 
-  ngOnInit() {
+  logout() {
+    this.loginService.logout(false);
+    window.location.replace("/");
   }
 
 }

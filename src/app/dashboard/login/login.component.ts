@@ -6,6 +6,7 @@ import { FullUser } from "../../core/models/user";
 import { RedirectService } from "../../core/services/redirect.service";
 import { Router } from "@angular/router";
 import { UserService } from "../../core/services/user.service";
+import { LijstrException } from "../../core/exceptions";
 
 @Component({
   selector: 'lijstr-login',
@@ -65,14 +66,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       user => {
         this.redirectRoute();
       },
-      error => {
+      (error : LijstrException) => {
         this.submitting = false;
-        console.log("Failed to login: " + error.toString());
-        if (typeof(error) == 'string') {
-          this.error = error;
-        } else {
-          this.error = "[" + error.status + "] " + error.message;
-        }
+        console.log("Failed to login: " + error.message);
+        this.error = LijstrException.toString(error);
       }
     );
   }

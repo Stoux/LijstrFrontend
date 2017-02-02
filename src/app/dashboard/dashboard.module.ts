@@ -4,6 +4,7 @@ import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { DashboardComponent } from "./dashboard.component";
 import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { LogoutComponent } from "./logout/logout.component";
   declarations: [
     DashboardComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    ResetPasswordComponent
   ]
 })
 export class DashboardModule {

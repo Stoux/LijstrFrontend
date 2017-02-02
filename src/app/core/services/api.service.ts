@@ -29,25 +29,25 @@ export class ApiService {
 
   get<T>(path : string, authToken : boolean = true) : Observable<T> {
     return this.http.get(this.endpoint + path, this.createRequestOptions(authToken))
-      .map((response) => response.json())
+      .map(ApiService.handleResponse)
       .catch(ApiService.handleError);
   }
 
   post<T>(path : string, body : any, authToken : boolean = true) : Observable<T> {
     return this.http.post(this.endpoint + path, body, this.createRequestOptions(authToken))
-      .map((response) => response.json())
+      .map(ApiService.handleResponse)
       .catch(ApiService.handleError);
   }
 
   put<T>(path : string, body : any, authToken : boolean = true) : Observable<T> {
     return this.http.put(this.endpoint + path, body, this.createRequestOptions(authToken))
-      .map((response) => response.json())
+      .map(ApiService.handleResponse)
       .catch(ApiService.handleError);
   }
 
   del<T>(path : string, authToken : boolean = true) : Observable<T> {
     return this.http.delete(this.endpoint + path, this.createRequestOptions(authToken))
-      .map((response) => response.json())
+      .map(ApiService.handleResponse)
       .catch(ApiService.handleError);
   }
 
@@ -78,6 +78,14 @@ export class ApiService {
       injector.inject(headers, authToken);
     }
     return new RequestOptions({headers: headers});
+  }
+
+  private static handleResponse(response : Response) {
+    if (response.text()) {
+      return response.json();
+    } else {
+      return response;
+    }
   }
 
   private static handleError(error : Response | any) {

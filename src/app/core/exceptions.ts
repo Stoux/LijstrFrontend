@@ -11,4 +11,8 @@ export class LijstrException {
     this.timestamp = new Date().toISOString();
   }
 
+  static toString(error) : string {
+    return "[" + error.status + " - " + error.error + "] " + error.message;
+  }
+
 }

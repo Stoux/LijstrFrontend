@@ -51,7 +51,6 @@ export class ResetPasswordRequest {
  * Data object that contains the information for a new password request.
  */
 export class NewPasswordRequest {
-  constructor(public resetToken : string,
-              public newPassword : string) {
-  }
+  public resetToken : string;
+  public newPassword : string;
 }

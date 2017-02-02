@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
-import { AuthenticationRequest, AuthenticationToken } from "../models/authentication";
+import { AuthenticationRequest, AuthenticationToken, NewPasswordRequest } from "../models/authentication";
 import { AuthService } from "./auth.service";
 import { ApiService } from "./api.service";
 import { Subject, Observable } from "rxjs";
 import { UserService } from "./user.service";
 import { FullUser } from "../models/user";
+import { Response } from "@angular/http";
 
 @Injectable()
 export class LoginService {
@@ -99,6 +100,26 @@ export class LoginService {
     //TODO: Make a request to increment validating key on server
     this.authService.removeToken();
     return true;
+  }
+
+  /**
+   * Set a new password using a token.
+   * @param request The reset data
+   * @returns {Observable<Boolean>} returns true if success or throws an error
+   */
+  newPassword(request : NewPasswordRequest) : Observable<Boolean> {
+    let result : Subject<Boolean> = new Subject();
+    this.api.put('/auth/resetPassword', request, false)
+      .map((response : Response) => {
+        return response;
+      })
+      .finally(() => result.complete())
+      .subscribe(
+        response => result.next(true),
+        error => result.error(error)
+      );
+
+    return result.asObservable();
   }
 
 }
