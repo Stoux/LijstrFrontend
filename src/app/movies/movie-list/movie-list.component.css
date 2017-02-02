@@ -2,6 +2,17 @@
   height: 500px;
 }
 
+@media (max-height: 750px) {
+  #movie-list {
+    height: 250px;
+  }
+}
+
 .title {
   margin-top: 0;
+}
+
+.list-options > * {
+  float: right;
+  margin-left: 5px;
 }

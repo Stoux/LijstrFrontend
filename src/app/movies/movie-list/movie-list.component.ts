@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 export class MovieListComponent implements OnInit, OnDestroy {
 
   selected = [];
+  cache : MovieSummary[];
   summaries : MovieSummary[];
   error : LijstrException;
 
@@ -24,15 +25,13 @@ export class MovieListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('Init MovieList');
     this.listSubscription = this.listService.getSummaries().subscribe(
       list => {
-        console.log('Got a new List');
+        this.cache = list;
         this.summaries = list;
         this.error = null;
       },
       error => {
-        console.log('Welp, something went wrong.');
         this.error = error;
       }
     );
@@ -47,6 +46,12 @@ export class MovieListComponent implements OnInit, OnDestroy {
     console.log('Destroy MovieList');
     this.listSubscription.unsubscribe();
     this.listSubscription = null;
+  }
+
+  onFilter(value) {
+    this.summaries = this.cache.filter(function(d) {
+      return d.title.toLowerCase().indexOf(value) !== -1 || !value;
+    });
   }
 
 }
