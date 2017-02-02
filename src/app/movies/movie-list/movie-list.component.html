@@ -24,12 +24,12 @@
   </ngx-datatable-column>
   <ngx-datatable-column name="IMDB" prop="imdbRating" [flexGrow]="1">
     <template let-value="value" ngx-datatable-cell-template>
-      {{value}}
+      {{value ? (value | number:"1.1-1") : "N/A" }}
     </template>
   </ngx-datatable-column>
   <ngx-datatable-column name="MC" prop="metacriticScore" [flexGrow]="1">
     <template let-value="value" ngx-datatable-cell-template>
-      {{value}}
+      {{value ? value : "N/A"}}
     </template>
   </ngx-datatable-column>
 

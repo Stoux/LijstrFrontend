@@ -7,33 +7,38 @@
       <p>{{shortPlot ? movie.shortPlot : movie.longPlot}}</p>
       <footer>
         <ins (click)="switchPlotSize()">{{shortPlot ? "Korte" : "Lange"}}</ins>
-        IMDB Beschrijving
+        IMDB beschrijving
       </footer>
     </blockquote>
     <table class="table table-striped details">
       <tbody>
-      <tr>
+      <tr *ngIf="movie.imdbRating">
         <th>IMDB</th>
-        <td>{{movie.imdbRating}}/10
-          <small>({{movie.imdbVotes}} votes)</small>
+        <td>{{movie.imdbRating | number:"1.1-1" }}/10
+          <small *ngIf="movie.imdbVotes">({{movie.imdbVotes | number:"1.0-0" }} votes)</small>
         </td>
+      </tr>
+      <tr *ngIf="!movie.imdbRating">
+        <th>IMDB</th>
+        <td>Onbekend</td>
       </tr>
       <tr *ngIf="movie.metacriticScore">
         <th>Metacritic</th>
         <td>{{movie.metacriticScore}}/100</td>
       </tr>
       <tr>
+        <th>Release datum</th>
+        <td *ngIf="movie.released">{{movie.released | date:"d MMMM yyyy" }}</td>
+        <td *ngIf="!movie.released">{{movie.year}}</td>
+      </tr>
+      <tr *ngIf="movie.ageRating">
         <th>Leeftijd rating</th>
         <td>{{movie.ageRating}}</td>
       </tr>
       <tr>
-        <th>Release datum</th>
-        <td>{{movie.released}}</td>
-      </tr>
-      <tr>
         <th>Genres</th>
         <td>
-          <ul>
+          <ul class="list-unstyled">
             <li *ngFor="let wrapper of movie.genres">{{wrapper.genre}}</li>
           </ul>
         </td>
@@ -41,7 +46,7 @@
       <tr>
         <th>Talen</th>
         <td>
-          <ul>
+          <ul class="list-unstyled">
             <li *ngFor="let wrapper of movie.languages">{{wrapper.language}}</li>
           </ul>
         </td>
@@ -55,7 +60,7 @@
   </div>
   <div class="col-sm-3">
     <div class="center-block">
-      <a href="http://www.imdb.com/title/{{movie.imdbId}}/">
+      <a href="http://www.imdb.com/title/{{movie.imdbId}}/" target="_blank">
         <img class="img-responsive img-thumbnail" src="{{getPosterURL()}}" alt="{{movie.title}} - Poster"/>
       </a>
     </div>
