@@ -2,36 +2,36 @@
   <div class="container">
 
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <button type="button" class="navbar-toggle collapsed" (click)="toggleMenu()">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" routerLink="">Lijstr</a>
+      <a class="navbar-brand" routerLink="" (click)="collapseMenu()">Lijstr</a>
     </div>
 
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="nav navbar-nav navbar-right">
 
         <!-- Movies -->
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          <a routerLink="movies">Films</a>
+          <a routerLink="movies" (click)="collapseMenu()">Films</a>
         </li>
         <li routerLinkActive="active">
-          <a routerLink="movies/stats">Filmstats</a>
+          <a routerLink="movies/stats" (click)="collapseMenu()">Filmstats</a>
         </li>
 
         <!-- Dashboard -->
         <li *ngIf="loggedIn" routerLinkActive="active">
-          <a routerLink="dashboard">Dashboard</a>
+          <a routerLink="dashboard" (click)="collapseMenu()">Dashboard</a>
         </li>
         <li *ngIf="!loggedIn" routerLinkActive="active">
-          <a routerLink="dashboard/login">Login</a>
+          <a routerLink="dashboard/login" (click)="collapseMenu()">Login</a>
         </li>
 
         <li *ngIf="admin" routerLinkActive="active">
-          <a routerLink="admin">Admin</a>
+          <a routerLink="admin" (click)="collapseMenu()">Admin</a>
         </li>
 
       </ul>

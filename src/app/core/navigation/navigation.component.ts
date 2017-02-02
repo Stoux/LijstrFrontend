@@ -8,16 +8,19 @@ import { UserService } from "../services/user.service";
 })
 export class NavigationComponent implements OnInit {
 
+  isCollapsed: boolean;
   name : string;
   loggedIn : boolean;
   admin : boolean;
 
   constructor(public userService : UserService) {
-    this.loggedIn = false;
-    this.admin = false;
   }
 
   ngOnInit() : void {
+    this.loggedIn = false;
+    this.admin = false;
+    this.isCollapsed = true;
+
     this.userService.userChangeFeed()
       .subscribe(user => {
         this.loggedIn = this.userService.isLoggedIn();
@@ -25,4 +28,13 @@ export class NavigationComponent implements OnInit {
         this.name = (user == null ? null : user.displayName);
       });
   }
+
+  toggleMenu() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
+  collapseMenu() {
+    this.isCollapsed = true;
+  }
+
 }

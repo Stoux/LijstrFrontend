@@ -10,11 +10,13 @@ import { AdminGuard } from "./guards/admin-guard.service";
 import { UserGuard } from "./guards/user-guard.service";
 import { RedirectService } from "./services/redirect.service";
 import { LoginService } from "./services/login.service";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule
+    HttpModule,
+    RouterModule
   ],
   declarations: [
     ErrorPageComponent,

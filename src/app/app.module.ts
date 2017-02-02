@@ -4,6 +4,7 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from "./core/core.module";
 import { NavigationComponent } from "./core/navigation/navigation.component";
+import { CollapseModule } from "ng2-bootstrap";
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { NavigationComponent } from "./core/navigation/navigation.component";
   imports: [
     BrowserModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CollapseModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
