@@ -1,0 +1,20 @@
+.img-thumbnail {
+  width: 100%;
+  max-width: 250px;
+}
+
+.plot ins {
+  cursor: pointer;
+}
+
+table.details ul {
+  margin-bottom: 0;
+}
+
+h1.title {
+  margin-top: 0;
+}
+
+pre {
+  margin-top: 50px;
+}

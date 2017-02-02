@@ -1,10 +1,39 @@
 <h1>Films</h1>
 
-<ul>
-  <li *ngFor="let summary of summaries" (click)="onSelect(summary)">
-    {{summary.title}}
-  </li>
-</ul>
+<ngx-datatable
+  id="movie-list"
+  class="material striped"
+  [columnMode]="'flex'"
+  [rows]="summaries"
+  [reorderable]="false"
+  [scrollbarV]="true"
+  [selected]="selected"
+  [selectionType]="'single'"
+  [trackByProp]="'id'"
+  (select)="onSelect($event)">
+
+  <ngx-datatable-column name="Titel" prop="title" [flexGrow]="3">
+    <template let-row="row" let-value="value" ngx-datatable-cell-template>
+      {{value}}
+    </template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Jaar" prop="year" [flexGrow]="1">
+    <template let-value="value" ngx-datatable-cell-template>
+      {{value}}
+    </template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="IMDB" prop="imdbRating" [flexGrow]="1">
+    <template let-value="value" ngx-datatable-cell-template>
+      {{value}}
+    </template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="MC" prop="metacriticScore" [flexGrow]="1">
+    <template let-value="value" ngx-datatable-cell-template>
+      {{value}}
+    </template>
+  </ngx-datatable-column>
+
+</ngx-datatable>
 
 <hr />
 

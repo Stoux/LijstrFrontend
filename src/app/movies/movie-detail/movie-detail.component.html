@@ -1,1 +1,65 @@
+<div class="row">
+  <div class="col-sm-9">
+    <h1 class="title">{{movie.title}}
+      <small>({{movie.imdbId}})</small>
+    </h1>
+    <blockquote class="plot">
+      <p>{{shortPlot ? movie.shortPlot : movie.longPlot}}</p>
+      <footer>
+        <ins (click)="switchPlotSize()">{{shortPlot ? "Korte" : "Lange"}}</ins>
+        IMDB Beschrijving
+      </footer>
+    </blockquote>
+    <table class="table table-striped details">
+      <tbody>
+      <tr>
+        <th>IMDB</th>
+        <td>{{movie.imdbRating}}/10
+          <small>({{movie.imdbVotes}} votes)</small>
+        </td>
+      </tr>
+      <tr *ngIf="movie.metacriticScore">
+        <th>Metacritic</th>
+        <td>{{movie.metacriticScore}}/100</td>
+      </tr>
+      <tr>
+        <th>Leeftijd rating</th>
+        <td>{{movie.ageRating}}</td>
+      </tr>
+      <tr>
+        <th>Release datum</th>
+        <td>{{movie.released}}</td>
+      </tr>
+      <tr>
+        <th>Genres</th>
+        <td>
+          <ul>
+            <li *ngFor="let wrapper of movie.genres">{{wrapper.genre}}</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <th>Talen</th>
+        <td>
+          <ul>
+            <li *ngFor="let wrapper of movie.languages">{{wrapper.language}}</li>
+          </ul>
+        </td>
+      </tr>
+      <tr *ngIf="movie.addedBy != null">
+        <th>Toegevoegd door</th>
+        <td>{{movie.addedBy}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-3">
+    <div class="center-block">
+      <a href="http://www.imdb.com/title/{{movie.imdbId}}/">
+        <img class="img-responsive img-thumbnail" src="{{getPosterURL()}}" alt="{{movie.title}} - Poster"/>
+      </a>
+    </div>
+  </div>
+</div>
+
 <pre>{{debug}}</pre>

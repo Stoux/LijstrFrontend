@@ -8,11 +8,13 @@ import { MovieListService } from "./services/movie-list.service";
 import { SharedModule } from "../shared/shared.module";
 import { MoviesComponent } from "./movies.component";
 import { MovieDetailService } from "./services/movie-detail.service";
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 
 @NgModule({
   imports: [
     SharedModule,
-    MoviesRoutingModule
+    MoviesRoutingModule,
+    NgxDatatableModule
   ],
   declarations: [
     MoviesComponent,

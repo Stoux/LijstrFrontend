@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class MovieListComponent implements OnInit, OnDestroy {
 
+  selected = [];
   summaries : MovieSummary[];
   error : LijstrException;
 
@@ -37,8 +38,8 @@ export class MovieListComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSelect(movie : MovieSummary) {
-    this.router.navigate([movie.id], { relativeTo: this.route });
+  onSelect({ selected }) {
+    this.router.navigate([selected[0].id], { relativeTo: this.route });
   }
 
 

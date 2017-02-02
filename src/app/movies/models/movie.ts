@@ -8,6 +8,9 @@ export class MovieSummary {
   title : string;
   year : number;
 
+  imdbRating : number;
+  metacriticScore : number;
+
   ageRating : string;
 
   genres : Map<number, string>;
