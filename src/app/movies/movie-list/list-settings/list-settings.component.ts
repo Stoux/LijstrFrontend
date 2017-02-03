@@ -97,8 +97,6 @@ export class ListSettingsComponent implements OnInit {
   }
 
   private static saveEnabled(key : string, enabled : OrderedColumn[]) {
-    console.log('Saving: ' + key);
-    console.log(enabled);
     localStorage.setItem(key, JSON.stringify(enabled));
   }
 
@@ -122,7 +120,6 @@ export class ListSettingsComponent implements OnInit {
     );
     let enabledUsers = [];
     if (this.enabledUsers != null) {
-      console.log('Fetching');
        enabledUsers = ListSettingsComponent.enabledFromList(
          this.availableUsers, this.enabledUsers, ListSettingsComponent.USERS_KEY
        );

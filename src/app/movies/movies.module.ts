@@ -12,6 +12,7 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { ModalModule } from "ng2-bootstrap";
 import { ListSettingsComponent } from './movie-list/list-settings/list-settings.component';
 import { MovieUsersService } from "./services/movie-users.service";
+import { MovieRatingComponent } from './movie-detail/movie-rating/movie-rating.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { MovieUsersService } from "./services/movie-users.service";
     MovieStatsComponent,
     MovieSelectComponent,
     MovieDetailComponent,
-    ListSettingsComponent
+    ListSettingsComponent,
+    MovieRatingComponent
   ],
   providers: [
     MovieUsersService,

@@ -1,0 +1,58 @@
+<div class="row" [class.hidden]="error != null">
+  <form (ngSubmit)="onSubmit()" #ratingForm="ngForm">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="seen">Gezien</label>
+        <select id="seen" name="seen" class="form-control" required
+                [(ngModel)]="userRating.seen">
+          <option [value]="null" disabled>NNI</option>
+          <option *ngFor="let option of seenOptions" [value]="option.value">
+            {{option.title}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="rating">Rating</label>
+
+        <div class="input-group" [class.hidden]="!unknownRating" >
+          <input type="text" class="form-control" value="?/10" disabled />
+          <div class="input-group-addon pointer" [class.pointer-disabled]="!isSeenYes()" (click)="toggleUnknownRating()">X/10</div>
+        </div>
+
+        <div class="input-group" [class.hidden]="unknownRating">
+          <input id="rating" name="rating" type="number" class="form-control" #ratingField="ngModel" required
+                 step="0.1" min="1.0" max="10.0" pattern="((10([.,]0)?)|([1-9]([.,][0-9])?))"
+                 [disabled]="!isSeenYes() || unknownRating"
+                 [(ngModel)]="userRating.rating" />
+          <div class="input-group-addon pointer" [class.pointer-disabled]="!isSeenYes()" (click)="toggleUnknownRating()">?/10</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div [hidden]="ratingField.valid || ratingField.pristine || ratingField.disabled || unknownRating"
+           class="alert alert-danger">
+        Geen geldige IMDB rating.
+      </div>
+
+      <div class="form-group">
+        <label for="comment">Opmerking</label>
+        <textarea id="comment" name="comment" class="form-control" rows="3"
+                  [(ngModel)]="userRating.comment">
+      </textarea>
+      </div>
+
+      <button class="btn btn-success pull-right" type="submit"
+              [disabled]="userRating.seen == null || (isSeenYes() && !ratingField.valid && !unknownRating) || submitting || !isChanged()">
+        {{isEdit() ? "Aanpassen" : "Opslaan"}}
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="error">
+  RIP: {{error}}
+</div>

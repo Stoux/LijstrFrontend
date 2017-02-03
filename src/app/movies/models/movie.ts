@@ -1,4 +1,4 @@
-import { ShortRating } from "./ratings/short-rating";
+import { ShortRating } from "./ratings";
 import { Genre, Language } from "./imdb";
 
 export class MovieSummary {

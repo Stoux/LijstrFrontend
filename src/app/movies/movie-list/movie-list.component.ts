@@ -4,7 +4,7 @@ import { Subscription } from "rxjs";
 import { MovieSummary } from "../models/movie";
 import { LijstrException } from "../../core/exceptions";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ShortRating } from "../models/ratings/short-rating";
+import { ShortRating } from "../models/ratings";
 import { DecimalPipe } from "@angular/common";
 
 @Component({
@@ -94,7 +94,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
         if (rating.rating == null) {
           return "?";
         } else {
-          return this.numberPipe.transform(rating.rating, '1.1-1') + "/10";
+          return this.numberPipe.transform(rating.rating, '1.1-1');
         }
 
       case 1: //No

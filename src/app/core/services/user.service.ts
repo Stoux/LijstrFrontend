@@ -45,7 +45,7 @@ export class UserService {
    * Get the currently logged in user.
    * @returns {FullUser} the user or null
    */
-  getLoggedInUser() : Observable<FullUser> {
+  private getLoggedInUser() : Observable<FullUser> {
     return this.getUser(this.authService.getUserId());
   }
 
@@ -68,14 +68,19 @@ export class UserService {
   }
 
   /**
-   * Check whether the user (if any) is logged in.
+   * Check whether the user is an admin.
    * @returns {boolean}
    */
   isAdmin() : boolean {
-    if (!this.isLoggedIn()) {
-      return false;
-    }
     return this.hasRole('ROLE_ADMIN');
+  }
+
+  /**
+   * Check whether the user has access to the movie tools.
+   * @returns {boolean}
+   */
+  isMovieUser() : boolean {
+    return this.hasRole('ROLE_MOVIE');
   }
 
   /**
