@@ -1,0 +1,19 @@
+<h1>Sync old site</h1>
+
+<button class="btn btn-success" (click)="startSync()" *ngIf="!started">Start sync</button>
+
+<div class="row" *ngIf="started">
+  <div class="col-xs-6">
+    Started: {{started}} <br />
+    Finished: {{finished}} <br />
+
+    <pre *ngIf="error">
+    {{error | json}}
+    </pre>
+  </div>
+  <div class="col-xs-6">
+    <pre>
+      {{result | json}}
+    </pre>
+  </div>
+</div>

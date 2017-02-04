@@ -7,6 +7,7 @@ import { AdminUserService } from "./services/admin-user.service";
 import { RouterModule } from "@angular/router";
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
+import { OldSiteSyncComponent } from './dev/old-site-sync/old-site-sync.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
     AdminComponent,
     UsersComponent,
     AddUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    OldSiteSyncComponent
   ],
   providers: [
     AdminUserService

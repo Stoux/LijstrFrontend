@@ -33,13 +33,13 @@ export class ApiService {
       .catch(ApiService.handleError);
   }
 
-  post<T>(path : string, body : any, authToken : boolean = true) : Observable<T> {
+  post<T>(path : string, body? : any, authToken : boolean = true) : Observable<T> {
     return this.http.post(this.endpoint + path, body, this.createRequestOptions(authToken))
       .map(ApiService.handleResponse)
       .catch(ApiService.handleError);
   }
 
-  put<T>(path : string, body : any, authToken : boolean = true) : Observable<T> {
+  put<T>(path : string, body? : any, authToken : boolean = true) : Observable<T> {
     return this.http.put(this.endpoint + path, body, this.createRequestOptions(authToken))
       .map(ApiService.handleResponse)
       .catch(ApiService.handleError);

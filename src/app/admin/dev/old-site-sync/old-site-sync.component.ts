@@ -1,0 +1,55 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from "rxjs";
+import { ApiService } from "../../../core/services/api.service";
+
+@Component({
+  selector: 'lijstr-old-site-sync',
+  templateUrl: './old-site-sync.component.html'
+})
+export class OldSiteSyncComponent implements OnDestroy {
+
+  started : boolean;
+  finished : boolean;
+  error : any;
+  result : any;
+
+  constructor(private api : ApiService) { }
+
+  startSync() {
+    if (this.started) return;
+    this.started = true;
+
+    this.api.post('/movies/migrate').subscribe(
+      result => {
+        if (result['newMigration']) {
+          this.fetch();
+        }
+      }
+    );
+
+  }
+
+  fetch() {
+    this.api.get('/movies/migrate').subscribe(
+      result => {
+        if (!this.finished) {
+          this.result = result;
+          if (result['progress']['finished']) {
+            this.finished = true;
+            this.api.del('/movies/migrate');
+          } else {
+            setTimeout(() => this.fetch(), 2500);
+          }
+        }
+      },
+      error => {
+        this.error = error;
+      }
+    )
+  }
+
+  ngOnDestroy() : void {
+    this.finished = true;
+  }
+
+}
