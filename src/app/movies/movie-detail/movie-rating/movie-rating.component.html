@@ -45,6 +45,10 @@
       </textarea>
       </div>
 
+      <div class="alert alert-success" *ngIf="changeSubscription != null">
+        Aangepast <span class="glyphicon glyphicon-thumbs-up"></span>
+      </div>
+
       <button class="btn btn-success pull-right" type="submit"
               [disabled]="userRating.seen == null || (isSeenYes() && !ratingField.valid && !unknownRating) || submitting || !isChanged()">
         {{isEdit() ? "Aanpassen" : "Opslaan"}}

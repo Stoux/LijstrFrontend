@@ -4,7 +4,7 @@ import { Seen, MovieRating } from "../../models/ratings";
 import { DataWrapper } from "../../../core/models/common";
 import { LijstrException } from "../../../core/exceptions";
 import { NgForm } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
 
 @Component({
@@ -21,6 +21,7 @@ export class MovieRatingComponent implements OnChanges {
   @Input() private movie : MovieDetail;
 
   submitting : boolean;
+  changeSubscription : Subscription;
   cachedRating : MovieRating;
   userRating : MovieRating;
   error : string;
@@ -82,6 +83,9 @@ export class MovieRatingComponent implements OnChanges {
         (newRating : MovieRating) => {
           this.setActiveIfEditable(newRating);
           this.ratingsService.onChange(this.movie.id, newRating);
+          this.changeSubscription = Observable.timer(3000).subscribe(
+            x => this.changeSubscription = null
+          );
         },
         (error : LijstrException) => {
           this.error = LijstrException.toString(error);
