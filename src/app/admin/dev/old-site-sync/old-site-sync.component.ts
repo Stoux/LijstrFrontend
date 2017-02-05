@@ -6,7 +6,7 @@ import { ApiService } from "../../../core/services/api.service";
   selector: 'lijstr-old-site-sync',
   templateUrl: './old-site-sync.component.html'
 })
-export class OldSiteSyncComponent implements OnDestroy {
+export class OldSiteSyncComponent implements OnInit, OnDestroy {
 
   started : boolean;
   finished : boolean;
@@ -14,6 +14,10 @@ export class OldSiteSyncComponent implements OnDestroy {
   result : any;
 
   constructor(private api : ApiService) { }
+
+  ngOnInit() : void {
+    this.fetch();
+  }
 
   startSync() {
     if (this.started) return;
@@ -32,7 +36,8 @@ export class OldSiteSyncComponent implements OnDestroy {
   fetch() {
     this.api.get('/movies/migrate').subscribe(
       result => {
-        if (!this.finished) {
+        if (!this.finished && result['progress'] != null) {
+          this.started = true;
           this.result = result;
           if (result['progress']['finished']) {
             this.finished = true;

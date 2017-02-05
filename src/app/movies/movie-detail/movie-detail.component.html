@@ -35,6 +35,14 @@
         <th>Leeftijd rating</th>
         <td>{{movie.ageRating}}</td>
       </tr>
+      <tr *ngIf="movie.originalTitle != null && movie.title != movie.originalTitle">
+        <th>Originele titel</th>
+        <td>{{movie.originalTitle}}</td>
+      </tr>
+      <tr *ngIf="movie.dutchTitle != null">
+        <th>Nederlandse titel</th>
+        <td>{{movie.dutchTitle}}</td>
+      </tr>
       <tr>
         <th>Genres</th>
         <td>

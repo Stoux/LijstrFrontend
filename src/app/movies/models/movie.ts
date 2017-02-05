@@ -32,6 +32,9 @@ export class MovieDetail {
 
   imdbId : string;
   title : string;
+  originalTitle : string;
+  dutchTitle : string;
+
   year : number;
   released : number;
 
