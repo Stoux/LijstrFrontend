@@ -14,6 +14,7 @@ import { ListSettingsComponent } from './movie-list/list-settings/list-settings.
 import { MovieUsersService } from "./services/movie-users.service";
 import { MovieRatingComponent } from './movie-detail/movie-rating/movie-rating.component';
 import { MovieRatingsComponent } from './movie-detail/movie-ratings/movie-ratings.component';
+import { MovieRatingsService } from "./services/movie-ratings.service";
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { MovieRatingsComponent } from './movie-detail/movie-ratings/movie-rating
   providers: [
     MovieUsersService,
     MovieListService,
-    MovieDetailService
+    MovieDetailService,
+    MovieRatingsService
   ]
 })
 export class MoviesModule {

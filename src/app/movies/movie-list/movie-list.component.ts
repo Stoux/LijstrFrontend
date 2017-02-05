@@ -52,7 +52,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
     this.listSubscription = this.listService.getSummaries().subscribe(
       list => {
         this.cache = list;
-        this.summaries = list;
+        this.summaries = list; //TODO: Reapply filter
         this.error = null;
       },
       error => {

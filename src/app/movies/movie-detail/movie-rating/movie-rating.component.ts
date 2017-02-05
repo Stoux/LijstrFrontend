@@ -1,13 +1,11 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, EventEmitter, Output } from "@angular/core";
 import { MovieDetail } from "../../models/movie";
-import { MovieDetailService } from "../../services/movie-detail.service";
-import { UserService } from "../../../core/services/user.service";
 import { Seen, MovieRating } from "../../models/ratings";
-import { FullUser } from "../../../core/models/user";
 import { DataWrapper } from "../../../core/models/common";
 import { LijstrException } from "../../../core/exceptions";
 import { NgForm } from "@angular/forms";
 import { Observable } from "rxjs";
+import { MovieRatingsService } from "../../services/movie-ratings.service";
 
 @Component({
   selector: 'lijstr-movie-rating',
@@ -16,10 +14,11 @@ import { Observable } from "rxjs";
 })
 export class MovieRatingComponent implements OnChanges {
 
+  private static readonly EDIT_BUFFER : number = (30 * 60 * 1000);
+
   @ViewChild('ratingForm') private form : NgForm;
 
   @Input() private movie : MovieDetail;
-  @Output() updatedRating = new EventEmitter<MovieRating>();
 
   submitting : boolean;
   cachedRating : MovieRating;
@@ -33,7 +32,7 @@ export class MovieRatingComponent implements OnChanges {
   ];
   unknownRating : boolean;
 
-  constructor(private movieDetailService : MovieDetailService) {
+  constructor(private ratingsService : MovieRatingsService) {
     this.unknownRating = false;
     this.submitting = false;
   }
@@ -46,17 +45,17 @@ export class MovieRatingComponent implements OnChanges {
       this.form.reset();
 
       const currentMovie = this.movie;
-      this.movieDetailService.getLatestMovieRatingForUser(this.movie.id)
+      this.ratingsService.getLatestMovieRatingForUser(this.movie.id)
         .subscribe(
-        (ratingWrapper : DataWrapper<MovieRating>) => {
-          if (this.movie.id == currentMovie.id && ratingWrapper.data != null) {
-            this.setActiveIfEditable(ratingWrapper.data);
+          (ratingWrapper : DataWrapper<MovieRating>) => {
+            if (this.movie.id == currentMovie.id && ratingWrapper.data != null) {
+              this.setActiveIfEditable(ratingWrapper.data);
+            }
+          },
+          (error : LijstrException) => {
+            this.error = LijstrException.toString(error);
           }
-        },
-        (error : LijstrException) => {
-          this.error = LijstrException.toString(error);
-        }
-      );
+        );
     }
 
     if (this.userRating == null) {
@@ -73,16 +72,16 @@ export class MovieRatingComponent implements OnChanges {
 
     let ratingCall : Observable<MovieRating>;
     if (this.isEdit()) {
-      ratingCall = this.movieDetailService.editRating(this.movie.id, this.userRating);
+      ratingCall = this.ratingsService.editRating(this.movie.id, this.userRating);
     } else {
-      ratingCall = this.movieDetailService.addRating(this.movie.id, this.userRating);
+      ratingCall = this.ratingsService.addRating(this.movie.id, this.userRating);
     }
 
     ratingCall.finally(() => this.submitting = false)
       .subscribe(
         (newRating : MovieRating) => {
           this.setActiveIfEditable(newRating);
-          this.updatedRating.emit(newRating);
+          this.ratingsService.onChange(this.movie.id, newRating);
         },
         (error : LijstrException) => {
           this.error = LijstrException.toString(error);
@@ -116,7 +115,7 @@ export class MovieRatingComponent implements OnChanges {
 
   private setActiveRating(rating : MovieRating) {
     this.userRating = rating;
-    this.unknownRating = this.isSeenYes() && rating.rating  == null;
+    this.unknownRating = this.isSeenYes() && rating.rating == null;
     this.cachedRating = new MovieRating();
     this.copyFields(rating, this.cachedRating);
   }
@@ -138,7 +137,7 @@ export class MovieRatingComponent implements OnChanges {
   }
 
   private static isEditable(rating : MovieRating) {
-    return new Date().getTime() < rating.created + (25 * 60 * 1000);
+    return new Date().getTime() < rating.created + MovieRatingComponent.EDIT_BUFFER;
   }
 
 

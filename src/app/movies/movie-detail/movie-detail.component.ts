@@ -6,6 +6,8 @@ import { FullUser, User } from "../../core/models/user";
 import { Subscription } from "rxjs";
 import { UserService } from "../../core/services/user.service";
 import { MovieUsersService } from "../services/movie-users.service";
+import { RatingChange } from "../models/ratings";
+import { MovieRatingsService } from "../services/movie-ratings.service";
 
 @Component({
   selector: 'lijstr-movie-detail',
@@ -16,7 +18,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
 
   movie : MovieDetail;
 
-  userSubscription : Subscription;
   loggedInUser : FullUser;
   isMovieUser : boolean;
 
@@ -24,8 +25,12 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
 
   movieUsers : User[];
 
+  private userSubscription : Subscription;
+  private ratingsSubscription : Subscription;
+
   constructor(private userService : UserService,
               private movieUsersService : MovieUsersService,
+              private movieRatingsService : MovieRatingsService,
               private route : ActivatedRoute) {
 
     this.shortPlot = true;
@@ -47,14 +52,26 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
         this.isMovieUser = this.userService.isMovieUser();
       }
     );
-    
+
     this.movieUsersService.getPromisedUsers().subscribe(
       users => this.movieUsers = users
+    );
+
+    //Keep track of rating changes
+    this.ratingsSubscription = this.movieRatingsService.changeFeed().subscribe(
+      (change : RatingChange) => {
+        if (this.movie != null && this.movie.id == change.movieId) {
+          MovieRatingsService.updateRatingList(this.movie.latestMovieRatings, change);
+          //Change the array ref to trigger a change
+          this.movie.latestMovieRatings = this.movie.latestMovieRatings.slice();
+        }
+      }
     );
   }
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
+    this.ratingsSubscription.unsubscribe();
   }
 
   getPosterURL() : string {
@@ -64,11 +81,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
 
   switchPlotSize() {
     this.shortPlot = !this.shortPlot;
-  }
-
-
-  get debug() {
-    return JSON.stringify(this.movie, null, 2);
   }
 
 }

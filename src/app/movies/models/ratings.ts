@@ -4,6 +4,11 @@ export enum Seen {
   UNKNOWN = 2
 }
 
+export class RatingChange {
+  constructor(public movieId : number, public rating : ShortRating) {
+  }
+}
+
 export class ShortRating {
 
   user : number;
@@ -31,6 +36,15 @@ export class ShortRating {
         v2 = r2.rating == null ? 0 : r2.rating;
       return v1 - v2;
     }
+  }
+
+  static copy(rating : ShortRating) : ShortRating {
+    let r = new ShortRating();
+    r.user = rating.user;
+    r.seen = rating.seen;
+    r.rating = rating.rating;
+    r.comment = rating.comment == "" ? null : rating.comment;
+    return r;
   }
 
 }
