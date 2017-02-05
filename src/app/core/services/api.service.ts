@@ -20,7 +20,6 @@ export class ApiService {
   private injectors : Injector[];
 
   constructor(http : Http) {
-    console.log("Created ApiService");
     this.http = http;
     this.domain = environment.endpoint;
     this.endpoint = 'http' + (environment.endpointSSL ? 's' : '') + '://' + environment.endpoint;

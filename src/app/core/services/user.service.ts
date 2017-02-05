@@ -14,7 +14,6 @@ export class UserService {
   private userSubject : BehaviorSubject<FullUser>;
 
   constructor(api : ApiService, authService : AuthService) {
-    console.log("Created UserService");
     this.api = api;
     this.authService = authService;
     this.userSubject = new BehaviorSubject(this.user);

@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private unsubscribeUserFeed() {
-    console.log("Unsubscribe userFeed: " + (this.userService != null));
     if (this.userSubscription != null) {
       this.userSubscription.unsubscribe();
       this.userSubscription = null;

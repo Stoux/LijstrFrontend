@@ -1,10 +1,48 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
+import { TitleService } from "./core/services/title.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(private router : Router,
+              private activatedRoute : ActivatedRoute,
+              private titleApi : TitleService) {
+  }
+
+  ngOnInit() : void {
+    this.router.events
+      .filter(x => x instanceof NavigationEnd) //Only trigger when navigation has finished
+      .map(() => this.activatedRoute) //Replace the event with the activated route
+      .flatMap(route => { //Include all the sub-routes as well
+        let withChildren = [route];
+        let current = route;
+        while (current.firstChild) {
+          current = current.firstChild;
+          withChildren.push(current);
+        }
+        return withChildren;
+      })
+      .filter(route => route.outlet === 'primary') //Only care about the main outlet
+      .mergeMap(route => route.data) //Get the data
+      .subscribe(event => {
+        if (event['title']) { //Check if title data value is set
+          this.titleApi.setTitle(event['title']);
+        } else if (event['resolveTitle']) { //Try to resolve it if path is set
+          let splitPath : string[] = event['resolveTitle'].split('.');
+          let value = event;
+          for (let path of splitPath) {
+            value = value[path];
+          }
+          if (value != event && event != null) {
+            this.titleApi.setTitle(value.toString());
+          }
+        }
+      });
+  }
 
 }

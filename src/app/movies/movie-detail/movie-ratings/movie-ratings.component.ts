@@ -35,11 +35,9 @@ export class MovieRatingsComponent implements OnChanges {
   }
 
   ngOnChanges(changes : SimpleChanges) : void {
-    console.log(changes);
     this.ratings = [];
 
     if (this.hasUsers()) {
-      console.log(this.availableUsers);
       for (let user of this.availableUsers) {
         this.ratings.push(new UserRating(
           user.displayName,

@@ -9,15 +9,18 @@ import { OldSiteSyncComponent } from "./dev/old-site-sync/old-site-sync.componen
 const routes : Routes = [
   {
     path: '',
-    component: AdminComponent
+    component: AdminComponent,
+    data: {title: 'Admin'}
   },
   {
     path: 'old-site-sync',
-    component: OldSiteSyncComponent
+    component: OldSiteSyncComponent,
+    data: {title: 'Site-sync'}
   },
   {
     path: 'users',
     component: UsersComponent,
+    data: {title: 'Gebruikers'},
     children: [
       {
         path: 'add',

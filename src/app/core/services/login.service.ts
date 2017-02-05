@@ -33,7 +33,6 @@ export class LoginService {
     let post : Observable<AuthenticationToken> = this.api.post('/auth', request, false);
     post.subscribe(
       newToken => {
-        console.log("Got a new token for: " + newToken.userId);
         this.authService.useNewToken(newToken);
         this.userService.userChangeFeed()
           .filter(x => x != null)
@@ -41,12 +40,10 @@ export class LoginService {
           .timeout(5000)
           .subscribe(
             user => {
-              console.log("Found the user.");
               this.loginSubject.next(user);
               this.complete();
             },
             error => { //Should be a timeout?
-              console.log("Token has been received.. but no user? wtf");
               this.finishError("Failed to get user...? Shit's broken.");
             }
           );

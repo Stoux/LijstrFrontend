@@ -1,10 +1,11 @@
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, Title } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from "./core/core.module";
 import { NavigationComponent } from "./core/navigation/navigation.component";
 import { CollapseModule } from "ng2-bootstrap";
+import { TitleService } from "./core/services/title.service";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,10 @@ import { CollapseModule } from "ng2-bootstrap";
     AppRoutingModule,
     CollapseModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    Title, //Required to wrap
+    TitleService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

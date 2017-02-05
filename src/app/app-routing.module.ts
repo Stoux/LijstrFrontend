@@ -7,7 +7,8 @@ import { AdminGuard } from "./core/guards/admin-guard.service";
 export const routes : Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    data: {title: 'Home'}
   },
   {
     path: 'movies',
@@ -24,7 +25,8 @@ export const routes : Routes = [
   },
   {
     path: '**',
-    component: ErrorPageComponent
+    component: ErrorPageComponent,
+    data: {title: 'RIP'}
   }
 ];
 

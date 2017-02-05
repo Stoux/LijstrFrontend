@@ -14,15 +14,18 @@ const routes : Routes = [
     children: [
       {
         path: 'stats',
-        component: MovieStatsComponent
+        component: MovieStatsComponent,
+        data: {title: 'Filmstats'}
       },
       {
         path: '',
         component: MovieListComponent,
+        data: {title: 'Films'},
         children: [
           {
             path: ':id',
             component: MovieDetailComponent,
+            data: {resolveTitle: 'movieDetail.title'},
             resolve: {
               movieDetail: MovieDetailResolver
             }

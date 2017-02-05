@@ -15,7 +15,6 @@ export class AuthService {
   private refreshTimer : any;
 
   constructor(private api : ApiService) {
-    console.log("Created AuthService");
     this.tokenSubject = new ReplaySubject(1);
     const auth = this;
     api.addHeaderInterceptor({
@@ -74,7 +73,6 @@ export class AuthService {
   }
 
   private refreshToken(currentToken : string) {
-    console.log("Refreshing token...");
     let refreshRequest = new RefreshRequest(currentToken);
     let post : Observable<AuthenticationToken> = this.api.post('/auth/refresh', refreshRequest, false);
     post.subscribe(

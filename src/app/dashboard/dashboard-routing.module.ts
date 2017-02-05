@@ -10,20 +10,24 @@ const routes : Routes = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: [UserGuard]
+    canActivate: [UserGuard],
+    data: {title: 'Dashboard'}
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    data: {title: 'Login'}
   },
   {
     path: 'logout',
     component: LogoutComponent,
-    canActivate: [UserGuard]
+    canActivate: [UserGuard],
+    data: {title: 'Loguit'}
   },
   {
     path: 'reset-password',
-    component: ResetPasswordComponent
+    component: ResetPasswordComponent,
+    data: {title: 'Wachtwoord resetten'}
   }
 ];
 
