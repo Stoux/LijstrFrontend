@@ -24,14 +24,21 @@ export class MovieUsersService {
     );
   }
 
+  /**
+   * Get the users that are currently loaded.
+   * @returns {User[]}
+   */
   getUsers() : User[] {
     return this.users;
   }
 
+  /**
+   * Get the users when they are available.
+   * Only returns one result and then completes.
+   * @returns {Observable<User[]>}
+   */
   getPromisedUsers() : Observable<User[]> {
     return this.usersSubject.asObservable().first();
   }
-
-
 
 }

@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MovieDetail } from "../models/movie";
 import { environment } from "../../../environments/environment";
-import { FullUser } from "../../core/models/user";
+import { FullUser, User } from "../../core/models/user";
 import { Subscription } from "rxjs";
 import { UserService } from "../../core/services/user.service";
+import { MovieUsersService } from "../services/movie-users.service";
 
 @Component({
   selector: 'lijstr-movie-detail',
@@ -21,7 +22,10 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
 
   shortPlot : boolean;
 
+  movieUsers : User[];
+
   constructor(private userService : UserService,
+              private movieUsersService : MovieUsersService,
               private route : ActivatedRoute) {
 
     this.shortPlot = true;
@@ -42,6 +46,10 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
         this.loggedInUser = user;
         this.isMovieUser = this.userService.isMovieUser();
       }
+    );
+    
+    this.movieUsersService.getPromisedUsers().subscribe(
+      users => this.movieUsers = users
     );
   }
 

@@ -52,4 +52,6 @@ export class MovieDetail {
   genres : Genre[];
   languages : Language[];
 
+  latestMovieRatings : ShortRating[];
+
 }

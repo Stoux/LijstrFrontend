@@ -36,7 +36,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
   constructor(public listService : MovieListService,
               private route : ActivatedRoute,
               private router : Router) {
-    this.numberPipe = new DecimalPipe('nl-NL');
+    this.numberPipe = new DecimalPipe('en-US');
   }
 
   ngOnInit() {

@@ -70,7 +70,14 @@
 <hr />
 
 <div class="row">
-  <div class="col-md-4 col-md-offset-8" *ngIf="isMovieUser">
+  <div class="col-md-8">
+    <h4>Ratings</h4>
+    <lijstr-movie-ratings [availableUsers]="movieUsers"
+                          [availableRatings]="movie.latestMovieRatings">
+    </lijstr-movie-ratings>
+  </div>
+
+  <div class="col-md-4" *ngIf="isMovieUser">
     <h4>Rating aanpassen</h4>
     <lijstr-movie-rating [movie]="movie"></lijstr-movie-rating>
   </div>

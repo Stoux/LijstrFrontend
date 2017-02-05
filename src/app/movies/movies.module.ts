@@ -13,6 +13,7 @@ import { ModalModule } from "ng2-bootstrap";
 import { ListSettingsComponent } from './movie-list/list-settings/list-settings.component';
 import { MovieUsersService } from "./services/movie-users.service";
 import { MovieRatingComponent } from './movie-detail/movie-rating/movie-rating.component';
+import { MovieRatingsComponent } from './movie-detail/movie-ratings/movie-ratings.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { MovieRatingComponent } from './movie-detail/movie-rating/movie-rating.c
     MovieSelectComponent,
     MovieDetailComponent,
     ListSettingsComponent,
-    MovieRatingComponent
+    MovieRatingComponent,
+    MovieRatingsComponent
   ],
   providers: [
     MovieUsersService,

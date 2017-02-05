@@ -1,0 +1,17 @@
+<p *ngIf="!hasUsers()">
+  <strong>Still loading users...</strong>
+</p>
+
+<ul class="list-unstyled" *ngIf="hasUsers()">
+  <li *ngFor="let userRating of ratings">
+    <blockquote *ngIf="userRating.hasComment()">
+      <p>{{userRating.rating.comment}}</p>
+      <footer>
+        <strong>{{userRating.displayName}}</strong> | {{shortRatingText(userRating.rating)}}
+      </footer>
+    </blockquote>
+    <p *ngIf="!userRating.hasComment()">
+      <strong>{{userRating.displayName}}</strong> {{longRatingText(userRating.rating)}}
+    </p>
+  </li>
+</ul>
