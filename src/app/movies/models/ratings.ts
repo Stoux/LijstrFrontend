@@ -1,3 +1,4 @@
+import { Serializable } from "../../core/models/common";
 export enum Seen {
   YES = 0,
   NO = 1,
@@ -9,7 +10,7 @@ export class RatingChange {
   }
 }
 
-export class ShortRating {
+export class ShortRating extends Serializable {
 
   user : number;
   seen : Seen;

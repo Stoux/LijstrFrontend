@@ -1,0 +1,9 @@
+<div #timelineTop style="height: 200px;" [class.hidden]="timeline != null"></div>
+
+
+
+<div class="row">
+  <div class="col-md-6" *ngFor="let item of timeline">
+    <pre>{{item | json}}</pre>
+  </div>
+</div>

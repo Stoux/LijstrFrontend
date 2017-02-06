@@ -9,9 +9,7 @@ export class Serializable {
 
   fromJSON(json) {
     for (let propName in json) {
-      if (this.hasOwnProperty(propName)) {
-        this[propName] = json[propName];
-      }
+      this[propName] = json[propName];
     }
     return this;
   }
