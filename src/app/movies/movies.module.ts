@@ -15,6 +15,10 @@ import { MovieUsersService } from "./services/movie-users.service";
 import { MovieRatingComponent } from './movie-detail/movie-rating/movie-rating.component';
 import { MovieRatingsComponent } from './movie-detail/movie-ratings/movie-ratings.component';
 import { MovieRatingsService } from "./services/movie-ratings.service";
+import { MovieRequestComponent } from './movie-request/movie-request.component';
+import { MovieUserGuard } from "./services/guards/movie-user-guard.service";
+import { MovieRequestService } from "./services/movie-request.service";
+import { MovieRequestListComponent } from './movie-request/movie-request-list/movie-request-list.component';
 
 @NgModule({
   imports: [
@@ -31,13 +35,18 @@ import { MovieRatingsService } from "./services/movie-ratings.service";
     MovieDetailComponent,
     ListSettingsComponent,
     MovieRatingComponent,
-    MovieRatingsComponent
+    MovieRatingsComponent,
+    MovieRequestComponent,
+    MovieRequestListComponent
   ],
   providers: [
+    MovieUserGuard,
+
     MovieUsersService,
     MovieListService,
     MovieDetailService,
-    MovieRatingsService
+    MovieRatingsService,
+    MovieRequestService
   ]
 })
 export class MoviesModule {

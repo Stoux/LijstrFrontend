@@ -21,6 +21,9 @@
         <li routerLinkActive="active">
           <a routerLink="movies/stats" (click)="collapseMenu()">Filmstats</a>
         </li>
+        <li routerLinkActive="active" *ngIf="movieUser">
+          <a routerLink="movies/add" (click)="collapseMenu()">Film toevoegen</a>
+        </li>
 
         <!-- Dashboard -->
         <li *ngIf="loggedIn" routerLinkActive="active">

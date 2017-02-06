@@ -6,6 +6,9 @@ import { MovieSelectComponent } from "./movie-select/movie-select.component";
 import { MovieDetailComponent } from "./movie-detail/movie-detail.component";
 import { MoviesComponent } from "./movies.component";
 import { MovieDetailResolver } from "./movie-detail/movie-detail-resolver.service";
+import { MovieRequestComponent } from "./movie-request/movie-request.component";
+import { MovieUserGuard } from "./services/guards/movie-user-guard.service";
+import { UserGuard } from "../core/guards/user-guard.service";
 
 const routes : Routes = [
   {
@@ -16,6 +19,12 @@ const routes : Routes = [
         path: 'stats',
         component: MovieStatsComponent,
         data: {title: 'Filmstats'}
+      },
+      {
+        path: 'add',
+        component: MovieRequestComponent,
+        data: {title: 'Film toevoegen'},
+        canActivate: [UserGuard, MovieUserGuard]
       },
       {
         path: '',

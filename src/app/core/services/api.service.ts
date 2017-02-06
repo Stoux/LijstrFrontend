@@ -90,11 +90,11 @@ export class ApiService {
   private static handleError(error : Response | any) {
     let exception = null;
     if (error instanceof Response) {
-      exception = <LijstrException> error.json();
+      exception = new LijstrException().fromJSON(error.json());
       console.log("[" + exception.status + "] [" + exception.error + "] " + exception.message);
     } else {
       console.error("[WTF] Server did not return a LijstrException.. '" + error.toString() + "'");
-      exception = new LijstrException(error.toString())
+      exception = LijstrException.forMessage(error.toString())
     }
     return Observable.throw(exception);
   }

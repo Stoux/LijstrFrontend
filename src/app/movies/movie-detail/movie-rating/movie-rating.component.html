@@ -35,14 +35,14 @@
     <div class="col-md-12">
       <div [hidden]="ratingField.valid || ratingField.pristine || ratingField.disabled || unknownRating"
            class="alert alert-danger">
-        Geen geldige IMDB rating.
+        Geen geldige rating.
       </div>
 
       <div class="form-group">
         <label for="comment">Opmerking</label>
         <textarea id="comment" name="comment" class="form-control" rows="3"
                   [(ngModel)]="userRating.comment">
-      </textarea>
+        </textarea>
       </div>
 
       <div class="alert alert-success" *ngIf="changeSubscription != null">

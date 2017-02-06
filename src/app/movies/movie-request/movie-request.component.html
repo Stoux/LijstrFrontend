@@ -1,0 +1,29 @@
+<h1>Films toevoegen</h1>
+
+<lijstr-movie-request-list
+  [outstandingRequests]="outstandingRequests"
+  [error]="outstandingRequestsError"
+  [selectable]="isMod && !submitting"
+  (selected)="onSelected($event)">
+
+</lijstr-movie-request-list>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let approvingItem of approving">
+    <div class="alert" [class.alert-warning]="!approvingItem.finished"
+         [class.alert-success]="approvingItem.finished && approvingItem.error == null"
+         [class.alert-danger]="approvingItem.error != null">
+      <strong>Film:</strong> {{approvingItem.title}}
+      <strong *ngIf="approvingItem.error != null"><br />Error: {{approvingItem.error.toString()}}</strong>
+    </div>
+  </div>
+
+  <div class="col-xs-12">
+    <button class="btn btn-success pull-right"
+            (click)="approve()"
+            [disabled]="selectedRequests.length == 0 || submitting"
+            *ngIf="isMod">
+      {{submitting ? 'Toevoegen...' : 'Voeg toe'}}
+    </button>
+  </div>
+</div>

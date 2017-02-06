@@ -83,6 +83,14 @@ export class UserService {
   }
 
   /**
+   * Check whether the user is a movie mod.
+   * @returns {boolean}
+   */
+  isMovieMod() : boolean {
+    return this.hasRole('ROLE_MOVIE_MOD');
+  }
+
+  /**
    * Observable feed of the current state of the logged in user.
    * @returns {Observable<FullUser>}
    */

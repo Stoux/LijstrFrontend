@@ -1,0 +1,25 @@
+<template let-value="value" #dateCell>
+  {{value | date:"HH:mm:ss - d MMM"}}
+</template>
+<template let-value="value" let-row="row" #titleCell>
+  <a href="http://www.imdb.com/title/{{row.imdbId}}/">
+    {{value}} <small>({{row.imdbId}})</small>
+  </a>
+</template>
+<template let-value="value" #userCell>
+  {{getUserDisplayName(value)}}
+</template>
+
+<ngx-datatable
+  id="request-list"
+  class="material striped"
+  [columnMode]="'flex'"
+  [columns]="columns"
+  [rows]="outstandingRequests"
+  [reorderable]="false"
+  [selectionType]="selectable ? 'multiClick' : false"
+  [trackByProp]="'id'"
+  (select)="onSelected($event)">
+</ngx-datatable>
+
+

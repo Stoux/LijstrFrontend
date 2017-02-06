@@ -12,6 +12,7 @@ export class NavigationComponent implements OnInit {
   name : string;
   loggedIn : boolean;
   admin : boolean;
+  movieUser : boolean;
 
   constructor(public userService : UserService) {
   }
@@ -25,6 +26,7 @@ export class NavigationComponent implements OnInit {
       .subscribe(user => {
         this.loggedIn = this.userService.isLoggedIn();
         this.admin = this.userService.isAdmin();
+        this.movieUser = this.userService.isMovieUser();
         this.name = (user == null ? null : user.displayName);
       });
   }
