@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  endpoint: 'localhost:8080',
-  endpointSSL: false
+  endpoint: 'api.lijstr.nl',
+  endpointSSL: true
 };

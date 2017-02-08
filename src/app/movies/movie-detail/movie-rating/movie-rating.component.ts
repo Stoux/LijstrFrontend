@@ -21,6 +21,7 @@ export class MovieRatingComponent implements OnChanges {
 
   @Input() private movie : MovieDetail;
   @Input() private findOldRatings : boolean; //Should try to find old ratings
+  @Output() private ratingChanged : EventEmitter<MovieRating>;
 
   submitting : boolean;
   changeSubscription : Subscription;
@@ -41,6 +42,7 @@ export class MovieRatingComponent implements OnChanges {
     this.unknownRating = false;
     this.submitting = false;
     this.findOldRatings = true;
+    this.ratingChanged = new EventEmitter();
   }
 
   ngOnChanges(changes : SimpleChanges) {
@@ -50,6 +52,7 @@ export class MovieRatingComponent implements OnChanges {
       this.setActiveRating(MovieRating.newRating());
       this.form.reset();
       this.foundOldRating = false;
+      this.changeSubscription = null;
 
       const currentMovie = this.movie;
       if (this.findOldRatings) {
@@ -100,6 +103,8 @@ export class MovieRatingComponent implements OnChanges {
           if (isNewRating) {
             this.outstandingService.decrease();
           }
+
+          this.ratingChanged.emit(newRating);
         },
         (error : LijstrException) => {
           this.error = LijstrException.toString(error);

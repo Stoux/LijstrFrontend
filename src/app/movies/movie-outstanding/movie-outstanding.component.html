@@ -1,3 +1,42 @@
-<p>
-  movie-outstanding works!
-</p>
+<h1 *ngIf="moviesRemaining == 0">Films invullen</h1>
+<p *ngIf="movies == null">Laden...</p>
+<p *ngIf="movies != null && moviesRemaining == 0">Alles is al ingevuld. Mooi <span class="glyphicon glyphicon-thumbs-up"></span></p>
+<div class="alert alert-danger" *ngIf="error != null">
+  <strong>RIP:</strong> {{error.toString()}}
+</div>
+<div class="row" *ngIf="movies != null && moviesRemaining > 0">
+  <div class="col-xs-12">
+    <h1>Film: {{currentMovie.title}}</h1>
+  </div>
+  <div class="col-sm-6 col-sm-push-6">
+    <lijstr-movie-rating [movie]="currentMovie"
+                         [findOldRatings]="false"
+                         (ratingChanged)="onNext($event)">
+    </lijstr-movie-rating>
+    <p *ngIf="oldSiteRating != null && oldSiteRating.comment == null">
+      Oude rating = <strong>{{oldSiteRating.rating}}</strong>
+    </p>
+    <blockquote *ngIf="oldSiteRating != null && oldSiteRating.comment != null">
+      <p>{{oldSiteRating.comment}}</p>
+      <footer>Oude rating = <strong>{{oldSiteRating.rating}}</strong></footer>
+    </blockquote>
+  </div>
+  <div class="col-sm-6 col-sm-pull-6">
+    <lijstr-movie-detail-table [movie]="currentMovie"  [users]="availableUsers"
+                               [languages]="false" [genres]="false">
+    </lijstr-movie-detail-table>
+    <lijstr-movie-detail-summary [movie]="currentMovie"></lijstr-movie-detail-summary>
+  </div>
+  <div class="col-md-12 hidden-xs hidden-sm">
+    <hr />
+  </div>
+  <div class="col-md-3">
+    <lijstr-movie-detail-poster [movie]="currentMovie"></lijstr-movie-detail-poster>
+  </div>
+  <div class="col-md-9">
+    <lijstr-movie-ratings [availableUsers]="availableUsers"
+                          [availableRatings]="currentMovie.latestMovieRatings">
+    </lijstr-movie-ratings>
+  </div>
+
+</div>

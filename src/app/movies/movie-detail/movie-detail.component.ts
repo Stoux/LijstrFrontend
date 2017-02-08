@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MovieDetail } from "../models/movie";
-import { environment } from "../../../environments/environment";
 import { FullUser, User } from "../../core/models/user";
 import { Subscription } from "rxjs";
 import { UserService } from "../../core/services/user.service";
@@ -21,8 +20,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   loggedInUser : FullUser;
   isMovieUser : boolean;
 
-  shortPlot : boolean;
-
   movieUsers : User[];
 
   private userSubscription : Subscription;
@@ -33,7 +30,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
               private movieRatingsService : MovieRatingsService,
               private route : ActivatedRoute) {
 
-    this.shortPlot = true;
     this.isMovieUser = false;
   }
 
@@ -72,15 +68,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
     this.ratingsSubscription.unsubscribe();
-  }
-
-  getPosterURL() : string {
-    return "http" + (environment.endpointSSL ? "s" : "") + "://" + environment.endpoint +
-      "/movies/" + this.movie.id + "/poster";
-  }
-
-  switchPlotSize() {
-    this.shortPlot = !this.shortPlot;
   }
 
 }

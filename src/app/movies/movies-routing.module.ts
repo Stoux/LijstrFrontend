@@ -21,7 +21,7 @@ const routes : Routes = [
   {
     path: 'outstanding',
     component: MovieOutstandingComponent,
-    data: {title: 'Films invullen'},
+    data: {title: 'Nog niet ingevuld'},
     canActivate: [UserGuard]
   },
   {

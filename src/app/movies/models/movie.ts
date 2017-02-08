@@ -26,6 +26,7 @@ export class MovieSummary {
 export class MovieDetail {
 
   id : number;
+  oldSiteId : number;
 
   created : number;
   lastUpdated : number;

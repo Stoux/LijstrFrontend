@@ -19,5 +19,7 @@ export class FullUser extends User {
   lastModified : number;
   created : number;
 
+  oldSiteUser : string;
+
   grantedPermissions : GrantedPermission[];
 }
