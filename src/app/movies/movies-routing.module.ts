@@ -9,8 +9,21 @@ import { MovieDetailResolver } from "./movie-detail/movie-detail-resolver.servic
 import { MovieRequestComponent } from "./movie-request/movie-request.component";
 import { MovieUserGuard } from "./services/guards/movie-user-guard.service";
 import { UserGuard } from "../core/guards/user-guard.service";
+import { MovieOutstandingComponent } from "./movie-outstanding/movie-outstanding.component";
 
 const routes : Routes = [
+  {
+    path: 'add',
+    component: MovieRequestComponent,
+    data: {title: 'Film toevoegen'},
+    canActivate: [UserGuard, MovieUserGuard]
+  },
+  {
+    path: 'outstanding',
+    component: MovieOutstandingComponent,
+    data: {title: 'Films invullen'},
+    canActivate: [UserGuard]
+  },
   {
     path: '',
     component: MoviesComponent,
@@ -19,12 +32,6 @@ const routes : Routes = [
         path: 'stats',
         component: MovieStatsComponent,
         data: {title: 'Filmstats'}
-      },
-      {
-        path: 'add',
-        component: MovieRequestComponent,
-        data: {title: 'Film toevoegen'},
-        canActivate: [UserGuard, MovieUserGuard]
       },
       {
         path: '',

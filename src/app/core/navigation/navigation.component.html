@@ -21,8 +21,13 @@
         <li routerLinkActive="active">
           <a routerLink="movies/stats" (click)="collapseMenu()">Filmstats</a>
         </li>
-        <li routerLinkActive="active" *ngIf="movieUser">
+        <li *ngIf="movieUser" routerLinkActive="active">
           <a routerLink="movies/add" (click)="collapseMenu()">Film toevoegen</a>
+        </li>
+        <li *ngIf="movieUser && outstandingMovies != null && outstandingMovies != 0" routerLinkActive="active">
+          <a routerLink="movies/outstanding" (click)="collapseMenu()">
+            Films invullen <span class="badge">{{this.outstandingMovies}}</span>
+          </a>
         </li>
 
         <!-- Dashboard -->

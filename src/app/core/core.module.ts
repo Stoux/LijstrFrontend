@@ -11,6 +11,7 @@ import { UserGuard } from "./guards/user-guard.service";
 import { RedirectService } from "./services/redirect.service";
 import { LoginService } from "./services/login.service";
 import { RouterModule } from "@angular/router";
+import { MovieOutstandingService } from "./services/section/movie-outstanding.service";
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { RouterModule } from "@angular/router";
     AuthService,
     UserService,
     LoginService,
-    RedirectService
+    RedirectService,
+    MovieOutstandingService
   ]
 })
 export class CoreModule {

@@ -6,6 +6,7 @@ import { LijstrException } from "../../../core/exceptions";
 import { NgForm } from "@angular/forms";
 import { Observable, Subscription } from "rxjs";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
+import { MovieOutstandingService } from "../../../core/services/section/movie-outstanding.service";
 
 @Component({
   selector: 'lijstr-movie-rating',
@@ -19,12 +20,14 @@ export class MovieRatingComponent implements OnChanges {
   @ViewChild('ratingForm') private form : NgForm;
 
   @Input() private movie : MovieDetail;
+  @Input() private findOldRatings : boolean; //Should try to find old ratings
 
   submitting : boolean;
   changeSubscription : Subscription;
   cachedRating : MovieRating;
   userRating : MovieRating;
   error : string;
+  foundOldRating : boolean;
 
   seenOptions = [
     {value: Seen.YES, title: "Ja"},
@@ -33,9 +36,11 @@ export class MovieRatingComponent implements OnChanges {
   ];
   unknownRating : boolean;
 
-  constructor(private ratingsService : MovieRatingsService) {
+  constructor(private ratingsService : MovieRatingsService,
+              private outstandingService : MovieOutstandingService) {
     this.unknownRating = false;
     this.submitting = false;
+    this.findOldRatings = true;
   }
 
   ngOnChanges(changes : SimpleChanges) {
@@ -44,19 +49,23 @@ export class MovieRatingComponent implements OnChanges {
     if ('movie' in changes) {
       this.setActiveRating(MovieRating.newRating());
       this.form.reset();
+      this.foundOldRating = false;
 
       const currentMovie = this.movie;
-      this.ratingsService.getLatestMovieRatingForUser(this.movie.id)
-        .subscribe(
-          (ratingWrapper : DataWrapper<MovieRating>) => {
-            if (this.movie.id == currentMovie.id && ratingWrapper.data != null) {
-              this.setActiveIfEditable(ratingWrapper.data);
+      if (this.findOldRatings) {
+        this.ratingsService.getLatestMovieRatingForUser(this.movie.id)
+          .subscribe(
+            (ratingWrapper : DataWrapper<MovieRating>) => {
+              if (this.movie.id == currentMovie.id && ratingWrapper.data != null) {
+                this.foundOldRating = true;
+                this.setActiveIfEditable(ratingWrapper.data);
+              }
+            },
+            (error : LijstrException) => {
+              this.error = LijstrException.toString(error);
             }
-          },
-          (error : LijstrException) => {
-            this.error = LijstrException.toString(error);
-          }
-        );
+          );
+      }
     }
 
     if (this.userRating == null) {
@@ -71,6 +80,7 @@ export class MovieRatingComponent implements OnChanges {
       this.userRating.rating = null;
     }
 
+    const isNewRating = !this.foundOldRating;
     let ratingCall : Observable<MovieRating>;
     if (this.isEdit()) {
       ratingCall = this.ratingsService.editRating(this.movie.id, this.userRating);
@@ -86,6 +96,10 @@ export class MovieRatingComponent implements OnChanges {
           this.changeSubscription = Observable.timer(3000).subscribe(
             x => this.changeSubscription = null
           );
+
+          if (isNewRating) {
+            this.outstandingService.decrease();
+          }
         },
         (error : LijstrException) => {
           this.error = LijstrException.toString(error);
@@ -125,6 +139,7 @@ export class MovieRatingComponent implements OnChanges {
   }
 
   private setActiveIfEditable(rating : MovieRating) {
+    this.foundOldRating = true;
     if (MovieRatingComponent.isEditable(rating)) {
       this.setActiveRating(rating);
     } else {

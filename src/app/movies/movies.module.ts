@@ -20,6 +20,7 @@ import { MovieUserGuard } from "./services/guards/movie-user-guard.service";
 import { MovieRequestService } from "./services/movie-request.service";
 import { MovieRequestListComponent } from './movie-request/movie-request-list/movie-request-list.component';
 import { MovieTimelineComponent } from './movie-detail/movie-timeline/movie-timeline.component';
+import { MovieOutstandingComponent } from './movie-outstanding/movie-outstanding.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { MovieTimelineComponent } from './movie-detail/movie-timeline/movie-time
     MovieRatingsComponent,
     MovieRequestComponent,
     MovieRequestListComponent,
-    MovieTimelineComponent
+    MovieTimelineComponent,
+    MovieOutstandingComponent
   ],
   providers: [
     MovieUserGuard,

@@ -5,6 +5,7 @@ import { SavedMovieRequest } from "../models/requests";
 import { LijstrException } from "../../core/exceptions";
 import { Subscription, Observable } from "rxjs";
 import { FullUser, User } from "../../core/models/user";
+import { MovieOutstandingService } from "../../core/services/section/movie-outstanding.service";
 
 @Component({
   selector: 'lijstr-movie-request',
@@ -24,7 +25,8 @@ export class MovieRequestComponent implements OnInit, OnDestroy {
   private userFeed : Subscription;
 
   constructor(private userService : UserService,
-              private movieRequestService : MovieRequestService) { }
+              private movieRequestService : MovieRequestService,
+              private outstandingService : MovieOutstandingService) { }
 
   ngOnInit() : void {
     this.isMod = false;
@@ -66,7 +68,10 @@ export class MovieRequestComponent implements OnInit, OnDestroy {
           this.releaseSubmitHold();
         })
         .subscribe(
-          x => x, //Succeeded, nothing to do
+          x => {
+            this.outstandingService.increase();
+            return x;
+          },
           (error : LijstrException) => approvingItem.error = error
         );
     }

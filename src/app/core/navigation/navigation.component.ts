@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../services/user.service";
+import { MovieOutstandingService } from "../services/section/movie-outstanding.service";
 
 @Component({
   selector: 'lijstr-navigation',
@@ -14,13 +15,17 @@ export class NavigationComponent implements OnInit {
   admin : boolean;
   movieUser : boolean;
 
-  constructor(public userService : UserService) {
+  outstandingMovies : number;
+
+  constructor(public userService : UserService,
+              private movieService : MovieOutstandingService) {
   }
 
   ngOnInit() : void {
     this.loggedIn = false;
     this.admin = false;
     this.isCollapsed = true;
+    this.outstandingMovies = null;
 
     this.userService.userChangeFeed()
       .subscribe(user => {
@@ -29,6 +34,10 @@ export class NavigationComponent implements OnInit {
         this.movieUser = this.userService.isMovieUser();
         this.name = (user == null ? null : user.displayName);
       });
+
+    this.movieService.getOutstandingCount().subscribe(
+      count => this.outstandingMovies = count
+    );
   }
 
   toggleMenu() {
