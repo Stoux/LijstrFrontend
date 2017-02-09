@@ -1,9 +1,27 @@
-<div #timelineTop style="height: 200px;" [class.hidden]="timeline != null"></div>
+<div class="trigger-element" #timelineTop
+     [class.hidden]="timeline != null">
+  Timeline laden....
+</div>
 
+<div class="panel panel-default" *ngFor="let item of timeline">
+  <div class="panel-body">
+    <lijstr-movie-timeline-rating *ngIf="isRating(item)" [rating]="item"
+                                  [displayName]="getDisplayName(item.user)">
+    </lijstr-movie-timeline-rating>
 
+    <lijstr-movie-timeline-comment *ngIf="isComment(item)" [comment]="item"
+                                   [displayName]="getDisplayName(item.user)">
+    </lijstr-movie-timeline-comment>
 
-<div class="row">
-  <div class="col-md-6" *ngFor="let item of timeline">
-    <pre>{{item | json}}</pre>
+    <lijstr-movie-timeline-new-movie *ngIf="isNewMovie(item)" [creation]="item"
+                                     [displayName]="getDisplayName(item.user)">
+    </lijstr-movie-timeline-new-movie>
+  </div>
+
+  <div class="panel-footer">
+    <strong>Nieuwe {{item.newTitle()}}</strong> | {{item.created | date:"d MMM yyyy - HH:mm:ss"}}
+    <small *ngIf="item.created != item.lastModified">
+      (aangepast op {{item.lastModified | date:"d MMM yyyy - HH:mm:ss"}})
+    </small>
   </div>
 </div>

@@ -4,6 +4,7 @@ import { MovieRating } from "../../models/ratings";
 import { MovieComment, MovieCreation } from "../../models/timeline";
 import { MovieDetailService } from "../../services/movie-detail.service";
 import { LijstrException } from "../../../core/exceptions";
+import { User } from "../../../core/models/user";
 
 @Component({
   selector: 'lijstr-movie-timeline',
@@ -13,7 +14,10 @@ import { LijstrException } from "../../../core/exceptions";
 export class MovieTimelineComponent implements OnInit, OnChanges {
 
   @ViewChild('timelineTop') timelineTop : ElementRef;
+
   @Input() movie : MovieDetail;
+  @Input() availableUsers : User[];
+
   fetching : boolean;
   timeline : (MovieRating|MovieComment|MovieCreation)[];
   error : LijstrException;
@@ -36,11 +40,41 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
 
   @HostListener('window:scroll', ['$event'])
   scrolled() {
-    if (window.innerHeight + document.body.scrollTop > this.timelineTop.nativeElement.offsetTop) {
+    let node = this.timelineTop.nativeElement;
+    while(node.offsetTop == 0 && node.parentElement != null) {
+      node = node.parentElement;
+    }
+    let offsetTop = node.offsetTop;
+
+    if (window.innerHeight + document.body.scrollTop > offsetTop) {
       if (!this.fetching && this.timeline == null) {
         this.fetch();
       }
     }
+  }
+
+  getDisplayName(userId : number) {
+    if (userId == null) return null;
+    if (this.availableUsers != null) {
+      for (let user of this.availableUsers) {
+        if (user.id == userId) {
+          return user.displayName;
+        }
+      }
+    }
+    return 'Onbekend';
+  }
+
+  isRating(obj : any) : boolean {
+    return obj instanceof MovieRating;
+  }
+
+  isComment(obj : any) : boolean {
+    return obj instanceof MovieComment;
+  }
+
+  isNewMovie(obj : any) : boolean {
+    return obj instanceof MovieCreation;
   }
 
   private fetch() {

@@ -2,7 +2,7 @@
   {{value | date:"HH:mm:ss - d MMM"}}
 </template>
 <template let-value="value" let-row="row" #titleCell>
-  <a href="http://www.imdb.com/title/{{row.imdbId}}/">
+  <a href="http://www.imdb.com/title/{{row.imdbId}}/" target="_blank">
     {{value}} <small>({{row.imdbId}})</small>
   </a>
 </template>

@@ -14,6 +14,7 @@ export class NavigationComponent implements OnInit {
   loggedIn : boolean;
   admin : boolean;
   movieUser : boolean;
+  movieMod : boolean;
 
   outstandingMovies : number;
 
@@ -32,6 +33,7 @@ export class NavigationComponent implements OnInit {
         this.loggedIn = this.userService.isLoggedIn();
         this.admin = this.userService.isAdmin();
         this.movieUser = this.userService.isMovieUser();
+        this.movieMod = this.userService.isMovieMod();
         this.name = (user == null ? null : user.displayName);
       });
 

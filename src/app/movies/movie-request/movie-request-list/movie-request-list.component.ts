@@ -34,7 +34,7 @@ export class MovieRequestListComponent implements OnInit {
     );
 
     this.columns = [
-      {name: 'Titel', prop: 'title', flexGrow: 3, cellTemplate: this.titleCell},
+      {name: 'Aangevraagde film', prop: 'title', flexGrow: 3, cellTemplate: this.titleCell},
       {name: 'Jaar', prop: 'year', flexGrow: 1},
       {name: 'IMDB', prop: 'imdbRating', flexGrow: 1},
       {name: 'Door', prop: 'requestedBy', flexGrow: 1, cellTemplate: this.userCell},

@@ -22,7 +22,9 @@
           <a routerLink="movies/stats" (click)="collapseMenu()">Filmstats</a>
         </li>
         <li *ngIf="movieUser" routerLinkActive="active">
-          <a routerLink="movies/add" (click)="collapseMenu()">Film toevoegen</a>
+          <a routerLink="movies/add" (click)="collapseMenu()">
+            Film {{movieMod ? "toevoegen" : "aanvragen"}}
+          </a>
         </li>
         <li *ngIf="movieUser && outstandingMovies != null && outstandingMovies != 0" routerLinkActive="active">
           <a routerLink="movies/outstanding" (click)="collapseMenu()">

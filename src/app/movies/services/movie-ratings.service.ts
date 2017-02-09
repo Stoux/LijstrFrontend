@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ShortRating, RatingChange, MovieRating } from "../models/ratings";
+import { ShortRating, RatingChange, MovieRating, Seen } from "../models/ratings";
 import { Subject, Observable } from "rxjs";
 import { DataWrapper } from "../../core/models/common";
 import { ApiService } from "../../core/services/api.service";
+import { DecimalPipe } from "@angular/common";
 
 @Injectable()
 export class MovieRatingsService {
 
   emitter : Subject<RatingChange>;
 
+  private numberPipe : DecimalPipe;
+
   constructor(private api : ApiService) {
     this.emitter = new Subject();
+    this.numberPipe = new DecimalPipe('en-US');
   }
 
   /**
@@ -83,5 +87,52 @@ export class MovieRatingsService {
       ratings.push(change.rating);
     }
   }
+
+
+  /**
+   * Get the short text version of  a rating.
+   * @param shortRating the rating
+   * @returns {string}
+   */
+  public shortRatingText(shortRating : ShortRating) : string {
+    if (!shortRating) {
+      return 'Nog niet ingevuld';
+    } else if (shortRating.seen == Seen.NO) {
+      return 'Niet gezien';
+    } else if (shortRating.seen == Seen.YES) {
+      return this.ratingValueText(shortRating.rating);
+    } else {
+      return 'Not sure if gezien';
+    }
+  }
+
+  /**
+   * Get the long text version of a rating.
+   * @param shortRating the rating
+   * @returns {string}
+   */
+  public longRatingText(shortRating : ShortRating) : string {
+    if (!shortRating) {
+      return 'heeft nog niks ingevuld.';
+    } else if (shortRating.seen == Seen.NO) {
+      return 'heeft de film nog niet gezien.'
+    } else if (shortRating.seen == Seen.YES) {
+      return 'heeft de film gezien | ' + this.ratingValueText(shortRating.rating);
+    } else {
+      //TODO: Add gender?
+      return 'weet niet meer hij/zij de film heeft gezien.';
+    }
+  }
+
+  private ratingValueText(value : number) {
+    let valueAsText;
+    if (value == null) {
+      valueAsText = '?';
+    } else {
+      valueAsText = this.numberPipe.transform(value, '1.1-1');
+    }
+    return 'Rating: ' + valueAsText + '/10';
+  }
+
 
 }

@@ -26,6 +26,11 @@ import { MovieDetailSummaryComponent } from './movie-detail/movie-detail-summary
 import { OldSiteService } from "./movie-outstanding/old-site.service";
 import { MovieDetailPosterComponent } from './movie-detail/movie-detail-poster/movie-detail-poster.component';
 import { MovieWatchlistIconComponent } from './movie-detail/movie-watchlist-icon/movie-watchlist-icon.component';
+import { MovieRequestModComponent } from './movie-request/movie-request-mod/movie-request-mod.component';
+import { MovieRequestUserComponent } from './movie-request/movie-request-user/movie-request-user.component';
+import { MovieTimelineRatingComponent } from './movie-detail/movie-timeline/movie-timeline-rating/movie-timeline-rating.component';
+import { MovieTimelineCommentComponent } from './movie-detail/movie-timeline/movie-timeline-comment/movie-timeline-comment.component';
+import { MovieTimelineNewMovieComponent } from './movie-detail/movie-timeline/movie-timeline-new-movie/movie-timeline-new-movie.component';
 
 @NgModule({
   imports: [
@@ -50,7 +55,12 @@ import { MovieWatchlistIconComponent } from './movie-detail/movie-watchlist-icon
     MovieDetailTableComponent,
     MovieDetailSummaryComponent,
     MovieDetailPosterComponent,
-    MovieWatchlistIconComponent
+    MovieWatchlistIconComponent,
+    MovieRequestModComponent,
+    MovieRequestUserComponent,
+    MovieTimelineRatingComponent,
+    MovieTimelineCommentComponent,
+    MovieTimelineNewMovieComponent
   ],
   providers: [
     MovieUserGuard,

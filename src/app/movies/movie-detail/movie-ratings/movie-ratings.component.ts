@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { User } from "../../../core/models/user";
 import { ShortRating, Seen } from "../../models/ratings";
 import { DecimalPipe } from "@angular/common";
+import { MovieRatingsService } from "../../services/movie-ratings.service";
 
 class UserRating {
   constructor(public displayName : string,
@@ -26,12 +27,9 @@ export class MovieRatingsComponent implements OnChanges {
 
   ratings : UserRating[];
 
-  private numberPipe : DecimalPipe;
-
-  constructor() {
+  constructor(private ratingsService : MovieRatingsService) {
     this.availableUsers = [];
     this.availableRatings = [];
-    this.numberPipe = new DecimalPipe('en-US');
   }
 
   ngOnChanges(changes : SimpleChanges) : void {
@@ -51,41 +49,13 @@ export class MovieRatingsComponent implements OnChanges {
     return MovieRatingsComponent.hasValues(this.availableUsers);
   }
 
-  shortRatingText(shortRating : ShortRating) {
-    if (!shortRating) {
-      return 'Nog niet ingevuld';
-    } else if (shortRating.seen == Seen.NO) {
-      return 'Niet gezien';
-    } else if (shortRating.seen == Seen.YES) {
-      return this.ratingValueText(shortRating.rating);
-    } else {
-      return 'Not sure if gezien';
-    }
+  public shortRatingText(shortRating : ShortRating) : string {
+    return this.ratingsService.shortRatingText(shortRating);
   }
 
-  longRatingText(shortRating : ShortRating) {
-    if (!shortRating) {
-      return 'heeft nog niks ingevuld.';
-    } else if (shortRating.seen == Seen.NO) {
-      return 'heeft de film nog niet gezien.'
-    } else if (shortRating.seen == Seen.YES) {
-      return 'heeft de film gezien | ' + this.ratingValueText(shortRating.rating);
-    } else {
-      //TODO: Add gender?
-      return 'weet niet meer hij/zij de film heeft gezien.';
-    }
+  public longRatingText(shortRating : ShortRating) : string {
+    return this.ratingsService.longRatingText(shortRating);
   }
-
-  private ratingValueText(value : number) {
-    let valueAsText;
-    if (value == null) {
-      valueAsText = '?';
-    } else {
-      valueAsText = this.numberPipe.transform(value, '1.1-1');
-    }
-    return 'Rating: ' + valueAsText + '/10';
-  }
-
 
   private getUsersRating(user : User) : ShortRating {
     for (let rating of this.availableRatings) {

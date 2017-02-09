@@ -1,4 +1,4 @@
-<h1>Films toevoegen</h1>
+<h1>Films {{isMod ? "toevoegen" : "aanvragen"}}</h1>
 
 <lijstr-movie-request-list
   [outstandingRequests]="outstandingRequests"
@@ -27,3 +27,8 @@
     </button>
   </div>
 </div>
+
+<hr />
+
+
+

@@ -54,7 +54,7 @@ export class MovieRating extends ShortRating {
 
   id : number;
   created : number;
-  modified : number;
+  lastModified : number;
   lastest : boolean;
 
   static newRating() : MovieRating {
@@ -64,6 +64,10 @@ export class MovieRating extends ShortRating {
     r.rating = null;
     r.comment = null;
     return r;
+  }
+
+  newTitle() {
+    return 'rating';
   }
 
 }

@@ -1,0 +1,9 @@
+<blockquote *ngIf="rating.comment != null">
+  <p>{{rating.comment}}</p>
+  <footer>
+    <strong>{{displayName}}</strong> | {{shortRatingText()}}
+  </footer>
+</blockquote>
+<p *ngIf="rating.comment == null">
+  <strong>{{displayName}}</strong> {{longRatingText()}}
+</p>
