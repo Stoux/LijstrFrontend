@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "../../core/services/api.service";
 import { Observable } from "rxjs";
-import { MovieDetail } from "../models/movie";
+import { MovieDetail, MovieUserMeta } from "../models/movie";
 import { DataWrapper } from "../../core/models/common";
 import { MovieRating } from "../models/ratings";
 import { MovieComment } from "../models/timeline";
+import { Response } from "@angular/http";
 
 @Injectable()
 export class MovieDetailService {
@@ -40,6 +41,25 @@ export class MovieDetailService {
         }
         return result;
       });
+  }
+
+  /**
+   * Get the meta data a user has for a movie.
+   * @param movieId The movie id
+   * @returns {Observable<MovieUserMeta>}
+   */
+  getMovieUserMeta(movieId : number) : Observable<MovieUserMeta> {
+    return this.api.get('/movies/' + movieId + '/meta');
+  }
+
+  /**
+   * Save a user's meta data for a given movie.
+   * @param movieId The movie id
+   * @param meta The new metadata
+   * @returns {Observable<Response>}
+   */
+  saveMovieUserMeta(movieId : number, meta : MovieUserMeta) : Observable<Response> {
+    return this.api.put('/movies/' + movieId + '/meta', meta);
   }
 
 }

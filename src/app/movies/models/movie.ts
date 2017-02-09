@@ -59,3 +59,7 @@ export class MovieDetail {
   latestMovieRatings : ShortRating[];
 
 }
+
+export class MovieUserMeta {
+  wantToWatch : boolean;
+}

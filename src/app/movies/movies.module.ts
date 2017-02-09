@@ -25,6 +25,7 @@ import { MovieDetailTableComponent } from './movie-detail/movie-detail-table/mov
 import { MovieDetailSummaryComponent } from './movie-detail/movie-detail-summary/movie-detail-summary.component';
 import { OldSiteService } from "./movie-outstanding/old-site.service";
 import { MovieDetailPosterComponent } from './movie-detail/movie-detail-poster/movie-detail-poster.component';
+import { MovieWatchlistIconComponent } from './movie-detail/movie-watchlist-icon/movie-watchlist-icon.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { MovieDetailPosterComponent } from './movie-detail/movie-detail-poster/m
     MovieOutstandingComponent,
     MovieDetailTableComponent,
     MovieDetailSummaryComponent,
-    MovieDetailPosterComponent
+    MovieDetailPosterComponent,
+    MovieWatchlistIconComponent
   ],
   providers: [
     MovieUserGuard,

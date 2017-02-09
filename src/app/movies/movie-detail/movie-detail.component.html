@@ -10,6 +10,10 @@
   <div class="col-sm-3">
     <lijstr-movie-detail-poster [movie]="movie">
     </lijstr-movie-detail-poster>
+    <div class="text-center center-block">
+      <lijstr-movie-watchlist-icon *ngIf="isMovieUser" [movie]="movie">
+      </lijstr-movie-watchlist-icon>
+    </div>
   </div>
 </div>
 

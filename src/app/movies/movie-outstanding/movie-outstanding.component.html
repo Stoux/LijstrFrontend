@@ -5,14 +5,21 @@
   <strong>RIP:</strong> {{error.toString()}}
 </div>
 <div class="row" *ngIf="movies != null && moviesRemaining > 0">
-  <div class="col-xs-12">
-    <h1>Film: {{currentMovie.title}}</h1>
+  <div class="col-xs-10">
+    <h1 class="title">Film: {{currentMovie.title}}</h1>
+  </div>
+  <div class="col-xs-2">
+    <lijstr-movie-watchlist-icon class="pull-right"
+      [movie]="currentMovie" [showP]="false">
+    </lijstr-movie-watchlist-icon>
   </div>
   <div class="col-sm-6 col-sm-push-6">
     <lijstr-movie-rating [movie]="currentMovie"
                          [findOldRatings]="false"
                          (ratingChanged)="onNext($event)">
     </lijstr-movie-rating>
+
+    <!-- Old rating -->
     <p *ngIf="oldSiteRating != null && oldSiteRating.comment == null">
       Oude rating = <strong>{{oldSiteRating.rating}}</strong>
     </p>

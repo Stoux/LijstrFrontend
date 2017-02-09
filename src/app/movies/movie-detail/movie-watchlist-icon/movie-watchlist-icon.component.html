@@ -1,0 +1,13 @@
+<p *ngIf="showP">Wil ik zien:</p>
+<button title="{{getButtonTitle()}}"
+        [ngClass]="btnClasses"
+        (click)="submitChange()"
+        (mouseenter)="setHoverState(true)"
+        (mouseleave)="setHoverState(false)"
+        [disabled]="wantsToWatch == null || submitting">
+  <span [ngClass]="glyphiconClasses"></span>
+</button>
+
+<div class="alert alert-danger" *ngIf="error != null">
+  RIP Button: {{error.toString()}}
+</div>
