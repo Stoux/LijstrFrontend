@@ -50,6 +50,7 @@
       </div>
 
       <button class="btn btn-warning" *ngIf="showNotSeenButton" (click)="notSeen()" type="submit"
+              [disabled]="submitting"
               title="Zet gezien naar 'Nee' en sla gelijk op">
         Niet gezien
       </button>
