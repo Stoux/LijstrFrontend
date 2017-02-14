@@ -16,8 +16,10 @@
   <div class="col-sm-6 col-sm-push-6">
     <lijstr-movie-rating [movie]="currentMovie"
                          [findOldRatings]="false"
+                         [showNotSeenButton]="true"
                          (ratingChanged)="onNext($event)">
     </lijstr-movie-rating>
+    <br />
 
     <!-- Old rating -->
     <p *ngIf="oldSiteRating != null && oldSiteRating.comment == null">

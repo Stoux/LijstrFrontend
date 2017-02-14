@@ -1,4 +1,5 @@
 import { Serializable } from "../../core/models/common";
+
 export enum Seen {
   YES = 0,
   NO = 1,

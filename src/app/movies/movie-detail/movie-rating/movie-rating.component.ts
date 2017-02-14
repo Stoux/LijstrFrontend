@@ -21,6 +21,7 @@ export class MovieRatingComponent implements OnChanges {
 
   @Input() private movie : MovieDetail;
   @Input() private findOldRatings : boolean; //Should try to find old ratings
+  @Input() private showNotSeenButton : boolean;
   @Output() private ratingChanged : EventEmitter<MovieRating>;
 
   submitting : boolean;
@@ -33,7 +34,7 @@ export class MovieRatingComponent implements OnChanges {
   seenOptions = [
     {value: Seen.YES, title: "Ja"},
     {value: Seen.NO, title: "Nee"},
-    {value: Seen.UNKNOWN, title: "?"}
+    {value: Seen.UNKNOWN, title: "Weet niet meer"}
   ];
   unknownRating : boolean;
 
@@ -42,6 +43,7 @@ export class MovieRatingComponent implements OnChanges {
     this.unknownRating = false;
     this.submitting = false;
     this.findOldRatings = true;
+    this.showNotSeenButton = false;
     this.ratingChanged = new EventEmitter();
   }
 
@@ -128,6 +130,10 @@ export class MovieRatingComponent implements OnChanges {
 
     let curRatingvalue = this.unknownRating ? null : this.userRating.rating;
     return curRatingvalue != this.cachedRating.rating;
+  }
+
+  notSeen() {
+    this.userRating.seen = Seen.NO;
   }
 
   toggleUnknownRating() {
