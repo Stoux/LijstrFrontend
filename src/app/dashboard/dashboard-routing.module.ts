@@ -5,6 +5,7 @@ import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
 import { UserGuard } from "../core/guards/user-guard.service";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
+import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 
 const routes : Routes = [
   {
@@ -28,6 +29,11 @@ const routes : Routes = [
     path: 'reset-password',
     component: ResetPasswordComponent,
     data: {title: 'Wachtwoord resetten'}
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    data: {title: 'Wachtwoord vergeten..'}
   }
 ];
 

@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core";
-import { AuthenticationRequest, AuthenticationToken, NewPasswordRequest } from "../models/authentication";
+import {
+  AuthenticationRequest, AuthenticationToken, NewPasswordRequest,
+  ResetPasswordRequest
+} from "../models/authentication";
 import { AuthService } from "./auth.service";
 import { ApiService } from "./api.service";
 import { Subject, Observable } from "rxjs";
@@ -67,7 +70,7 @@ export class LoginService {
   }
 
   /**
-   * Get the login status if there's already a login attempt ongiong.
+   * Get the login status if there's already a login attempt ongoing.
    * Otherwise it returns null.
    * @returns {Observable<FullUser>}
    */
@@ -117,6 +120,15 @@ export class LoginService {
       );
 
     return result.asObservable();
+  }
+
+  /**
+   * Send a request for a new password.
+   * @param request The request
+   * @returns {Observable<Response>}
+   */
+  requestNewPassword(request : ResetPasswordRequest) : Observable<Response> {
+    return this.api.post('/auth/resetPassword', request, false);
   }
 
 }

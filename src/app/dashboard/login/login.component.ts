@@ -7,25 +7,25 @@ import { RedirectService } from "../../core/services/redirect.service";
 import { Router } from "@angular/router";
 import { UserService } from "../../core/services/user.service";
 import { LijstrException } from "../../core/exceptions";
+import { WithoutUserComponent } from "../core/WithoutUserComponent";
 
 @Component({
   selector: 'lijstr-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent extends WithoutUserComponent {
 
   model : AuthenticationRequest;
   submitting : boolean;
   userRestriction : boolean;
   error : string;
 
-  private userSubscription;
-
   constructor(private loginService : LoginService,
-              private userService : UserService,
-              private router: Router,
-              private redirect : RedirectService) {
+              userService : UserService,
+              router: Router,
+              redirect : RedirectService) {
+    super(userService, router, redirect);
   }
 
   ngOnInit() {
@@ -39,19 +39,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.userSubscription = this.userService.userChangeFeed()
-      .filter(x => x != null)
-      .subscribe(
-        user => {
-          this.redirectRoute();
-        }
-      );
+    super.ngOnInit();
 
     this.submitting = false;
-  }
-
-  ngOnDestroy() : void {
-    this.unsubscribeUserFeed();
   }
 
   onSubmit() {
@@ -72,22 +62,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.error = LijstrException.toString(error);
       }
     );
-  }
-
-  private unsubscribeUserFeed() {
-    if (this.userSubscription != null) {
-      this.userSubscription.unsubscribe();
-      this.userSubscription = null;
-    }
-  }
-
-  private redirectRoute() {
-    if (this.redirect.hasUrl()) {
-      let url = this.redirect.popUrl();
-      this.router.navigate([url]);
-    } else {
-      this.router.navigate(['/dashboard']);
-    }
   }
 
 }

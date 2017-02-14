@@ -36,8 +36,8 @@
     {{ error }}
   </div>
 
-  <button type="submit" class="btn btn-default" [disabled]="!loginForm.form.valid">Inloggen</button>
-
+  <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Inloggen</button>
+  <a type="button" class="btn btn-danger pull-right" routerLink="/dashboard/forgot-password">Wachtwoord vergeten?</a>
 </form>
 
 <div *ngIf="submitting">

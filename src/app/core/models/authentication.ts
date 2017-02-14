@@ -42,9 +42,8 @@ export class AuthenticationToken {
  * Data object that contains the information for a password reset request.
  */
 export class ResetPasswordRequest {
-  constructor(public username : string,
-              public email : string) {
-  }
+  public username : string;
+  public email : string;
 }
 
 /**
