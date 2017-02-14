@@ -71,6 +71,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
   }
 
   onFilter(value) {
+    value = value.toLowerCase();
     this.summaries = this.cache.filter(function (d) {
       return d.title.toLowerCase().indexOf(value) !== -1 || !value;
     });
