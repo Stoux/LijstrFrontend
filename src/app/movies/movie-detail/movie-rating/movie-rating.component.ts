@@ -142,6 +142,12 @@ export class MovieRatingComponent implements OnChanges {
     }
   }
 
+  handleRatingKeyPress(key : string) {
+    if (key == '?') {
+      this.toggleUnknownRating();
+    }
+  }
+
   private setActiveRating(rating : MovieRating) {
     this.userRating = rating;
     this.unknownRating = this.isSeenYes() && rating.rating == null;

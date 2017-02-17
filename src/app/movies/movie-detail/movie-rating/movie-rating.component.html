@@ -18,7 +18,9 @@
         <label for="rating">Rating</label>
 
         <div class="input-group" [class.hidden]="!unknownRating" >
-          <input type="text" class="form-control" value="?/10" disabled />
+          <input type="text" class="form-control" value="?/10" disabled
+                 title="Klip op X/10 om weer een cijfer in te vullen."
+                 (click)="toggleUnknownRating()" />
           <div class="input-group-addon pointer" [class.pointer-disabled]="!isSeenYes()" (click)="toggleUnknownRating()">X/10</div>
         </div>
 
@@ -26,6 +28,7 @@
           <input id="rating" name="rating" type="number" class="form-control" #ratingField="ngModel" required
                  step="0.1" min="1.0" max="10.0" pattern="((10([.,]0)?)|([1-9]([.,][0-9])?))"
                  [disabled]="!isSeenYes() || unknownRating"
+                 (keypress)="handleRatingKeyPress($event.key)"
                  [(ngModel)]="userRating.rating" />
           <div class="input-group-addon pointer" [class.pointer-disabled]="!isSeenYes()" (click)="toggleUnknownRating()">?/10</div>
         </div>
