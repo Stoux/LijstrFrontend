@@ -27,6 +27,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
   selected = [];
   cache : MovieSummary[];
   summaries : MovieSummary[];
+  filter : string;
   error : LijstrException;
 
   private listSubscription : Subscription;
@@ -41,6 +42,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.settingsEditable = false;
+    this.filter = null;
     this.requiredColumns = [{name: "Titel", prop: "title", flexGrow: 4, cellTemplate: this.valueCell}];
     this.availableColumns = [
       {name: "Jaar", prop: "year", flexGrow: 1, cellTemplate: this.valueCell},
@@ -52,8 +54,12 @@ export class MovieListComponent implements OnInit, OnDestroy {
     this.listSubscription = this.listService.getSummaries().subscribe(
       list => {
         this.cache = list;
-        this.summaries = list; //TODO: Reapply filter
         this.error = null;
+        if (this.filter != null) {
+          this.onFilter(this.filter);
+        } else {
+          this.summaries = list;
+        }
       },
       error => {
         this.error = error;
@@ -72,6 +78,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
   onFilter(value) {
     value = value.toLowerCase();
+    this.filter = value;
     this.summaries = this.cache.filter(function (d) {
       return d.title.toLowerCase().indexOf(value) !== -1 || !value;
     });
