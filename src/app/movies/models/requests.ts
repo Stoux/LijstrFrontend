@@ -5,8 +5,8 @@ import { ShortRating } from "./ratings";
  */
 export class AddMoviePayload {
 
-  imdbId : string;
-  youtubeUrl : string;
+  constructor(public imdbId : string, public youtubeId : string) {
+  }
 
 }
 

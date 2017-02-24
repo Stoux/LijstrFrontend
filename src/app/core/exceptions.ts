@@ -7,10 +7,14 @@ export class LijstrException extends Serializable {
   message : string;
 
   static forMessage(message : string) : LijstrException {
+    return this.forErrorMessage(999, message);
+  }
+
+  static forErrorMessage(status : number, message : string) {
     let e = new LijstrException();
     e.message = message;
     e.error = message;
-    e.status = 999;
+    e.status = status;
     e.timestamp = new Date().toISOString();
     return e;
   }
