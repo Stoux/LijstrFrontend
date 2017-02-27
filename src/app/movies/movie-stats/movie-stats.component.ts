@@ -51,8 +51,8 @@ export class MovieStatsComponent implements OnInit {
     const ceilings = this.ceilings.get(key);
     const value = userWrapper.stats[key];
     return {
-      'lowest': ceilings['low'] == value,
-      'highest': ceilings['high'] == value
+      'danger': ceilings['low'] == value,
+      'success': ceilings['high'] == value
     }
   }
 
