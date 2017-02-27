@@ -105,8 +105,8 @@ export class UserService {
 
   private hasRole(...permissions : string[]) : boolean {
     if (this.user == null) return false;
-    for (let permission of permissions) {
-      if (permissions.indexOf(permission) >= 0) {
+    for (let grantedPermission of this.user.grantedPermissions) {
+      if (permissions.indexOf(grantedPermission.authority) >= 0) {
         return true;
       }
     }
