@@ -2,10 +2,12 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { LoadingComponent } from "./loading/loading.component";
+import { MarkdownModule } from "angular2-markdown";
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    MarkdownModule.forRoot()
   ],
   declarations: [
     LoadingComponent
@@ -13,6 +15,7 @@ import { LoadingComponent } from "./loading/loading.component";
   exports: [
     CommonModule,
     FormsModule,
+    MarkdownModule,
     LoadingComponent
   ]
 })

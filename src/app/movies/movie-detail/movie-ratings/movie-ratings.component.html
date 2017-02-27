@@ -4,12 +4,17 @@
 
 <ul class="list-unstyled" *ngIf="hasUsers()">
   <li *ngFor="let userRating of ratings">
-    <blockquote *ngIf="userRating.hasComment()">
-      <p>{{userRating.rating.comment}}</p>
+    <div class="rating-comment" *ngIf="userRating.hasComment()">
+      <div class="markdown-container">
+        <markdown [data]="userRating.rating.comment"></markdown>
+      </div>
       <footer>
         <strong>{{userRating.displayName}}</strong> | {{shortRatingText(userRating.rating)}}
       </footer>
-    </blockquote>
+      <div class="expand text-center" style="position: absolute; width: 100%; top: 0; cursor: pointer; height: 100%;"> <!-- TODO (click)="expandComment()" -->
+        <span class="caret" style="margin-top: 85px;"></span>
+      </div>
+    </div>
     <p *ngIf="!userRating.hasComment()">
       <strong>{{userRating.displayName}}</strong> {{longRatingText(userRating.rating)}}
     </p>
