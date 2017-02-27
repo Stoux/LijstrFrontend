@@ -1,0 +1,16 @@
+<!--TODO: Add more filters (genres, languages, etc) -->
+<button class="btn btn-primary" title="Filter op films die je hebt getagged als 'Wil ik zien'"
+        *ngIf="isMovieUser"
+        [disabled]="wantToWatch && wantToWatchMap == null"
+        [ngClass]="{'btn-primary': !wantToWatch, 'btn-danger': wantToWatch && wantToWatchMap == null, 'btn-success': wantToWatch}"
+        (click)="toggleWantToWatch()">
+  <span class="glyphicon glyphicon-eye-open"></span>
+</button>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label class="sr-only" for="filter">Filter</label>
+    <input type="text" class="form-control" id="filter" name="filter" placeholder="Filter"
+           #filter (keyup)="onFilter(filter.value)" [disabled]="summaries == null" />
+  </div>
+</form>

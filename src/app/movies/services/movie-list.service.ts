@@ -64,6 +64,14 @@ export class MovieListService {
     return response;
   }
 
+  /**
+   * Get all the IDs of the movies the currently logged in user wants to see.
+   * @returns {Observable<number>}
+   */
+  getWantToWatchMovies() : Observable<number[]> {
+    return this.api.get('/movies/wantToWatch')
+  }
+
   private changeList(list : MovieSummary[]) : void {
     this.latestList = list;
     this.heroesList.next(list);

@@ -32,6 +32,7 @@ import { MovieTimelineRatingComponent } from './movie-detail/movie-timeline/movi
 import { MovieTimelineCommentComponent } from './movie-detail/movie-timeline/movie-timeline-comment/movie-timeline-comment.component';
 import { MovieTimelineNewMovieComponent } from './movie-detail/movie-timeline/movie-timeline-new-movie/movie-timeline-new-movie.component';
 import { MovieStatsService } from "./services/movie-stats.service";
+import { ListFilterComponent } from './movie-list/list-filter/list-filter.component';
 
 @NgModule({
   imports: [
@@ -43,10 +44,11 @@ import { MovieStatsService } from "./services/movie-stats.service";
   declarations: [
     MoviesComponent,
     MovieListComponent,
+    ListSettingsComponent,
+    ListFilterComponent,
     MovieStatsComponent,
     MovieSelectComponent,
     MovieDetailComponent,
-    ListSettingsComponent,
     MovieRatingComponent,
     MovieRatingsComponent,
     MovieRequestComponent,

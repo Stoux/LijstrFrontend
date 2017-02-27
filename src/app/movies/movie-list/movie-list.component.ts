@@ -12,7 +12,7 @@ import { DecimalPipe } from "@angular/common";
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent implements OnInit, OnDestroy {
+export class MovieListComponent implements OnInit {
 
   @ViewChild('valueCell') valueCell : TemplateRef<any>;
   @ViewChild('imdbCell') imdbCell : TemplateRef<any>;
@@ -25,63 +25,31 @@ export class MovieListComponent implements OnInit, OnDestroy {
 
   columns = [];
   selected = [];
-  cache : MovieSummary[];
   summaries : MovieSummary[];
-  filter : string;
-  error : LijstrException;
-
-  private listSubscription : Subscription;
 
   private numberPipe : DecimalPipe;
 
-  constructor(public listService : MovieListService,
-              private route : ActivatedRoute,
+  constructor(private route : ActivatedRoute,
               private router : Router) {
     this.numberPipe = new DecimalPipe('en-US');
   }
 
   ngOnInit() {
     this.settingsEditable = false;
-    this.filter = null;
     this.requiredColumns = [{name: "Titel", prop: "title", flexGrow: 4, cellTemplate: this.valueCell}];
     this.availableColumns = [
       {name: "Jaar", prop: "year", flexGrow: 1, cellTemplate: this.valueCell},
       {name: "IMDB", prop: "imdbRating", flexGrow: 1, cellTemplate: this.imdbCell},
       {name: "MC", prop: "metacriticScore", flexGrow: 1, cellTemplate: this.metacriticCell}
     ];
-
-
-    this.listSubscription = this.listService.getSummaries().subscribe(
-      list => {
-        this.cache = list;
-        this.error = null;
-        if (this.filter != null) {
-          this.onFilter(this.filter);
-        } else {
-          this.summaries = list;
-        }
-      },
-      error => {
-        this.error = error;
-      }
-    );
   }
 
   onSelect({selected}) {
     this.router.navigate([selected[0].id], {relativeTo: this.route});
   }
 
-  ngOnDestroy() : void {
-    this.listSubscription.unsubscribe();
-    this.listSubscription = null;
-  }
-
-  onFilter(value) {
-    value = value.toLowerCase();
-    this.filter = value;
-    this.summaries = this.cache.filter(function (d) {
-      return d.title.toLowerCase().indexOf(value) !== -1 || !value;
-    });
+  onNewList(summaries : MovieSummary[]) {
+    this.summaries = summaries;
   }
 
   setColumns(columns) {
