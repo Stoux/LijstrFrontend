@@ -52,7 +52,7 @@ export class MovieStatsComponent implements OnInit {
     const value = userWrapper.stats[key];
     return {
       'danger': ceilings['low'] == value,
-      'success': ceilings['high'] == value
+      'success': ceilings['high'] == value && key != 'filledIn'
     }
   }
 
