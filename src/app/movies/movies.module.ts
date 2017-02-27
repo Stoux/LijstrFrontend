@@ -31,6 +31,7 @@ import { MovieRequestUserComponent } from './movie-request/movie-request-user/mo
 import { MovieTimelineRatingComponent } from './movie-detail/movie-timeline/movie-timeline-rating/movie-timeline-rating.component';
 import { MovieTimelineCommentComponent } from './movie-detail/movie-timeline/movie-timeline-comment/movie-timeline-comment.component';
 import { MovieTimelineNewMovieComponent } from './movie-detail/movie-timeline/movie-timeline-new-movie/movie-timeline-new-movie.component';
+import { MovieStatsService } from "./services/movie-stats.service";
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import { MovieTimelineNewMovieComponent } from './movie-detail/movie-timeline/mo
     MovieDetailService,
     MovieRatingsService,
     MovieRequestService,
+    MovieStatsService,
     OldSiteService
   ]
 })

@@ -1,3 +1,53 @@
-<p>
-  movie-stats works!
-</p>
+<div *ngIf="userStats != null">
+
+  <table class="table table-striped table-condensed">
+    <thead>
+    <tr>
+      <th>Naam</th>
+      <th>Ingevuld</th>
+      <th>Gezien</th>
+      <th>Niet gezien</th>
+      <th>Gezien?</th>
+      <th>Dunno rating</th>
+      <th>Ratings met comments</th>
+      <th>Gem. rating</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let userData of userStats">
+      <th>{{userData['user']}}</th>
+      <td *ngFor="let key of keys" [ngClass]="getClassesForKey(key, userData)">
+        {{userData['stats'][key]}}
+      </td>
+      <td [ngClass]="getClassesForKey('averageRating', userData)">
+        {{userData['stats'].averageRating | number:"1.2-2"}}
+      </td>
+    </tr>
+    <tr *ngFor="let lazyUser of lazyStats">
+      <th>{{lazyUser}}</th>
+      <td colspan="7">heeft nog niks ingevuld...</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <hr />
+
+  <h1>{{stats.numberOfMovies}} films!</h1>
+  <p>
+    IMDB gemiddelde: <strong>{{stats.averageImdb | number:"1.2-2"}}</strong> <br />
+    Metacritic gemiddelde: <strong>{{stats.averageMetacritic | number:"1.1-1"}}</strong>
+  </p>
+
+  <p>
+    <small>Hier komt ooit nog meer spul, check deze hippe zonnebril: <span class="glyphicon glyphicon-sunglasses"></span></small>
+  </p>
+
+</div>
+
+<div *ngIf="error != null" class="alert alert-danger">
+  Er is iets mis gegaan... <br/>
+  {{alert.toString()}}
+</div>
+
+<lijstr-loading *ngIf="stats == null && error == null"></lijstr-loading>
