@@ -21,7 +21,7 @@ export class MovieRequestModComponent implements OnInit {
 
   imdbPattern : string = "(?:https?:\\/\\/)?(?:(?:www|m)\\.)?(?:imdb.com\\/title\\/)?(tt\\d{7})(?:\\/.*)?";
   imdbRegex : RegExp;
-  youtubePattern : string = "(?:https?:\\/\\/)?(?:www\\.)?(?:youtu\\.be\\/|youtube\\.com\\/(?:embed\\/|v\\/|watch\\?v=|watch\\?.+&v=))?((?:\\w|-){11})(?:\\S+)";
+  youtubePattern : string = "(?:https?:\\/\\/)?(?:www\\.)?(?:youtu\\.be\\/|youtube\\.com\\/(?:embed\\/|v\\/|watch\\?v=|watch\\?.+&v=))?((?:\\w|-){11})(?:\\S+)?";
   youtubeRegex : RegExp;
 
 
