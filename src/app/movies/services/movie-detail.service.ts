@@ -28,9 +28,8 @@ export class MovieDetailService {
    * @returns {Observable<(MovieRating|MovieComment)[]>} ordered array of ratings and comments
    */
   getMovieTimeline(id : number) : Observable<(MovieRating|MovieComment)[]> {
-    return this.api.get('/movies/' + id + '/timeline')
+    return this.api.get('/movies/' + id + '/timeline?includeRatings=false')
       .map((items : any[]) => {
-        console.log(items);
         let result : (MovieRating|MovieComment)[] = [];
         for (let item of items) {
           if ('seen' in item) {
