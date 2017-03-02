@@ -33,15 +33,24 @@
 
   <hr />
 
-  <h1>{{stats.numberOfMovies}} films!</h1>
-  <p>
-    IMDB gemiddelde: <strong>{{stats.averageImdb | number:"1.2-2"}}</strong> <br />
-    Metacritic gemiddelde: <strong>{{stats.averageMetacritic | number:"1.1-1"}}</strong>
-  </p>
 
-  <p>
-    <small>Hier komt ooit nog meer spul, check deze hippe zonnebril: <span class="glyphicon glyphicon-sunglasses"></span></small>
-  </p>
+  <div class="row">
+    <div class="col-md-4">
+      <h1>{{stats.numberOfMovies}} films!</h1>
+      <p>
+        IMDB gemiddelde: <strong>{{stats.averageImdb | number:"1.2-2"}}</strong> <br />
+        Metacritic gemiddelde: <strong>{{stats.averageMetacritic | number:"1.1-1"}}</strong>
+      </p>
+
+      <p>
+        <small>Hier komt ooit nog meer spul, check deze hippe zonnebril: <span class="glyphicon glyphicon-sunglasses"></span></small>
+      </p>
+    </div>
+
+    <div class="col-md-8">
+      <lijstr-recently-added></lijstr-recently-added>
+    </div>
+  </div>
 
 </div>
 

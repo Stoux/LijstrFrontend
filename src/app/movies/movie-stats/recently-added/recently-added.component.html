@@ -1,0 +1,20 @@
+<h2>Pas toegevoegd</h2>
+
+<ul class="main">
+  <li *ngFor="let result of results">
+    <p>
+      Op {{result.created | date:"dd-MM-yyyy"}} is <strong>{{result.title}}</strong> toegevoegd
+
+    </p>
+  </li>
+</ul>
+
+<lijstr-loading *ngIf="loading"></lijstr-loading>
+
+<button class="btn btn-primary" *ngIf="hasNextPage" (click)="fetchNextPage()">
+  Laad meer
+</button>
+
+<div class="alert alert-danger" *ngIf="error != null">
+  {{error.toString()}}
+</div>

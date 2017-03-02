@@ -33,6 +33,7 @@ import { MovieTimelineCommentComponent } from './movie-detail/movie-timeline/mov
 import { MovieTimelineNewMovieComponent } from './movie-detail/movie-timeline/movie-timeline-new-movie/movie-timeline-new-movie.component';
 import { MovieStatsService } from "./services/movie-stats.service";
 import { ListFilterComponent } from './movie-list/list-filter/list-filter.component';
+import { RecentlyAddedComponent } from './movie-stats/recently-added/recently-added.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { ListFilterComponent } from './movie-list/list-filter/list-filter.compon
     MovieRequestUserComponent,
     MovieTimelineRatingComponent,
     MovieTimelineCommentComponent,
-    MovieTimelineNewMovieComponent
+    MovieTimelineNewMovieComponent,
+    RecentlyAddedComponent
   ],
   providers: [
     MovieUserGuard,
