@@ -4,6 +4,8 @@ import { MovieStats, MovieUserStats } from "../models/movie-stats";
 import { LijstrException } from "../../core/exceptions";
 import { MovieUsersService } from "../services/movie-users.service";
 import { User } from "../../core/models/user";
+import { PageResult } from "../../core/models/common";
+import { Observable } from "rxjs";
 
 export class UserWrapper {
   constructor(public user : string, public stats : MovieUserStats) {
@@ -18,6 +20,13 @@ export class UserWrapper {
 export class MovieStatsComponent implements OnInit {
 
   keys = ["filledIn", "seen", "notSeen", "noIdea", "unknownRating", "withComment"];
+
+  recentlyAddedFunc = (page : number) : Observable<PageResult<any>> =>
+    this.statsService.getRecentlyAdded(page);
+  newRatingsFunc = (page : number) : Observable<PageResult<any>> =>
+    this.statsService.getNewRatings(page);
+  newCommentsFunc = (page : number) : Observable<PageResult<any>> =>
+    this.statsService.getNewComments(page);
 
   stats : MovieStats;
   userStats : UserWrapper[];

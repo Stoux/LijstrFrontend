@@ -1,18 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { User } from "../../../core/models/user";
-import { ShortRating, Seen } from "../../models/ratings";
+import { ShortRating, Seen, UserRating } from "../../models/ratings";
 import { DecimalPipe } from "@angular/common";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
-
-class UserRating {
-  constructor(public displayName : string,
-              public rating : ShortRating) {
-  }
-
-  hasComment() : boolean {
-    return this.rating != null && this.rating.comment != null && this.rating.comment != "";
-  }
-}
 
 //TODO: Add sorting? Or delegate to caller and base order on availableUsers?
 @Component({
@@ -47,14 +37,6 @@ export class MovieRatingsComponent implements OnChanges {
 
   hasUsers() : boolean {
     return MovieRatingsComponent.hasValues(this.availableUsers);
-  }
-
-  public shortRatingText(shortRating : ShortRating) : string {
-    return this.ratingsService.shortRatingText(shortRating);
-  }
-
-  public longRatingText(shortRating : ShortRating) : string {
-    return this.ratingsService.longRatingText(shortRating);
   }
 
   private getUsersRating(user : User) : ShortRating {

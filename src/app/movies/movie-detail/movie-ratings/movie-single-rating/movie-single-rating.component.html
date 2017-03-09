@@ -1,0 +1,9 @@
+<blockquote *ngIf="userRating.hasComment()">
+  <p>{{userRating.rating.comment}}</p>
+  <footer>
+    <strong>{{userRating.displayName}}</strong> | {{ratingsService.shortRatingText(userRating.rating)}}
+  </footer>
+</blockquote>
+<p *ngIf="!userRating.hasComment()">
+  <strong>{{userRating.displayName}}</strong> {{ratingsService.longRatingText(userRating.rating)}}
+</p>

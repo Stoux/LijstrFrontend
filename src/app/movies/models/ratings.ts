@@ -72,3 +72,13 @@ export class MovieRating extends ShortRating {
   }
 
 }
+
+export class UserRating {
+  constructor(public displayName : string,
+              public rating : ShortRating) {
+  }
+
+  hasComment() : boolean {
+    return this.rating != null && this.rating.comment != null && this.rating.comment != "";
+  }
+}

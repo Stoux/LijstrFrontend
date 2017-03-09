@@ -1,3 +1,4 @@
+import { MovieSummary } from "./movie";
 /**
  * Movie stats for a specific user.
  * All fields are a counter with how many ratings meet that requirement (unless specified otherwise).
@@ -42,4 +43,12 @@ export class MovieStats {
    */
   userToStats : Map<number, MovieUserStats>;
 
+}
+
+/**
+ * A change regarding a movie.
+ */
+export class MovieChange<T> {
+  movie : MovieSummary;
+  change : T;
 }

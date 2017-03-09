@@ -1,0 +1,7 @@
+li:not(:last-child) {
+  border-bottom: 1px solid lightgray;
+}
+
+lijstr-movie-single-rating /deep/ * {
+  font-size: 0.95em;
+}

@@ -41,4 +41,22 @@ export class MovieUsersService {
     return this.usersSubject.asObservable().first();
   }
 
+  /**
+   * Find the correct user in an array of users.
+   * @param id The ID of the user
+   * @param users The array of users
+   * @returns {user|null}
+   */
+  static findUser(id : number, users : User[]) : User {
+    if (users == null) {
+      return null;
+    }
+    for (let user of users) {
+      if (user.id == id) {
+        return user;
+      }
+    }
+    return null;
+  }
+
 }

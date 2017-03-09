@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { RecentlyAddedComponent } from './recently-added.component';
+import { MovieSingleRatingComponent } from './movie-single-rating.component';
 
-describe('RecentlyAddedComponent', () => {
-  let component: RecentlyAddedComponent;
-  let fixture: ComponentFixture<RecentlyAddedComponent>;
+describe('MovieSingleRatingComponent', () => {
+  let component: MovieSingleRatingComponent;
+  let fixture: ComponentFixture<MovieSingleRatingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecentlyAddedComponent ]
+      declarations: [ MovieSingleRatingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecentlyAddedComponent);
+    fixture = TestBed.createComponent(MovieSingleRatingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

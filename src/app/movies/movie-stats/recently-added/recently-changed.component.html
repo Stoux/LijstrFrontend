@@ -1,0 +1,45 @@
+<h2>{{title}}</h2>
+
+<!-- TODO: There are better ways to do this, like using templates or extending this component... -->
+
+<ul class="main list-unstyled">
+
+  <li *ngFor="let result of results">
+    <h5 *ngIf="!result.movie">
+      {{result.title}}
+      <small>- {{result.created | date:"dd-MM-yyyy"}}</small> <!-- TODO: Added by who -->
+    </h5>
+    <h5 *ngIf="result.movie">
+      {{result.movie.title}}
+      <small>- {{result.change.lastModified | date:"dd-MM-yyyy"}}</small>
+    </h5>
+    <lijstr-movie-single-rating *ngIf="result.change?.latest"
+      [userRating]="toUserRating(result)" [ratingsService]="ratingsService">
+    </lijstr-movie-single-rating>
+
+    <p *ngIf="result.movie && !result.change.latest">
+      {{result | json}}
+    </p>
+  </li>
+  <li *ngIf="loading">
+    <lijstr-loading></lijstr-loading>
+  </li>
+  <li *ngIf="!loading && results != null && results.length == 0">
+    <p>Er is hier helemaal niks...</p>
+  </li>
+  <li *ngIf="error">
+    <div class="alert alert-danger">
+      {{error.toString()}}
+    </div>
+  </li>
+</ul>
+
+<lijstr-loading *ngIf="loading"></lijstr-loading>
+
+<button class="btn btn-primary" *ngIf="hasNextPage" (click)="fetchNextPage()">
+  Laad meer
+</button>
+
+<div class="alert alert-danger" *ngIf="error != null">
+  {{error.toString()}}
+</div>
