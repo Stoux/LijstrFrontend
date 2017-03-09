@@ -52,15 +52,15 @@
         Aangepast <span class="glyphicon glyphicon-thumbs-up"></span>
       </div>
 
-      <button class="btn btn-warning" *ngIf="showNotSeenButton" (click)="notSeen()" type="submit"
-              [disabled]="submitting"
-              title="Zet gezien naar 'Nee' en sla gelijk op">
-        Niet gezien
-      </button>
-
       <button class="btn btn-success pull-right" type="submit"
               [disabled]="userRating.seen == null || (isSeenYes() && !ratingField.valid && !unknownRating) || submitting || !isChanged()">
         {{isEdit() ? "Aanpassen" : "Opslaan"}}
+      </button>
+
+      <button class="btn btn-warning" *ngIf="showNotSeenButton" (click)="notSeen()" type="button"
+              [disabled]="submitting"
+              title="Zet gezien naar 'Nee' en sla gelijk op">
+        Niet gezien
       </button>
     </div>
   </form>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { LijstrException } from "../../../core/exceptions";
 import { MovieUsersService } from "../../services/movie-users.service";
 import { User } from "../../../core/models/user";
@@ -6,7 +6,7 @@ import { PageResult } from "../../../core/models/common";
 import { Observable } from "rxjs";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
 import { MovieChange } from "../../models/movie-stats";
-import { ShortRating, MovieRating, UserRating } from "../../models/ratings";
+import { MovieRating, UserRating } from "../../models/ratings";
 
 @Component({
   selector: 'lijstr-recently-changed',

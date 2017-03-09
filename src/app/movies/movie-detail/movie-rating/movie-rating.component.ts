@@ -134,6 +134,7 @@ export class MovieRatingComponent implements OnChanges {
 
   notSeen() {
     this.userRating.seen = Seen.NO;
+    this.form.ngSubmit.emit();
   }
 
   toggleUnknownRating() {
