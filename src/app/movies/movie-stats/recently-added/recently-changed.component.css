@@ -2,6 +2,6 @@ li:not(:last-child) {
   border-bottom: 1px solid lightgray;
 }
 
-lijstr-movie-single-rating /deep/ * {
+lijstr-movie-single-rating /deep/ *, blockquote {
   font-size: 0.95em;
 }

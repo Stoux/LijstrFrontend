@@ -7,6 +7,7 @@ import { Observable } from "rxjs";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
 import { MovieChange } from "../../models/movie-stats";
 import { MovieRating, UserRating } from "../../models/ratings";
+import { MovieComment } from "../../models/timeline";
 
 @Component({
   selector: 'lijstr-recently-changed',
@@ -47,11 +48,15 @@ export class RecentlyChangedComponent implements OnInit {
   }
 
   toUserRating(ratingChange : MovieChange<MovieRating>) : UserRating {
-    let user = MovieUsersService.findUser(ratingChange.change.user, this.users);
     return new UserRating(
-      user == null ? 'N/A' : user.displayName,
+      this.fetchUserName(ratingChange),
       ratingChange.change
     );
+  }
+
+  fetchUserName(anyChange : MovieChange<MovieRating|MovieComment>) : string {
+    let user = MovieUsersService.findUser(anyChange.change.user, this.users);
+    return user == null ? 'N/A' : user.displayName;
   }
 
   private fetchPage(page : number) {

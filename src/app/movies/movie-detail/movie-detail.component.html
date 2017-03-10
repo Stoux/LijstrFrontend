@@ -38,8 +38,14 @@
 <div class="row">
   <div class="col-md-6">
     <lijstr-movie-timeline
+      #timeline
       [availableUsers]="movieUsers"
       [movie]="movie">
     </lijstr-movie-timeline>
+  </div>
+
+  <div class="col-md-6" *ngIf="isMovieUser">
+    <lijstr-movie-comment-form [movie]="movie" (newComment)="timeline.refresh()">
+    </lijstr-movie-comment-form>
   </div>
 </div>

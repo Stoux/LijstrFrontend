@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit()" #commentForm="ngForm" [class.hidden]="submitting || error">
+
+  <div class="form-group">
+    <label for="comment">Opmerking</label>
+    <textarea id="comment" name="comment" class="form-control" rows="5" required minlength="3"
+              [(ngModel)]="comment">
+        </textarea>
+  </div>
+
+  <button class="btn btn-success pull-right" type="submit"
+          [disabled]="submitting || !commentForm.form.valid">
+    Plaatsen
+  </button>
+
+  <br class="clearfix" />
+
+</form>
+
+<div class="alert alert-danger" *ngIf="error">
+  {{error.toString()}}
+</div>
+
+<lijstr-loading *ngIf="submitting"></lijstr-loading>

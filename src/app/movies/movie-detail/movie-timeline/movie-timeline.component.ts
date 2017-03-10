@@ -77,8 +77,11 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
     return obj instanceof MovieCreation;
   }
 
+  refresh() {
+    this.fetch();
+  }
+
   private fetch() {
-    console.log('Fetching!');
     this.fetching = true;
     const currentMovie = this.movie;
     this.detailService.getMovieTimeline(currentMovie.id).subscribe(

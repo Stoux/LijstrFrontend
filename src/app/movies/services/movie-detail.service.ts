@@ -61,4 +61,14 @@ export class MovieDetailService {
     return this.api.put('/movies/' + movieId + '/meta', meta);
   }
 
+  /**
+   * Post a new comment on a movie.
+   * @param movieId The movie ID
+   * @param comment The comment
+   * @returns {Observable<any>} ID of the comment
+   */
+  placeComment(movieId : number, comment : string) : Observable<any> {
+    return this.api.post('/movies/' + movieId + '/comments', {'comment' : comment});
+  }
+
 }

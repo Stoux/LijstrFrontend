@@ -11,15 +11,18 @@
     </h5>
     <h5 *ngIf="result.movie">
       {{result.movie.title}}
-      <small>- {{result.change.lastModified | date:"dd-MM-yyyy"}}</small>
+      <small>@ {{result.change.lastModified | date:"dd-MM-yyyy HH:mm"}}</small>
     </h5>
     <lijstr-movie-single-rating *ngIf="result.change?.latest"
       [userRating]="toUserRating(result)" [ratingsService]="ratingsService">
     </lijstr-movie-single-rating>
 
-    <p *ngIf="result.movie && !result.change.latest">
-      {{result | json}}
-    </p>
+    <blockquote *ngIf="result.movie && !result.change.latest">
+      <p>{{result.change.comment}}</p>
+      <footer>
+        <strong>{{fetchUserName(result)}}</strong>
+      </footer>
+    </blockquote>
   </li>
   <li *ngIf="loading">
     <lijstr-loading></lijstr-loading>
