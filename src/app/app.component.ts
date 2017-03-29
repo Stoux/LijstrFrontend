@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
+import { Component, HostListener, OnInit } from "@angular/core";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { TitleService } from "./core/services/title.service";
+import { AuthService } from "./core/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router : Router,
               private activatedRoute : ActivatedRoute,
+              private authService : AuthService,
               private titleApi : TitleService) {
   }
 
@@ -43,6 +45,13 @@ export class AppComponent implements OnInit {
           }
         }
       });
+  }
+
+  @HostListener('document:visibilitychange', ['$event'])
+  onVisibilityChange(event : any) : void {
+    if (event.target.visibilityState == 'visible') {
+      this.authService.validateToken();
+    }
   }
 
 }

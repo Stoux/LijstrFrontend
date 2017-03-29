@@ -24,28 +24,7 @@ export class AuthService {
     });
 
     let foundToken = AuthService.retrieveStoredToken();
-    if (foundToken == null) {
-      this.tokenSubject.next(false);
-      return;
-    }
-
-    //Check if still valid
-    let time = new Date().getTime();
-    if (foundToken.validTill < time) {
-      this.removeToken();
-      return;
-    }
-
-    //Check if access expired
-    if (foundToken.accessTill - AuthService.REFRESH_BUFFER < time) {
-      this.refreshToken(foundToken.token);
-      return;
-    }
-
-    //Still has access
-    this.authToken = foundToken;
-    this.tokenSubject.next(true);
-    this.startRefreshTimer();
+    this.validateFoundToken(foundToken, true);
   }
 
   /**
@@ -71,6 +50,46 @@ export class AuthService {
   useNewToken(authToken : AuthenticationToken) {
     this.newToken(authToken);
   }
+
+  /**
+   * Check if the current token (if any) is still valid.
+   */
+  validateToken() {
+    if (this.authToken == null) {
+      return;
+    }
+
+    this.clearRefreshTimer();
+    this.validateFoundToken(this.authToken, false);
+  }
+
+  private validateFoundToken(foundToken : AuthenticationToken, notifySubject : boolean = false) {
+    if (foundToken == null) {
+      this.tokenSubject.next(false);
+      return;
+    }
+
+    //Check if still valid
+    let time = new Date().getTime();
+    if (foundToken.validTill < time) {
+      this.removeToken();
+      return;
+    }
+
+    //Check if access expired
+    if (foundToken.accessTill - AuthService.REFRESH_BUFFER < time) {
+      this.refreshToken(foundToken.token);
+      return;
+    }
+
+    //Still has access
+    this.authToken = foundToken;
+    if (notifySubject) {
+      this.tokenSubject.next(true);
+    }
+    this.startRefreshTimer();
+  }
+
 
   private refreshToken(currentToken : string) {
     let refreshRequest = new RefreshRequest(currentToken);
@@ -98,11 +117,15 @@ export class AuthService {
     this.startRefreshTimer();
   }
 
-  private startRefreshTimer() {
+  private clearRefreshTimer() {
     if (this.refreshTimer != null) {
       clearTimeout(this.refreshTimer);
       this.refreshTimer = null;
     }
+  }
+
+  private startRefreshTimer() {
+    this.clearRefreshTimer();
 
     let timeLeft = this.authToken.accessTill - AuthService.REFRESH_BUFFER - (new Date().getTime());
     console.log("Refreshing token in " + (timeLeft / 1000) + " seconds.");
