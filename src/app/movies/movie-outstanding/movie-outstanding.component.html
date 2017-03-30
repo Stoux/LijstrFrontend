@@ -12,6 +12,8 @@
     <lijstr-movie-watchlist-icon class="pull-right"
       [movie]="currentMovie" [showP]="false">
     </lijstr-movie-watchlist-icon>
+    <lijstr-youtube-viewer class="pull-right" [youtubeId]="currentMovie.youtubeUrl">
+    </lijstr-youtube-viewer>
   </div>
   <div class="col-sm-6 col-sm-push-6">
     <lijstr-movie-rating [movie]="currentMovie"

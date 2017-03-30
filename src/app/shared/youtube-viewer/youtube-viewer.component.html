@@ -1,0 +1,15 @@
+<a class="btn btn-primary" title="Open trailer" target="_blank"
+   *ngIf="showButton" (click)="show($event)" [href]="youtubeUrl">
+  <span class="glyphicon glyphicon-hd-video"></span>
+</a>
+
+<div class="cover" *ngIf="showVideo">
+  <iframe id="ytplayer" type="text/html" width="100%" height="100%"
+          [src]="youtubeUrl"
+          frameborder="0">
+  </iframe>
+
+  <button class="btn btn-danger exit-button" (click)="hide()">
+    X
+  </button>
+</div>
