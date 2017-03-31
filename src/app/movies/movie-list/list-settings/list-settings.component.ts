@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from "@angular/core";
 import { User } from "../../../core/models/user";
 import { MovieUsersService } from "../../services/movie-users.service";
-import { MovieRating } from "../../models/ratings";
 
 class OrderedColumn {
   constructor(public prop : string,
@@ -104,9 +103,9 @@ export class ListSettingsComponent implements OnInit {
   private setAvailableUsers(users : User[]) {
     this.availableUsers = [];
     for (let user of users) {
-      this.availableUsers.push( //TODO: Add comparator
+      this.availableUsers.push(
         {name: user.displayName, prop: "latestRatings." + user.id, flexGrow: 1,
-          cellTemplate: this.userTemplateRef, comparator: MovieRating.comparator.bind(this)}
+          cellTemplate: this.userTemplateRef}
       );
     }
     this.enabledUsers = ListSettingsComponent.getEnabled(

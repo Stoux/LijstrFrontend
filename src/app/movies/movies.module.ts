@@ -36,6 +36,7 @@ import { ListFilterComponent } from './movie-list/list-filter/list-filter.compon
 import { RecentlyChangedComponent } from './movie-stats/recently-added/recently-changed.component';
 import { MovieSingleRatingComponent } from './movie-detail/movie-ratings/movie-single-rating/movie-single-rating.component';
 import { MovieCommentFormComponent } from './movie-detail/movie-comment-form/movie-comment-form.component';
+import { ListPagerComponent } from './movie-list/list-pager/list-pager.component';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { MovieCommentFormComponent } from './movie-detail/movie-comment-form/mov
     MovieTimelineNewMovieComponent,
     RecentlyChangedComponent,
     MovieSingleRatingComponent,
-    MovieCommentFormComponent
+    MovieCommentFormComponent,
+    ListPagerComponent
   ],
   providers: [
     MovieUserGuard,

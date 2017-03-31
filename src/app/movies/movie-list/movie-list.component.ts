@@ -6,18 +6,22 @@ import { LijstrException } from "../../core/exceptions";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ShortRating } from "../models/ratings";
 import { DecimalPipe } from "@angular/common";
+import { DatatableComponent } from "@swimlane/ngx-datatable";
+import { ListPagerComponent, RowCaller } from "./list-pager/list-pager.component";
 
 @Component({
   selector: 'lijstr-movie-list',
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent implements OnInit {
+export class MovieListComponent implements OnInit, RowCaller {
 
   @ViewChild('valueCell') valueCell : TemplateRef<any>;
   @ViewChild('imdbCell') imdbCell : TemplateRef<any>;
   @ViewChild('metacriticCell') metacriticCell : TemplateRef<any>;
   @ViewChild('userCell') userCell;
+  @ViewChild('movieList') listTable : DatatableComponent;
+  @ViewChild('pager') listPager : ListPagerComponent;
 
   settingsEditable : boolean;
   requiredColumns = [];
@@ -49,7 +53,7 @@ export class MovieListComponent implements OnInit {
   }
 
   onNewList(summaries : MovieSummary[]) {
-    this.summaries = summaries;
+    this.summaries = this.listPager.sort(summaries);
   }
 
   setColumns(columns) {
@@ -80,6 +84,23 @@ export class MovieListComponent implements OnInit {
       case 2:
         return "Ja?";
     }
+  }
+
+
+  goToRow(row : number) : void {
+    //Calculate the page
+    const bodyComponent = this.listTable.bodyComponent;
+    console.log(bodyComponent.pageSize);
+    bodyComponent.updateOffsetY(this.listTable.offset + 1);
+  }
+
+  onSort(event) {
+    const sort = event.sorts[0];
+    this.summaries = this.listPager.onSort(sort.prop, sort.dir, this.summaries);
+  }
+
+  getCaller() : RowCaller {
+    return this;
   }
 
 }
