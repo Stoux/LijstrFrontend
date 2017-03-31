@@ -1,0 +1,9 @@
+<p *ngIf="keys == null || keys.length == 0">
+  <span class="glyphicon glyphicon-sunglasses"></span>
+</p>
+
+<ul class="list-inline keys" *ngIf="keys != null && keys.length > 0">
+  <li *ngFor="let key of keys" (click)="goToKey(key)">
+    {{key}}
+  </li>
+</ul>
