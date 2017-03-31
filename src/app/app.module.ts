@@ -1,6 +1,6 @@
 import * as Raven from "raven-js";
 import { BrowserModule, Title } from "@angular/platform-browser";
-import { ErrorHandler, NgModule } from "@angular/core";
+import { ErrorHandler, NgModule, Provider } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from "./core/core.module";
@@ -9,12 +9,17 @@ import { CollapseModule } from "ng2-bootstrap";
 import { TitleService } from "./core/services/title.service";
 import { environment } from "../environments/environment";
 
-Raven.config(environment.sentryKey).install();
-
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err : any) : void {
     Raven.captureException(err.originalError || err);
   }
+}
+
+//Enable sentry if there's a key available
+let errorProvider : Provider[] = [];
+if (environment.sentryKey != null) {
+  Raven.config(environment.sentryKey).install();
+  errorProvider.push({provide: ErrorHandler, useClass: RavenErrorHandler})
 }
 
 @NgModule({
@@ -28,11 +33,10 @@ export class RavenErrorHandler implements ErrorHandler {
     AppRoutingModule,
     CollapseModule.forRoot()
   ],
-  providers: [
+  providers: errorProvider.concat([
     Title, //Required to wrap
-    TitleService,
-    {provide: ErrorHandler, useClass: RavenErrorHandler}
-  ],
+    TitleService
+  ]),
   bootstrap: [AppComponent]
 })
 export class AppModule {

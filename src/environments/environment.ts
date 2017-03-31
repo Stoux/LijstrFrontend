@@ -7,12 +7,12 @@
 //   production: false,
 //   endpoint: '192.168.2.2:8080',
 //   endpointSSL: false,
-//   sentryKey : 'https://d560f6e5b3884e61a0aed1920c1f841d@sentry.io/153802'
+//   sentryKey : null
 // };
 
 export const environment = {
   production: false,
   endpoint: 'api.lijstr.nl',
   endpointSSL: true,
-  sentryKey : 'https://d560f6e5b3884e61a0aed1920c1f841d@sentry.io/153802'
+  sentryKey : null
 };
