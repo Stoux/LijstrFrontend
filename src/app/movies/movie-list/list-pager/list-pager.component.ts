@@ -33,13 +33,13 @@ export class ListPagerComponent implements OnInit {
   sort(rows : MovieSummary[]) : MovieSummary[] {
     if (this.onProp == null) {
       this.onProp = 'title';
-      this.direction = 'desc';
+      this.direction = 'asc';
     }
 
     let result;
     if (this.onProp == 'title') {
       result = ListPagerSorting.sortRows(
-        rows, ListPagerSorting.titleSort, this.onProp, this.direction == 'asc'
+        rows, ListPagerSorting.titleSort, this.onProp, this.direction == 'desc'
       );
     } else if (this.isNumberProp()) {
       result = ListPagerSorting.sortRows(
