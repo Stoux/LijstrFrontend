@@ -1,9 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from "@angular/core";
-import { MovieListService } from "../services/movie-list.service";
-import { Subscription } from "rxjs";
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { MovieSummary } from "../models/movie";
-import { LijstrException } from "../../core/exceptions";
-import { Router, ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ShortRating } from "../models/ratings";
 import { DecimalPipe } from "@angular/common";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
@@ -86,12 +83,11 @@ export class MovieListComponent implements OnInit, RowCaller {
     }
   }
 
-
   goToRow(row : number) : void {
-    //Calculate the page
+    //TODO: Go to exact row instead of the page where that row is (directly setting the offset somehow?)
     const bodyComponent = this.listTable.bodyComponent;
-    console.log(bodyComponent.pageSize);
-    bodyComponent.updateOffsetY(this.listTable.offset + 1);
+    const page = Math.floor(row / bodyComponent.pageSize);
+    bodyComponent.updateOffsetY(page);
   }
 
   onSort(event) {
