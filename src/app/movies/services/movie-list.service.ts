@@ -10,6 +10,7 @@ export class MovieListService {
 
   private request : Subscription;
   private hasMovies : boolean;
+  private currentUsers : number[];
   private latestList : MovieSummary[];
   private heroesList : ReplaySubject<MovieSummary[]>;
 
@@ -17,6 +18,7 @@ export class MovieListService {
               private ratingsService : MovieRatingsService) {
     this.heroesList = new ReplaySubject(1);
     this.hasMovies = false;
+    this.currentUsers = [];
 
     this.ratingsService.changeFeed().subscribe(
       (change : RatingChange) => {
@@ -24,6 +26,11 @@ export class MovieListService {
         if (!list) {
           return; //Shouldn't happen but async
         }
+
+        if (!(change.rating.user in this.currentUsers)) {
+          return; //Nothing to update if the user isn't in the current list
+        }
+
 
         //Find the movie and update the ratings
         for (let movie of list) {
@@ -39,18 +46,17 @@ export class MovieListService {
 
   /**
    * Get all available movie summaries.
-   * TODO: Modify to return observable
    * TODO: Add filtering options
-   * TODO: Add sorting options
    * @returns {Array} array of summaries
    */
-  getSummaries(forceFetch : boolean = false) : Observable<MovieSummary[]> {
+  getSummaries(withUsers : number[]) : Observable<MovieSummary[]> {
     let response = this.heroesList.asObservable();
-    if ((this.hasMovies && !forceFetch) || this.request != null) {
+    if (this.sameUsers(withUsers) && (this.hasMovies || this.request != null)) {
       return response;
     }
 
-    let getRequest : Observable<MovieSummary[]> = this.api.get('/movies');
+    this.currentUsers = withUsers;
+    let getRequest : Observable<MovieSummary[]> = this.api.get('/movies?users=' + withUsers.join(","));
     this.request = getRequest.finally(() => this.request = null).subscribe(
       summaries => {
         this.changeList(summaries);
@@ -75,6 +81,20 @@ export class MovieListService {
   private changeList(list : MovieSummary[]) : void {
     this.latestList = list;
     this.heroesList.next(list);
+  }
+
+  private sameUsers(users : number[]) {
+    for (let user of users) {
+      if (!(user in this.currentUsers)) {
+        return false;
+      }
+    }
+    for (let user of this.currentUsers) {
+      if (!(user in users)) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }

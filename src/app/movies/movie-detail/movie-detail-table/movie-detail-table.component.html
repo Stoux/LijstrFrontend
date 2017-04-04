@@ -19,6 +19,10 @@
     <td *ngIf="movie.released">{{movie.released | date:"d MMMM yyyy" }}</td>
     <td *ngIf="!movie.released">{{movie.year}}</td>
   </tr>
+  <tr>
+    <th>Looptijd</th>
+    <td>{{getRuntime()}}</td>
+  </tr>
   <tr *ngIf="movie.ageRating">
     <th>Leeftijd rating</th>
     <td>{{movie.ageRating}}</td>

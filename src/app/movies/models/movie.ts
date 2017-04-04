@@ -38,6 +38,7 @@ export class MovieDetail {
 
   year : number;
   released : number;
+  runtime : number;
 
   imdbRating : number;
   imdbVotes : number;

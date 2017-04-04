@@ -10,8 +10,9 @@ import { LijstrException } from "../../../core/exceptions";
   templateUrl: './list-filter.component.html',
   styleUrls: ['./list-filter.component.css']
 })
-export class ListFilterComponent implements OnInit, OnDestroy {
+export class ListFilterComponent implements OnInit, OnChanges, OnDestroy {
 
+  @Input() requestedUsers : number[];
   @Output() filtered = new EventEmitter<MovieSummary[]>();
   @Output() error = new EventEmitter<LijstrException>();
 
@@ -36,8 +37,10 @@ export class ListFilterComponent implements OnInit, OnDestroy {
     this.userSubscription = this.userService.userChangeFeed().subscribe(
       newUser => this.isMovieUser = this.userService.isMovieUser()
     );
+  }
 
-    this.listSubscription = this.listService.getSummaries().subscribe(
+  ngOnChanges(changes : SimpleChanges) : void {
+    this.listSubscription = this.listService.getSummaries(this.requestedUsers).subscribe(
       list => {
         this.summaries = list;
         this.applyFilters();
