@@ -32,4 +32,15 @@ export class MovieDetailTableComponent {
     return this.movie.addedBy;
   }
 
+  getRuntime() : string {
+    let runtime = this.movie.runtime;
+    if (runtime == null) {
+      return "N/A";
+    }
+
+    let hours = Math.floor(runtime / 60);
+    let mins = runtime - (hours * 60);
+    return hours + " uur & " + mins + " minuten (" + runtime + " mins)";
+  }
+
 }

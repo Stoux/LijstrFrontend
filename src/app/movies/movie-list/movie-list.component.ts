@@ -15,7 +15,7 @@ export class MovieListComponent implements OnInit, RowCaller {
 
   @ViewChild('valueCell') valueCell : TemplateRef<any>;
   @ViewChild('imdbCell') imdbCell : TemplateRef<any>;
-  @ViewChild('metacriticCell') metacriticCell : TemplateRef<any>;
+  @ViewChild('numberCell') numberCell : TemplateRef<any>;
   @ViewChild('userCell') userCell;
   @ViewChild('movieList') listTable : DatatableComponent;
   @ViewChild('pager') listPager : ListPagerComponent;
@@ -41,7 +41,8 @@ export class MovieListComponent implements OnInit, RowCaller {
     this.availableColumns = [
       {name: "Jaar", prop: "year", flexGrow: 1, cellTemplate: this.valueCell},
       {name: "IMDB", prop: "imdbRating", flexGrow: 1, cellTemplate: this.imdbCell},
-      {name: "MC", prop: "metacriticScore", flexGrow: 1, cellTemplate: this.metacriticCell}
+      {name: "MC", prop: "metacriticScore", flexGrow: 1, cellTemplate: this.numberCell},
+      {name: "Looptijd", prop: "runtime", flexGrow: 1, cellTemplate: this.numberCell}
     ];
   }
 
