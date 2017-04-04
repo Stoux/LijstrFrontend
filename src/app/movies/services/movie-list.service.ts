@@ -4,6 +4,7 @@ import { ApiService } from "../../core/services/api.service";
 import { ReplaySubject, Observable, Subscription } from "rxjs";
 import { MovieRatingsService } from "./movie-ratings.service";
 import { RatingChange } from "../models/ratings";
+import { Subject } from "rxjs/Subject";
 
 @Injectable()
 export class MovieListService {
@@ -12,11 +13,11 @@ export class MovieListService {
   private hasMovies : boolean;
   private currentUsers : number[];
   private latestList : MovieSummary[];
-  private heroesList : ReplaySubject<MovieSummary[]>;
+  private heroesList : Subject<MovieSummary[]>;
 
   constructor(private api : ApiService,
               private ratingsService : MovieRatingsService) {
-    this.heroesList = new ReplaySubject(1);
+    this.heroesList = new Subject();
     this.hasMovies = false;
     this.currentUsers = [];
 
@@ -52,6 +53,7 @@ export class MovieListService {
   getSummaries(withUsers : number[]) : Observable<MovieSummary[]> {
     let response = this.heroesList.asObservable();
     if (this.sameUsers(withUsers) && (this.hasMovies || this.request != null)) {
+      console.log('Returning same response');
       return response;
     }
 
@@ -79,6 +81,7 @@ export class MovieListService {
   }
 
   private changeList(list : MovieSummary[]) : void {
+    console.log('Changing list');
     this.latestList = list;
     this.heroesList.next(list);
   }

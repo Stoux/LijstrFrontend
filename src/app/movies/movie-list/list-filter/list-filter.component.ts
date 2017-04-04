@@ -27,7 +27,9 @@ export class ListFilterComponent implements OnInit, OnChanges, OnDestroy {
   private isMovieUser : boolean;
 
   constructor(private userService : UserService,
-              private listService : MovieListService) { }
+              private listService : MovieListService) {
+    this.requestedUsers = null;
+  }
 
   ngOnInit() : void {
     this.isMovieUser = false;
@@ -40,8 +42,21 @@ export class ListFilterComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes : SimpleChanges) : void {
+    console.log('lf-ngOnChanges');
+    console.log(changes);
+    if (this.requestedUsers == null) {
+      return;
+    }
+
+    if (this.listSubscription != null) {
+      this.listSubscription.unsubscribe();
+    }
+
+    console.log('lf-ngOnChanges-ru');
+    const wot = new Date().getTime();
     this.listSubscription = this.listService.getSummaries(this.requestedUsers).subscribe(
       list => {
+        console.log('lf-ngOnChanges-li-' + wot);
         this.summaries = list;
         this.applyFilters();
       },

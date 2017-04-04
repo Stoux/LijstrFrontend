@@ -51,9 +51,8 @@ export class ListSettingsComponent implements OnInit {
       );
     } else {
       this.setAvailableUsers(users);
+      this.emit();
     }
-
-    this.emit();
   }
 
   private static getEnabled(key : string, columns : {}[], defaults : OrderedColumn[] = []) : OrderedColumn[] {

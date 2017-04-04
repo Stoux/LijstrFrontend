@@ -20,6 +20,7 @@ export class MovieListComponent implements OnInit, RowCaller {
   @ViewChild('movieList') listTable : DatatableComponent;
   @ViewChild('pager') listPager : ListPagerComponent;
 
+  reloadingColumns : boolean;
   settingsEditable : boolean;
   requiredColumns = [];
   availableColumns = [];
@@ -34,11 +35,13 @@ export class MovieListComponent implements OnInit, RowCaller {
   constructor(private route : ActivatedRoute,
               private router : Router) {
     this.numberPipe = new DecimalPipe('en-US');
-    this.requestedUsers = [];
+    this.requestedUsers = null;
   }
 
   ngOnInit() {
     this.settingsEditable = false;
+    this.reloadingColumns = true;
+    console.log('ml-ngOnInit');
     this.requiredColumns = [{name: "Titel", prop: "title", flexGrow: 4, cellTemplate: this.valueCell}];
     this.availableColumns = [
       {name: "Jaar", prop: "year", flexGrow: 1, cellTemplate: this.valueCell},
@@ -53,11 +56,15 @@ export class MovieListComponent implements OnInit, RowCaller {
   }
 
   onNewList(summaries : MovieSummary[]) {
+    console.log('onNewList');
     this.summaries = this.listPager.sort(summaries);
+    this.reloadingColumns = false;
   }
 
   setColumns(columns) {
+    console.log('setColumns');
     this.columns = columns;
+    this.reloadingColumns = true;
     this.requestedUsers = [];
     for (let column of columns) {
       if (column.prop.startsWith('latestRatings.')) {
@@ -72,7 +79,7 @@ export class MovieListComponent implements OnInit, RowCaller {
 
   representativeRating(rating : ShortRating) : string {
     if (!rating) {
-      return "N/A";
+      return this.reloadingColumns ? "..." : "N/A";
     }
 
     switch (rating.seen) {
