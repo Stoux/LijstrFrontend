@@ -32,6 +32,7 @@ export class MovieStats {
 
   averageImdb : number;
   averageMetacritic : number;
+  averageRuntime : number;
 
   /**
    * Map with years (key) -> number of movies in that year.
