@@ -21,7 +21,7 @@ export class MovieRequestComponent implements OnInit, OnDestroy {
   approving : {id : number, title: string, error : LijstrException, finished: boolean}[];
   submitting : boolean;
 
-  private isMod : boolean;
+  isMod : boolean;
   private userFeed : Subscription;
 
   constructor(private userService : UserService,

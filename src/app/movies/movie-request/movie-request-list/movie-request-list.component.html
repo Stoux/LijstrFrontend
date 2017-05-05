@@ -1,14 +1,14 @@
-<template let-value="value" #dateCell>
+<ng-template let-value="value" #dateCell>
   {{value | date:"HH:mm:ss - d MMM"}}
-</template>
-<template let-value="value" let-row="row" #titleCell>
+</ng-template>
+<ng-template let-value="value" let-row="row" #titleCell>
   <a href="http://www.imdb.com/title/{{row.imdbId}}/" target="_blank">
     {{value}} <small>({{row.imdbId}})</small>
   </a>
-</template>
-<template let-value="value" #userCell>
+</ng-template>
+<ng-template let-value="value" #userCell>
   {{getUserDisplayName(value)}}
-</template>
+</ng-template>
 
 <ngx-datatable
   id="request-list"

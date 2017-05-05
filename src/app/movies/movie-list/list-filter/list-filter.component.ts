@@ -15,7 +15,7 @@ export class ListFilterComponent implements OnInit, OnDestroy {
   @Output() filtered = new EventEmitter<MovieSummary[]>();
   @Output() error = new EventEmitter<LijstrException>();
 
-  private summaries : MovieSummary[];
+  summaries : MovieSummary[];
   private filter : string;
 
   private wantToWatch : boolean;
@@ -23,7 +23,7 @@ export class ListFilterComponent implements OnInit, OnDestroy {
 
   private listSubscription : Subscription;
   private userSubscription : Subscription;
-  private isMovieUser : boolean;
+  isMovieUser : boolean;
 
   constructor(private userService : UserService,
               private listService : MovieListService) { }

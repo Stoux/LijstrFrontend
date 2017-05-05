@@ -19,7 +19,7 @@ export class ListPagerComponent implements OnInit {
   private onProp : string;
   private direction : string;
 
-  private keys : string[];
+  keys : string[];
   private keyFoundAt : Map<string, number>;
 
   constructor() {
