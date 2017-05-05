@@ -1,7 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0-beta.25.5",
     "name": "frontend"
   },
   "apps": [
@@ -17,9 +16,8 @@
       "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
-	  "testTsconfig": "tsconfig.spec.json",
+      "testTsconfig": "tsconfig.spec.json",
       "prefix": "lijstr",
-      "mobile": false,
       "styles": [
         "styles.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -28,15 +26,13 @@
         "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css"
       ],
       "scripts": [],
-	  "environmentSource": "environments/environment.ts",
+      "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
     }
   ],
-  "addons": [],
-  "packages": [],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
@@ -60,9 +56,6 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {
-      "inlineTemplate": false,
-      "spec": true
-    }
+    "component": {}
   }
 }

@@ -5,7 +5,7 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from "./core/core.module";
 import { NavigationComponent } from "./core/navigation/navigation.component";
-import { CollapseModule } from "ng2-bootstrap";
+import { CollapseModule } from "ngx-bootstrap";
 import { TitleService } from "./core/services/title.service";
 import { environment } from "../environments/environment";
 
