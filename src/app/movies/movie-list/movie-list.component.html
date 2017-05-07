@@ -14,19 +14,19 @@
 <lijstr-list-pager #pager [caller]="getCaller()"></lijstr-list-pager>
 
 <!-- DataTable cell templates -->
-<template let-value="value" #valueCell>
+<ng-template let-value="value" #valueCell>
   {{value}}
-</template>
-<template let-value="value" #imdbCell>
+</ng-template>
+<ng-template let-value="value" #imdbCell>
   {{value ? (value | number:"1.1-1") : "N/A" }}
-</template>
-<template let-value="value" #numberCell>
+</ng-template>
+<ng-template let-value="value" #numberCell>
   {{value ? value : "N/A"}}
-</template>
-<template let-value="value" #userCell>
+</ng-template>
+<ng-template let-value="value" #userCell>
   <u *ngIf="value && value.comment">{{representativeRating(value)}}</u>
   <ng-container *ngIf="!value || !value.comment">{{representativeRating(value)}}</ng-container>
-</template>
+</ng-template>
 
 <ngx-datatable
   #movieList

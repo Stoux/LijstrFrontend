@@ -21,7 +21,7 @@ export class MovieRatingComponent implements OnChanges {
 
   @Input() private movie : MovieDetail;
   @Input() private findOldRatings : boolean; //Should try to find old ratings
-  @Input() private showNotSeenButton : boolean;
+  @Input() showNotSeenButton : boolean;
   @Output() private ratingChanged : EventEmitter<MovieRating>;
 
   submitting : boolean;
