@@ -12,14 +12,13 @@ import { environment } from "../environments/environment";
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err : any) : void {
     Raven.captureException(err.originalError || err);
+    console.error(err.originalError || err)
   }
 }
 
 //Enable sentry if there's a key available
-let errorProvider : Provider[] = [];
 if (environment.sentryKey != null) {
   Raven.config(environment.sentryKey).install();
-  errorProvider.push({provide: ErrorHandler, useClass: RavenErrorHandler})
 }
 
 @NgModule({
@@ -33,10 +32,11 @@ if (environment.sentryKey != null) {
     AppRoutingModule,
     CollapseModule.forRoot()
   ],
-  providers: errorProvider.concat([
+  providers: [
+    {provide: ErrorHandler, useClass: RavenErrorHandler},
     Title, //Required to wrap
     TitleService
-  ]),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
