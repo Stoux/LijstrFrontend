@@ -85,10 +85,9 @@ export class MovieListComponent implements OnInit, RowCaller {
   }
 
   goToRow(row : number) : void {
-    //TODO: Go to exact row instead of the page where that row is (directly setting the offset somehow?)
     const bodyComponent = this.listTable.bodyComponent;
-    const page = Math.floor(row / bodyComponent.pageSize);
-    bodyComponent.updateOffsetY(page);
+    const offset = bodyComponent.rowHeightsCache.query(row - 1);
+    bodyComponent.scroller.setOffset(offset);
   }
 
   onSort(event) {
