@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { UserRating } from "../../../models/ratings";
+import { UserRating } from "../../../../shared/models/ratings";
 import { MovieRatingsService } from "../../../services/movie-ratings.service";
 
 @Component({

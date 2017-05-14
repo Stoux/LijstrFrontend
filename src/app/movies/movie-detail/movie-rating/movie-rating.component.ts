@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, EventEmitter, Output } from "@angular/core";
 import { MovieDetail } from "../../models/movie";
-import { Seen, MovieRating } from "../../models/ratings";
+import { Seen, MovieRating } from "../../../shared/models/ratings";
 import { DataWrapper } from "../../../core/models/common";
 import { LijstrException } from "../../../core/exceptions";
 import { NgForm } from "@angular/forms";

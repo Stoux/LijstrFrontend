@@ -104,7 +104,7 @@ export class ListSettingsComponent implements OnInit {
     this.availableUsers = [];
     for (let user of users) {
       this.availableUsers.push(
-        {name: user.displayName, prop: "latestRatings." + user.id, flexGrow: 1,
+        {name: user.displayName, prop: "latestMovieRatings." + user.id, flexGrow: 1,
           cellTemplate: this.userTemplateRef}
       );
     }

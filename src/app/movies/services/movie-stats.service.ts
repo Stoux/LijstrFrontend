@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { MovieStats, MovieChange } from "../models/movie-stats";
 import { PageResult } from "../../core/models/common";
 import { MovieSummary } from "../models/movie";
-import { ShortRating, MovieRating } from "../models/ratings";
+import { ShortRating, MovieRating } from "../../shared/models/ratings";
 import { MovieComment } from "../models/timeline";
 
 @Injectable()

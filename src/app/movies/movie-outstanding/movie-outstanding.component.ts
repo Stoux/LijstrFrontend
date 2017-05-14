@@ -5,7 +5,7 @@ import { LijstrException } from "../../core/exceptions";
 import { FullUser, User } from "../../core/models/user";
 import { UserService } from "../../core/services/user.service";
 import { Subscription } from "rxjs";
-import { MovieRating } from "../models/ratings";
+import { MovieRating } from "../../shared/models/ratings";
 import { OldSiteService, OldSiteRating } from "./old-site.service";
 import { MovieUsersService } from "../services/movie-users.service";
 

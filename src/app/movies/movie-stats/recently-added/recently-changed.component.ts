@@ -6,7 +6,7 @@ import { PageResult } from "../../../core/models/common";
 import { Observable } from "rxjs";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
 import { MovieChange } from "../../models/movie-stats";
-import { MovieRating, UserRating } from "../../models/ratings";
+import { MovieRating, UserRating } from "../../../shared/models/ratings";
 import { MovieComment } from "../../models/timeline";
 
 @Component({

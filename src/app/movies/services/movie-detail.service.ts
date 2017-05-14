@@ -3,7 +3,7 @@ import { ApiService } from "../../core/services/api.service";
 import { Observable } from "rxjs";
 import { MovieDetail, MovieUserMeta } from "../models/movie";
 import { DataWrapper } from "../../core/models/common";
-import { MovieRating } from "../models/ratings";
+import { MovieRating } from "../../shared/models/ratings";
 import { MovieComment } from "../models/timeline";
 import { Response } from "@angular/http";
 

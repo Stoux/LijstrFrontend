@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { User } from "../../../core/models/user";
-import { ShortRating, Seen, UserRating } from "../../models/ratings";
+import { ShortRating, Seen, UserRating } from "../../../shared/models/ratings";
 import { DecimalPipe } from "@angular/common";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
 

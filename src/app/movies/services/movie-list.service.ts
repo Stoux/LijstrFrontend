@@ -3,7 +3,7 @@ import { MovieSummary } from "../models/movie";
 import { ApiService } from "../../core/services/api.service";
 import { ReplaySubject, Observable, Subscription } from "rxjs";
 import { MovieRatingsService } from "./movie-ratings.service";
-import { RatingChange } from "../models/ratings";
+import { RatingChange } from "../../shared/models/ratings";
 
 @Injectable()
 export class MovieListService {

@@ -1,4 +1,4 @@
-import { ShortRating } from "./ratings";
+import { ShortRating } from "../../shared/models/ratings";
 
 /**
  * Payload for adding a new movie.

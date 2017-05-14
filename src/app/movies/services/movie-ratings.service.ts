@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ShortRating, RatingChange, MovieRating, Seen } from "../models/ratings";
+import { ShortRating, RatingChange, MovieRating, Seen } from "../../shared/models/ratings";
 import { Subject, Observable } from "rxjs";
 import { DataWrapper } from "../../core/models/common";
 import { ApiService } from "../../core/services/api.service";

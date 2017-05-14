@@ -5,7 +5,7 @@ import { FullUser, User } from "../../core/models/user";
 import { Subscription } from "rxjs";
 import { UserService } from "../../core/services/user.service";
 import { MovieUsersService } from "../services/movie-users.service";
-import { RatingChange } from "../models/ratings";
+import { RatingChange } from "../../shared/models/ratings";
 import { MovieRatingsService } from "../services/movie-ratings.service";
 
 @Component({

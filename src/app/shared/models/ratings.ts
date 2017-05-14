@@ -3,7 +3,8 @@ import { Serializable } from "../../core/models/common";
 export enum Seen {
   YES = 0,
   NO = 1,
-  UNKNOWN = 2
+  UNKNOWN = 2,
+  TELEVISION = 3
 }
 
 export class RatingChange {

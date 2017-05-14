@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { MovieDetail } from "../../models/movie";
-import { MovieRating } from "../../models/ratings";
+import { MovieRating } from "../../../shared/models/ratings";
 import { MovieComment, MovieCreation } from "../../models/timeline";
 import { MovieDetailService } from "../../services/movie-detail.service";
 import { LijstrException } from "../../../core/exceptions";
