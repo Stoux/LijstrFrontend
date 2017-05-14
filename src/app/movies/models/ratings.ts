@@ -34,7 +34,7 @@ export class MovieRating extends ShortRating {
   id : number;
   created : number;
   lastModified : number;
-  lastest : boolean;
+  latest : boolean;
 
   static newRating() : MovieRating {
     let r = new MovieRating();
