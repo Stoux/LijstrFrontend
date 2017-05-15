@@ -6,7 +6,7 @@ import { TargetSummary } from "../models/target";
 import { AbstractListPager, RowCaller } from "./list-modifier.components";
 import { Seen, ShortRating } from "../../shared/models/ratings";
 
-export abstract class ListComponent<SR extends ShortRating, ListPager extends AbstractListPager<Item>, Item extends TargetSummary<SR>> implements OnInit, RowCaller {
+export abstract class AbstractListComponent<SR extends ShortRating, ListPager extends AbstractListPager<Item>, Item extends TargetSummary<SR>> implements OnInit, RowCaller {
 
   @ViewChild('listTable') listTable : DatatableComponent;
   @ViewChild('pager') listPager : ListPager;
@@ -100,6 +100,7 @@ export abstract class ListComponent<SR extends ShortRating, ListPager extends Ab
   }
 
   protected abstract getRequiredColumns() : any[];
+
   protected abstract getAvailableColumns() : any[];
 
 }

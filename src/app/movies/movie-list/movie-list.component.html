@@ -61,13 +61,13 @@
         </button>
       </div>
       <div class="modal-body">
-        <lijstr-list-settings #listSettings
-                              [userTemplateRef]="userCell"
-                              [requiredColumns]="requiredColumns"
-                              [availableColumns]="availableColumns"
-                              (orderedColumns)="setColumns($event)"
-                              (editable)="setSettingsEditable($event)">
-        </lijstr-list-settings>
+        <lijstr-movie-list-settings #listSettings
+                                    [userTemplateRef]="userCell"
+                                    [requiredColumns]="requiredColumns"
+                                    [availableColumns]="availableColumns"
+                                    (orderedColumns)="setColumns($event)"
+                                    (editable)="setSettingsEditable($event)">
+        </lijstr-movie-list-settings>
       </div>
     </div>
   </div>

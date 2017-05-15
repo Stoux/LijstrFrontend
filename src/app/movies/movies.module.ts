@@ -10,7 +10,7 @@ import { MoviesComponent } from "./movies.component";
 import { MovieDetailService } from "./services/movie-detail.service";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { ModalModule } from "ngx-bootstrap";
-import { ListSettingsComponent } from './movie-list/list-settings/list-settings.component';
+import { MovieListSettingsComponent } from './movie-list/list-settings/list-settings.component';
 import { MovieUsersService } from "./services/movie-users.service";
 import { MovieRatingComponent } from './movie-detail/movie-rating/movie-rating.component';
 import { MovieRatingsComponent } from './movie-detail/movie-ratings/movie-ratings.component';
@@ -48,7 +48,7 @@ import { ListPagerComponent } from './movie-list/list-pager/list-pager.component
   declarations: [
     MoviesComponent,
     MovieListComponent,
-    ListSettingsComponent,
+    MovieListSettingsComponent,
     ListFilterComponent,
     MovieStatsComponent,
     MovieSelectComponent,

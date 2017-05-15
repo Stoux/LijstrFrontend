@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ListSettingsComponent } from './list-settings.component';
+import { MovieListSettingsComponent } from './list-settings.component';
 
 describe('ListSettingsComponent', () => {
-  let component: ListSettingsComponent;
-  let fixture: ComponentFixture<ListSettingsComponent>;
+  let component: MovieListSettingsComponent;
+  let fixture: ComponentFixture<MovieListSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListSettingsComponent ]
+      declarations: [ MovieListSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListSettingsComponent);
+    fixture = TestBed.createComponent(MovieListSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

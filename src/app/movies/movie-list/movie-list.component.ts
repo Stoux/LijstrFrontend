@@ -2,7 +2,7 @@ import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { MovieSummary } from "../models/movie";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ShortRating } from "../../shared/models/ratings";
-import { ListComponent } from "../../abs/list/list.components";
+import { AbstractListComponent } from "../../abs/list/list.components";
 import { ListPagerComponent } from "./list-pager/list-pager.component";
 
 @Component({
@@ -10,12 +10,11 @@ import { ListPagerComponent } from "./list-pager/list-pager.component";
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent extends ListComponent<ShortRating, ListPagerComponent, MovieSummary> {
+export class MovieListComponent extends AbstractListComponent<ShortRating, ListPagerComponent, MovieSummary> {
 
   @ViewChild('valueCell') valueCell : TemplateRef<any>;
   @ViewChild('imdbCell') imdbCell : TemplateRef<any>;
   @ViewChild('numberCell') numberCell : TemplateRef<any>;
-  @ViewChild('userCell') userCell;
 
   settingsEditable : boolean;
 

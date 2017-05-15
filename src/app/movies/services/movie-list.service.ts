@@ -4,20 +4,14 @@ import { ApiService } from "../../core/services/api.service";
 import { ReplaySubject, Observable, Subscription } from "rxjs";
 import { MovieRatingsService } from "./movie-ratings.service";
 import { RatingChange } from "../../shared/models/ratings";
-import { SummaryService } from "../../abs/services/target.services";
+import { AbsSummaryService } from "../../abs/services/target.services";
 
 @Injectable()
-export class MovieListService implements SummaryService<MovieSummary> {
+export class MovieListService extends AbsSummaryService<MovieSummary> {
 
-  private request : Subscription;
-  private hasMovies : boolean;
-  private latestList : MovieSummary[];
-  private heroesList : ReplaySubject<MovieSummary[]>;
-
-  constructor(private api : ApiService,
+  constructor(api : ApiService,
               private ratingsService : MovieRatingsService) {
-    this.heroesList = new ReplaySubject(1);
-    this.hasMovies = false;
+    super(api, 'movies');
 
     this.ratingsService.changeFeed().subscribe(
       (change : RatingChange) => {
@@ -38,32 +32,6 @@ export class MovieListService implements SummaryService<MovieSummary> {
     );
   }
 
-  /**
-   * Get all available movie summaries.
-   * TODO: Modify to return observable
-   * TODO: Add filtering options
-   * TODO: Add sorting options
-   * @returns {Array} array of summaries
-   */
-  getSummaries(forceFetch : boolean = false) : Observable<MovieSummary[]> {
-    let response = this.heroesList.asObservable();
-    if ((this.hasMovies && !forceFetch) || this.request != null) {
-      return response;
-    }
-
-    let getRequest : Observable<MovieSummary[]> = this.api.get('/movies');
-    this.request = getRequest.finally(() => this.request = null).subscribe(
-      summaries => {
-        this.changeList(summaries);
-        this.hasMovies = true;
-      },
-      error => {
-        this.heroesList.error(error);
-      }
-    );
-
-    return response;
-  }
 
   /**
    * Get all the IDs of the movies the currently logged in user wants to see.
@@ -71,11 +39,6 @@ export class MovieListService implements SummaryService<MovieSummary> {
    */
   getWantToWatchMovies() : Observable<number[]> {
     return this.api.get('/movies/wantToWatch')
-  }
-
-  private changeList(list : MovieSummary[]) : void {
-    this.latestList = list;
-    this.heroesList.next(list);
   }
 
 }

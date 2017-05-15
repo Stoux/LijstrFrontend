@@ -6,7 +6,7 @@ import { LijstrException } from "../../core/exceptions";
 import { UserService } from "../../core/services/user.service";
 import { Subscription } from "rxjs/Subscription";
 import { User } from "../../core/models/user";
-import { SummaryService } from "../services/target.services";
+import { AbsSummaryService } from "../services/target.services";
 
 export interface RowCaller {
   goToRow(row : number) : void;
@@ -119,7 +119,7 @@ export abstract class AbstractListPager<Item extends TargetSummary<ShortRating>>
 
 }
 
-export abstract class AbstractListFilter<Summary extends TargetSummary<ShortRating>, Service extends SummaryService<Summary>> implements OnInit, OnDestroy {
+export abstract class AbstractListFilter<Summary extends TargetSummary<ShortRating>, Service extends AbsSummaryService<Summary>> implements OnInit, OnDestroy {
 
   @Output() filtered = new EventEmitter<Summary[]>();
   @Output() error = new EventEmitter<LijstrException>();

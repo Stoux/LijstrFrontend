@@ -91,6 +91,22 @@ export class UserService {
   }
 
   /**
+   * Check whether the user has access to the show tools.
+   * @returns {boolean}
+   */
+  isShowUser() : boolean {
+    return this.hasRole('ROLE_SHOW');
+  }
+
+  /**
+   * Check whether the user is a show mod.
+   * @returns {boolean}
+   */
+  isShowMod() : boolean {
+    return this.hasRole('ROLE_SHOW_MOD');
+  }
+
+  /**
    * Observable feed of the current state of the logged in user.
    * @returns {Observable<FullUser>}
    */
