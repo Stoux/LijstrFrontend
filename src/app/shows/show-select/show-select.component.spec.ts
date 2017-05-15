@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { MovieListPagerComponent } from './list-pager.component';
+import { ShowSelectComponent } from "./show-select.component";
 
-describe('ListPagerComponent', () => {
-  let component: MovieListPagerComponent;
-  let fixture: ComponentFixture<MovieListPagerComponent>;
+describe('ShowSelectComponent', () => {
+  let component: ShowSelectComponent;
+  let fixture: ComponentFixture<ShowSelectComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MovieListPagerComponent ]
+      declarations: [ ShowSelectComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MovieListPagerComponent);
+    fixture = TestBed.createComponent(ShowSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

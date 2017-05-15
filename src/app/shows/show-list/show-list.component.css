@@ -1,9 +1,9 @@
-#movie-list {
+#show-list {
   height: 500px;
 }
 
 @media (max-height: 750px) {
-  #movie-list {
+  #show-list {
     height: 250px;
   }
 }

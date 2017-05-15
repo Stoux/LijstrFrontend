@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-xs-4">
-    <h1 class="title">Films</h1>
+    <h1 class="title">Series</h1>
   </div>
   <div class="col-xs-8 list-options">
     <button class="btn btn-primary" [disabled]="!settingsEditable" (click)="settingsModal.show()">
       <span class="glyphicon glyphicon-cog"></span>
     </button>
-    <lijstr-movie-list-filter (filtered)="onNewList($event)">
-    </lijstr-movie-list-filter>
+    <lijstr-show-list-filter (filtered)="onNewList($event)">
+    </lijstr-show-list-filter>
   </div>
 </div>
 
-<lijstr-movie-list-pager #pager [caller]="getCaller()"></lijstr-movie-list-pager>
+<lijstr-show-list-pager #pager [caller]="getCaller()"></lijstr-show-list-pager>
 
 <!-- DataTable cell templates -->
 <ng-template let-value="value" #valueCell>
@@ -20,9 +20,6 @@
 <ng-template let-value="value" #imdbCell>
   {{value ? (value | number:"1.1-1") : "N/A" }}
 </ng-template>
-<ng-template let-value="value" #numberCell>
-  {{value ? value : "N/A"}}
-</ng-template>
 <ng-template let-value="value" #userCell>
   <u *ngIf="value && value.comment">{{representativeRating(value)}}</u>
   <ng-container *ngIf="!value || !value.comment">{{representativeRating(value)}}</ng-container>
@@ -30,7 +27,7 @@
 
 <ngx-datatable
   #listTable
-  id="movie-list"
+  id="show-list"
   class="material striped"
   [columnMode]="'flex'"
   [columns]="columns"
@@ -61,13 +58,13 @@
         </button>
       </div>
       <div class="modal-body">
-        <lijstr-movie-list-settings #listSettings
-                                    [userTemplateRef]="userCell"
-                                    [requiredColumns]="requiredColumns"
-                                    [availableColumns]="availableColumns"
-                                    (orderedColumns)="setColumns($event)"
-                                    (editable)="setSettingsEditable($event)">
-        </lijstr-movie-list-settings>
+        <lijstr-show-list-settings #listSettings
+                              [userTemplateRef]="userCell"
+                              [requiredColumns]="requiredColumns"
+                              [availableColumns]="availableColumns"
+                              (orderedColumns)="setColumns($event)"
+                              (editable)="setSettingsEditable($event)">
+        </lijstr-show-list-settings>
       </div>
     </div>
   </div>

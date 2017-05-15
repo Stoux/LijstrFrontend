@@ -3,8 +3,9 @@ import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DecimalPipe } from "@angular/common";
 import { TargetSummary } from "../models/target";
-import { AbstractListPager, RowCaller } from "./list-modifier.components";
 import { Seen, ShortRating } from "../../shared/models/ratings";
+import { AbstractListPager } from "./pager/list-pager.component";
+import { RowCaller } from "./row-caller";
 
 export abstract class AbstractListComponent<SR extends ShortRating, ListPager extends AbstractListPager<Item>, Item extends TargetSummary<SR>> implements OnInit, RowCaller {
 
@@ -17,6 +18,7 @@ export abstract class AbstractListComponent<SR extends ShortRating, ListPager ex
   public columns = [];
   public selected = [];
   public items : Item[];
+  public settingsEditable : boolean;
 
   protected numberPipe : DecimalPipe;
 
@@ -26,6 +28,7 @@ export abstract class AbstractListComponent<SR extends ShortRating, ListPager ex
   }
 
   ngOnInit() : void {
+    this.settingsEditable = false;
     this.requiredColumns = this.getRequiredColumns();
     this.availableColumns = this.getAvailableColumns();
   }
@@ -93,6 +96,10 @@ export abstract class AbstractListComponent<SR extends ShortRating, ListPager ex
       default:
         return "Ja?";
     }
+  }
+
+  setSettingsEditable(editable : boolean) {
+    this.settingsEditable = editable;
   }
 
   getCaller() : RowCaller {

@@ -8,11 +8,11 @@ import { AbstractListFilter } from "../../../abs/list/list-modifier.components";
 import { User } from "../../../core/models/user";
 
 @Component({
-  selector: 'lijstr-list-filter',
+  selector: 'lijstr-movie-list-filter',
   templateUrl: './list-filter.component.html',
   styleUrls: ['./list-filter.component.css']
 })
-export class ListFilterComponent extends AbstractListFilter<MovieSummary, MovieListService> {
+export class MovieListFilterComponent extends AbstractListFilter<MovieSummary, MovieListService> {
 
   private wantToWatch : boolean;
   private wantToWatchMap : Map<number, number>;

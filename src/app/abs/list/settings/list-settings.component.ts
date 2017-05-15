@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
+import { EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
 import { TargetUsersService } from "../../services/target-users.service";
 import { User } from "../../../core/models/user";
 

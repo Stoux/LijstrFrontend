@@ -3,28 +3,21 @@ import { MovieSummary } from "../models/movie";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ShortRating } from "../../shared/models/ratings";
 import { AbstractListComponent } from "../../abs/list/list.components";
-import { ListPagerComponent } from "./list-pager/list-pager.component";
+import { MovieListPagerComponent } from "./list-pager/list-pager.component";
 
 @Component({
   selector: 'lijstr-movie-list',
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent extends AbstractListComponent<ShortRating, ListPagerComponent, MovieSummary> {
+export class MovieListComponent extends AbstractListComponent<ShortRating, MovieListPagerComponent, MovieSummary> {
 
   @ViewChild('valueCell') valueCell : TemplateRef<any>;
   @ViewChild('imdbCell') imdbCell : TemplateRef<any>;
   @ViewChild('numberCell') numberCell : TemplateRef<any>;
 
-  settingsEditable : boolean;
-
   constructor(route : ActivatedRoute, router : Router) {
     super(route, router);
-  }
-
-  ngOnInit() : void {
-    this.settingsEditable = false;
-    super.ngOnInit();
   }
 
   protected getRequiredColumns() : any[] {
@@ -38,10 +31,6 @@ export class MovieListComponent extends AbstractListComponent<ShortRating, ListP
       {name: "MC", prop: "metacriticScore", flexGrow: 1, cellTemplate: this.numberCell},
       {name: "Looptijd", prop: "runtime", flexGrow: 1, cellTemplate: this.numberCell}
     ];
-  }
-
-  setSettingsEditable(editable : boolean) {
-    this.settingsEditable = editable;
   }
 
 }

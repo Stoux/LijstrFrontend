@@ -32,11 +32,11 @@ import { MovieTimelineRatingComponent } from './movie-detail/movie-timeline/movi
 import { MovieTimelineCommentComponent } from './movie-detail/movie-timeline/movie-timeline-comment/movie-timeline-comment.component';
 import { MovieTimelineNewMovieComponent } from './movie-detail/movie-timeline/movie-timeline-new-movie/movie-timeline-new-movie.component';
 import { MovieStatsService } from "./services/movie-stats.service";
-import { ListFilterComponent } from './movie-list/list-filter/list-filter.component';
+import { MovieListFilterComponent } from './movie-list/list-filter/list-filter.component';
 import { RecentlyChangedComponent } from './movie-stats/recently-added/recently-changed.component';
 import { MovieSingleRatingComponent } from './movie-detail/movie-ratings/movie-single-rating/movie-single-rating.component';
 import { MovieCommentFormComponent } from './movie-detail/movie-comment-form/movie-comment-form.component';
-import { ListPagerComponent } from './movie-list/list-pager/list-pager.component';
+import { MovieListPagerComponent } from './movie-list/list-pager/list-pager.component';
 
 @NgModule({
   imports: [
@@ -49,7 +49,7 @@ import { ListPagerComponent } from './movie-list/list-pager/list-pager.component
     MoviesComponent,
     MovieListComponent,
     MovieListSettingsComponent,
-    ListFilterComponent,
+    MovieListFilterComponent,
     MovieStatsComponent,
     MovieSelectComponent,
     MovieDetailComponent,
@@ -71,7 +71,7 @@ import { ListPagerComponent } from './movie-list/list-pager/list-pager.component
     RecentlyChangedComponent,
     MovieSingleRatingComponent,
     MovieCommentFormComponent,
-    ListPagerComponent
+    MovieListPagerComponent
   ],
   providers: [
     MovieUserGuard,

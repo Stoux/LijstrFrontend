@@ -1,17 +1,17 @@
 import { Component } from "@angular/core";
 import { MovieSummary } from "../../models/movie";
-import { AbstractListPager } from "../../../abs/list/list-modifier.components";
+import { AbstractListPager } from "../../../abs/list/pager/list-pager.component";
 
 @Component({
-  selector: 'lijstr-list-pager',
-  templateUrl: './list-pager.component.html',
-  styleUrls: ['./list-pager.component.css']
+  selector: 'lijstr-movie-list-pager',
+  templateUrl: '../../../abs/list/pager/list-pager.component.html',
+  styleUrls: ['../../../abs/list/pager/list-pager.component.css']
 })
-export class ListPagerComponent extends AbstractListPager<MovieSummary> {
+export class MovieListPagerComponent extends AbstractListPager<MovieSummary> {
 
   protected getKeyMethod(forProp : string) : (item : MovieSummary) => string {
     if (forProp == 'year') {
-      return ListPagerComponent.getYearKey;
+      return MovieListPagerComponent.getYearKey;
     }
     return null;
   }

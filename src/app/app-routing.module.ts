@@ -15,6 +15,10 @@ export const routes : Routes = [
     loadChildren: 'app/movies/movies.module#MoviesModule'
   },
   {
+    path: 'shows',
+    loadChildren: 'app/shows/shows.module#ShowsModule'
+  },
+  {
     path: 'admin',
     loadChildren: 'app/admin/admin.module#AdminModule',
     canActivate: [AdminGuard]
