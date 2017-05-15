@@ -1,6 +1,6 @@
 <!--TODO: Add more filters (genres, languages, etc) -->
 <button class="btn btn-primary" title="Filter op films die je hebt getagged als 'Wil ik zien'"
-        *ngIf="isMovieUser"
+        *ngIf="targetUser"
         [disabled]="wantToWatch && wantToWatchMap == null"
         [ngClass]="{'btn-primary': !wantToWatch, 'btn-danger': wantToWatch && wantToWatchMap == null, 'btn-success': wantToWatch}"
         (click)="toggleWantToWatch()">

@@ -4,59 +4,33 @@ import { MovieListService } from "../../services/movie-list.service";
 import { UserService } from "../../../core/services/user.service";
 import { Subscription } from "rxjs";
 import { LijstrException } from "../../../core/exceptions";
+import { AbstractListFilter } from "../../../abs/list/list-modifier.components";
+import { User } from "../../../core/models/user";
 
 @Component({
   selector: 'lijstr-list-filter',
   templateUrl: './list-filter.component.html',
   styleUrls: ['./list-filter.component.css']
 })
-export class ListFilterComponent implements OnInit, OnDestroy {
-
-  @Output() filtered = new EventEmitter<MovieSummary[]>();
-  @Output() error = new EventEmitter<LijstrException>();
-
-  summaries : MovieSummary[];
-  private filter : string;
+export class ListFilterComponent extends AbstractListFilter<MovieSummary, MovieListService> {
 
   private wantToWatch : boolean;
   private wantToWatchMap : Map<number, number>;
 
-  private listSubscription : Subscription;
-  private userSubscription : Subscription;
-  isMovieUser : boolean;
-
-  constructor(private userService : UserService,
-              private listService : MovieListService) { }
+  constructor(userService : UserService,
+              listService : MovieListService) {
+    super(userService, listService);
+  }
 
   ngOnInit() : void {
-    this.isMovieUser = false;
+    super.ngOnInit();
     this.wantToWatch = false;
     this.wantToWatchMap = null;
-
-    this.userSubscription = this.userService.userChangeFeed().subscribe(
-      newUser => this.isMovieUser = this.userService.isMovieUser()
-    );
-
-    this.listSubscription = this.listService.getSummaries().subscribe(
-      list => {
-        this.summaries = list;
-        this.applyFilters();
-      },
-      error => {
-        this.error.emit(error);
-      }
-    );
   }
 
-  ngOnDestroy() : void {
-    this.userSubscription.unsubscribe();
-    this.listSubscription.unsubscribe();
-  }
 
-  onFilter(value) {
-    value = value.toLowerCase();
-    this.filter = value;
-    this.applyFilters();
+  protected isTargetUser(newUser : User) : boolean {
+    return this.userService.isMovieUser();
   }
 
   toggleWantToWatch() {
@@ -79,27 +53,15 @@ export class ListFilterComponent implements OnInit, OnDestroy {
     }
   }
 
-  private applyFilters() {
-    let result = this.summaries;
 
-    //Apply the text filter (on title)
-    let filter = this.filter;
-    if (filter != null && filter.length > 0) {
-      result = result.filter(function (d) {
-        return d.title.toLowerCase().indexOf(filter) !== -1 || !filter;
-      });
-    }
-
+  protected applyExtraFilters(result : MovieSummary[]) : MovieSummary[] {
     //Apply 'wantToWatch' movies
     if (this.wantToWatch && this.wantToWatchMap != null) {
       const map = this.wantToWatchMap;
-      result = result.filter(function (d) {
+      return result.filter(function (d) {
         return map.has(d.id);
       });
     }
-
-    this.filtered.emit(result);
+    return result;
   }
-
-
 }

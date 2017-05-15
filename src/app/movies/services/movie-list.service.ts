@@ -4,9 +4,10 @@ import { ApiService } from "../../core/services/api.service";
 import { ReplaySubject, Observable, Subscription } from "rxjs";
 import { MovieRatingsService } from "./movie-ratings.service";
 import { RatingChange } from "../../shared/models/ratings";
+import { SummaryService } from "../../abs/services/target.services";
 
 @Injectable()
-export class MovieListService {
+export class MovieListService implements SummaryService<MovieSummary> {
 
   private request : Subscription;
   private hasMovies : boolean;

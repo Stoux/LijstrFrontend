@@ -8,7 +8,7 @@ import { Seen, ShortRating } from "../../shared/models/ratings";
 
 export abstract class ListComponent<SR extends ShortRating, ListPager extends AbstractListPager<Item>, Item extends TargetSummary<SR>> implements OnInit, RowCaller {
 
-  @ViewChild('movieList') listTable : DatatableComponent;
+  @ViewChild('listTable') listTable : DatatableComponent;
   @ViewChild('pager') listPager : ListPager;
 
   public requiredColumns = [];
