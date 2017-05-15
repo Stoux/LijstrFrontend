@@ -6,7 +6,7 @@ import { PageResult } from "../../../core/models/common";
 import { Observable } from "rxjs";
 import { MovieRatingsService } from "../../services/movie-ratings.service";
 import { MovieChange } from "../../models/movie-stats";
-import { MovieRating, UserRating } from "../../../shared/models/ratings";
+import { ExtendedRating, UserRating } from "../../../shared/models/ratings";
 import { MovieComment } from "../../models/timeline";
 
 @Component({
@@ -47,14 +47,14 @@ export class RecentlyChangedComponent implements OnInit {
     }
   }
 
-  toUserRating(ratingChange : MovieChange<MovieRating>) : UserRating {
+  toUserRating(ratingChange : MovieChange<ExtendedRating>) : UserRating {
     return new UserRating(
       this.fetchUserName(ratingChange),
       ratingChange.change
     );
   }
 
-  fetchUserName(anyChange : MovieChange<MovieRating|MovieComment>) : string {
+  fetchUserName(anyChange : MovieChange<ExtendedRating|MovieComment>) : string {
     let user = MovieUsersService.findUser(anyChange.change.user, this.users);
     return user == null ? 'N/A' : user.displayName;
   }

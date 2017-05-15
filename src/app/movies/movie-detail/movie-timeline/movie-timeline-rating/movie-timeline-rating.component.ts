@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { MovieRating } from "../../../../shared/models/ratings";
+import { ExtendedRating } from "../../../../shared/models/ratings";
 import { MovieRatingsService } from "../../../services/movie-ratings.service";
 
 @Component({
@@ -8,7 +8,7 @@ import { MovieRatingsService } from "../../../services/movie-ratings.service";
 })
 export class MovieTimelineRatingComponent {
 
-  @Input() rating : MovieRating;
+  @Input() rating : ExtendedRating;
   @Input() displayName : string;
 
   constructor(private ratingsService : MovieRatingsService) { }

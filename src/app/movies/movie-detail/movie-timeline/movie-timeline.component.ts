@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { MovieDetail } from "../../models/movie";
-import { MovieRating } from "../../../shared/models/ratings";
+import { ExtendedRating } from "../../../shared/models/ratings";
 import { MovieComment, MovieCreation } from "../../models/timeline";
 import { MovieDetailService } from "../../services/movie-detail.service";
 import { LijstrException } from "../../../core/exceptions";
@@ -19,7 +19,7 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
   @Input() availableUsers : User[];
 
   fetching : boolean;
-  timeline : (MovieRating|MovieComment|MovieCreation)[];
+  timeline : (ExtendedRating|MovieComment|MovieCreation)[];
   error : LijstrException;
 
 
@@ -66,7 +66,7 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
   }
 
   isRating(obj : any) : boolean {
-    return obj instanceof MovieRating;
+    return obj instanceof ExtendedRating;
   }
 
   isComment(obj : any) : boolean {

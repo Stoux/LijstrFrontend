@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { MovieStats, MovieChange } from "../models/movie-stats";
 import { PageResult } from "../../core/models/common";
 import { MovieSummary } from "../models/movie";
-import { ShortRating, MovieRating } from "../../shared/models/ratings";
+import { ShortRating, ExtendedRating } from "../../shared/models/ratings";
 import { MovieComment } from "../models/timeline";
 
 @Injectable()
@@ -35,7 +35,7 @@ export class MovieStatsService {
    * @param page The page
    * @returns {Observable<PageResult<MovieChange<ShortRating>>>}
    */
-  getNewRatings(page : number = 1) : Observable<PageResult<MovieChange<MovieRating>>> {
+  getNewRatings(page : number = 1) : Observable<PageResult<MovieChange<ExtendedRating>>> {
     return this.api.get('/movies/stats/newRatings?page=' + page);
   }
 

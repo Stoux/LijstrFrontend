@@ -3,7 +3,7 @@ import { ApiService } from "../../core/services/api.service";
 import { Observable } from "rxjs";
 import { MovieDetail, MovieUserMeta } from "../models/movie";
 import { DataWrapper } from "../../core/models/common";
-import { MovieRating } from "../../shared/models/ratings";
+import { ExtendedRating } from "../../shared/models/ratings";
 import { MovieComment } from "../models/timeline";
 import { Response } from "@angular/http";
 
@@ -25,15 +25,15 @@ export class MovieDetailService {
   /**
    * Get a timeline for a movie.
    * @param id The ID of the movie
-   * @returns {Observable<(MovieRating|MovieComment)[]>} ordered array of ratings and comments
+   * @returns {Observable<(ExtendedRating|MovieComment)[]>} ordered array of ratings and comments
    */
-  getMovieTimeline(id : number) : Observable<(MovieRating|MovieComment)[]> {
+  getMovieTimeline(id : number) : Observable<(ExtendedRating|MovieComment)[]> {
     return this.api.get('/movies/' + id + '/timeline?includeRatings=false')
       .map((items : any[]) => {
-        let result : (MovieRating|MovieComment)[] = [];
+        let result : (ExtendedRating|MovieComment)[] = [];
         for (let item of items) {
           if ('seen' in item) {
-            result.push(new MovieRating().fromJSON(item));
+            result.push(new ExtendedRating().fromJSON(item));
           } else {
             result.push(new MovieComment().fromJSON(item));
           }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ShortRating, RatingChange, MovieRating, Seen } from "../../shared/models/ratings";
+import { ShortRating, RatingChange, ExtendedRating, Seen } from "../../shared/models/ratings";
 import { Subject, Observable } from "rxjs";
 import { DataWrapper } from "../../core/models/common";
 import { ApiService } from "../../core/services/api.service";
@@ -38,9 +38,9 @@ export class MovieRatingsService {
   /**
    * Get the latest rating a user gave for a movie.
    * @param movieId The movie's ID
-   * @returns {Observable<DataWrapper<MovieRating>>} wrapped rating
+   * @returns {Observable<DataWrapper<ExtendedRating>>} wrapped rating
    */
-  getLatestMovieRatingForUser(movieId : number) : Observable<DataWrapper<MovieRating>> {
+  getLatestMovieRatingForUser(movieId : number) : Observable<DataWrapper<ExtendedRating>> {
     return this.api.get('/movies/' + movieId + '/ratings/latest/');
   }
 
@@ -48,9 +48,9 @@ export class MovieRatingsService {
    * Add a rating for the given movie.
    * @param movieId The movie's ID
    * @param rating The rating
-   * @returns {Observable<MovieRating>}
+   * @returns {Observable<ExtendedRating>}
    */
-  addRating(movieId : number, rating : MovieRating) : Observable<MovieRating> {
+  addRating(movieId : number, rating : ExtendedRating) : Observable<ExtendedRating> {
     return this.api.post('/movies/' + movieId + '/ratings', rating);
   }
 
@@ -59,9 +59,9 @@ export class MovieRatingsService {
    * WARNING: This has to be done in the time-frame where the backend allows modifications.
    * @param movieId The movie's ID
    * @param rating The rating
-   * @returns {Observable<MovieRating>}
+   * @returns {Observable<ExtendedRating>}
    */
-  editRating(movieId : number, rating : MovieRating) : Observable<MovieRating> {
+  editRating(movieId : number, rating : ExtendedRating) : Observable<ExtendedRating> {
     return this.api.put('/movies/' + movieId + '/ratings/' + rating.id, rating);
   }
 

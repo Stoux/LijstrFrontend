@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, EventEmitter, Output } from "@angular/core";
 import { MovieDetail } from "../../models/movie";
-import { Seen, MovieRating } from "../../../shared/models/ratings";
+import { Seen, ExtendedRating } from "../../../shared/models/ratings";
 import { DataWrapper } from "../../../core/models/common";
 import { LijstrException } from "../../../core/exceptions";
 import { NgForm } from "@angular/forms";
@@ -22,12 +22,12 @@ export class MovieRatingComponent implements OnChanges {
   @Input() private movie : MovieDetail;
   @Input() private findOldRatings : boolean; //Should try to find old ratings
   @Input() showNotSeenButton : boolean;
-  @Output() private ratingChanged : EventEmitter<MovieRating>;
+  @Output() private ratingChanged : EventEmitter<ExtendedRating>;
 
   submitting : boolean;
   changeSubscription : Subscription;
-  cachedRating : MovieRating;
-  userRating : MovieRating;
+  cachedRating : ExtendedRating;
+  userRating : ExtendedRating;
   error : string;
   foundOldRating : boolean;
 
@@ -51,7 +51,7 @@ export class MovieRatingComponent implements OnChanges {
     this.error = null;
 
     if ('movie' in changes) {
-      this.setActiveRating(MovieRating.newRating());
+      this.setActiveRating(ExtendedRating.newRating());
       this.form.reset();
       this.foundOldRating = false;
       this.changeSubscription = null;
@@ -60,7 +60,7 @@ export class MovieRatingComponent implements OnChanges {
       if (this.findOldRatings) {
         this.ratingsService.getLatestMovieRatingForUser(this.movie.id)
           .subscribe(
-            (ratingWrapper : DataWrapper<MovieRating>) => {
+            (ratingWrapper : DataWrapper<ExtendedRating>) => {
               if (this.movie.id == currentMovie.id && ratingWrapper.data != null) {
                 this.foundOldRating = true;
                 this.setActiveIfEditable(ratingWrapper.data);
@@ -74,7 +74,7 @@ export class MovieRatingComponent implements OnChanges {
     }
 
     if (this.userRating == null) {
-      this.userRating = MovieRating.newRating();
+      this.userRating = ExtendedRating.newRating();
     }
   }
 
@@ -86,7 +86,7 @@ export class MovieRatingComponent implements OnChanges {
     }
 
     const isNewRating = !this.foundOldRating;
-    let ratingCall : Observable<MovieRating>;
+    let ratingCall : Observable<ExtendedRating>;
     if (this.isEdit()) {
       ratingCall = this.ratingsService.editRating(this.movie.id, this.userRating);
     } else {
@@ -95,7 +95,7 @@ export class MovieRatingComponent implements OnChanges {
 
     ratingCall.finally(() => this.submitting = false)
       .subscribe(
-        (newRating : MovieRating) => {
+        (newRating : ExtendedRating) => {
           this.setActiveIfEditable(newRating);
           this.ratingsService.onChange(this.movie.id, newRating);
           this.changeSubscription = Observable.timer(3000).subscribe(
@@ -149,14 +149,14 @@ export class MovieRatingComponent implements OnChanges {
     }
   }
 
-  private setActiveRating(rating : MovieRating) {
+  private setActiveRating(rating : ExtendedRating) {
     this.userRating = rating;
     this.unknownRating = this.isSeenYes() && rating.rating == null;
-    this.cachedRating = new MovieRating();
+    this.cachedRating = new ExtendedRating();
     this.copyFields(rating, this.cachedRating);
   }
 
-  private setActiveIfEditable(rating : MovieRating) {
+  private setActiveIfEditable(rating : ExtendedRating) {
     this.foundOldRating = true;
     if (MovieRatingComponent.isEditable(rating)) {
       this.setActiveRating(rating);
@@ -167,13 +167,13 @@ export class MovieRatingComponent implements OnChanges {
     }
   }
 
-  private copyFields(source : MovieRating, target : MovieRating) {
+  private copyFields(source : ExtendedRating, target : ExtendedRating) {
     target.seen = source.seen;
     target.rating = source.rating;
     target.comment = source.comment;
   }
 
-  private static isEditable(rating : MovieRating) {
+  private static isEditable(rating : ExtendedRating) {
     return new Date().getTime() < rating.created + MovieRatingComponent.EDIT_BUFFER;
   }
 

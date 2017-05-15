@@ -30,15 +30,15 @@ export class ShortRating extends Serializable {
 
 }
 
-export class MovieRating extends ShortRating {
+export class ExtendedRating extends ShortRating {
 
   id : number;
   created : number;
   lastModified : number;
   latest : boolean;
 
-  static newRating() : MovieRating {
-    let r = new MovieRating();
+  static newRating() : ExtendedRating {
+    let r = new ExtendedRating();
     r.id = null;
     r.seen = null;
     r.rating = null;

@@ -5,7 +5,7 @@ import { LijstrException } from "../../core/exceptions";
 import { FullUser, User } from "../../core/models/user";
 import { UserService } from "../../core/services/user.service";
 import { Subscription } from "rxjs";
-import { MovieRating } from "../../shared/models/ratings";
+import { ExtendedRating } from "../../shared/models/ratings";
 import { OldSiteService, OldSiteRating } from "./old-site.service";
 import { MovieUsersService } from "../services/movie-users.service";
 
@@ -59,7 +59,7 @@ export class MovieOutstandingComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe();
   }
 
-  onNext(newRating : MovieRating) : void {
+  onNext(newRating : ExtendedRating) : void {
     this.moviesRemaining--;
     if (this.moviesRemaining > 0) {
       this.next();
