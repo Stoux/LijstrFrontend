@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { ShowsComponent } from "./shows.component";
 import { ShowDetailComponent } from "./show-detail/show-detail.component";
 import { ShowListComponent } from "./show-list/show-list.component";
-import { ShowSelectComponent } from "./show-select/show-select.component";
+import { ShowSelectComponent } from "./show-list/show-select/show-select.component";
 import { ShowListFilterComponent } from "./show-list/show-list-filter/show-list-filter.component";
 import { ShowListPagerComponent } from "./show-list/show-list-pager/show-list-pager.component";
 import { ShowListSettingsComponent } from "./show-list/show-list-settings/show-list-settings.component";

@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ShowsComponent } from "./shows.component";
-import { ShowSelectComponent } from "./show-select/show-select.component";
+import { ShowSelectComponent } from "./show-list/show-select/show-select.component";
 import { ShowListComponent } from "./show-list/show-list.component";
 
 const routes : Routes = [
