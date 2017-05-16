@@ -1,0 +1,72 @@
+<table class="table table-striped details">
+  <tbody>
+  <tr *ngIf="target.imdbRating">
+    <th>IMDB</th>
+    <td>{{target.imdbRating | number:"1.1-1" }}/10
+      <small *ngIf="target.imdbVotes">({{target.imdbVotes | number:"1.0-0" }} votes)</small>
+    </td>
+  </tr>
+  <tr *ngIf="!target.imdbRating">
+    <th>IMDB</th>
+    <td>Onbekend</td>
+  </tr>
+  <tr *ngIf="target.metacriticScore">
+    <th>Metacritic</th>
+    <td>{{target.metacriticScore}}/100</td>
+  </tr>
+  <tr *ngIf="isMovie">
+    <th>Release datum</th>
+    <td *ngIf="movie.released">{{movie.released | date:"d MMMM yyyy" }}</td>
+    <td *ngIf="!movie.released">{{movie.year}}</td>
+  </tr>
+  <tr *ngIf="isShow && show.endYear">
+    <th>Productie jaren</th>
+    <td>{{show.startYear}} - {{show.endYear}} <small *ngIf="show.premiereDate">{{show.premiereDate | date:"d MMMM yyyy" }}</small></td>
+  </tr>
+  <tr *ngIf="isShow && !show.endYear">
+    <th>Loopt sinds</th>
+    <td *ngIf="show.premiereDate">{{show.premiereDate | date:"d MMMM yyyy" }}</td>
+    <td *ngIf="!show.premiereDate">{{show.startYear}}</td>
+  </tr>
+  <tr>
+    <th>Looptijd</th>
+    <td>{{getRuntime()}}</td>
+  </tr>
+  <tr *ngIf="isShow">
+    <th>Seizoenen</th>
+    <td>{{getSeasons()}}</td>
+  </tr>
+  <tr *ngIf="target.ageRating">
+    <th>Leeftijd rating</th>
+    <td>{{target.ageRating}}</td>
+  </tr>
+  <tr *ngIf="target.originalTitle != null && target.title != target.originalTitle">
+    <th>Originele titel</th>
+    <td>{{target.originalTitle}}</td>
+  </tr>
+  <tr *ngIf="target.dutchTitle != null">
+    <th>Nederlandse titel</th>
+    <td>{{target.dutchTitle}}</td>
+  </tr>
+  <tr *ngIf="genres">
+    <th>Genres</th>
+    <td>
+      <ul class="list-unstyled">
+        <li *ngFor="let wrapper of target.genres">{{wrapper.genre}}</li>
+      </ul>
+    </td>
+  </tr>
+  <tr *ngIf="languages">
+    <th>Talen</th>
+    <td>
+      <ul class="list-unstyled">
+        <li *ngFor="let wrapper of target.languages">{{wrapper.language}}</li>
+      </ul>
+    </td>
+  </tr>
+  <tr *ngIf="target.addedBy != null">
+    <th>Toegevoegd door</th>
+    <td>{{getUserRepresentation()}}</td>
+  </tr>
+  </tbody>
+</table>

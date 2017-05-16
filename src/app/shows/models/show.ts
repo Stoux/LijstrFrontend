@@ -1,5 +1,6 @@
 import { ShortRating } from "../../shared/models/ratings";
 import { TargetDetail, TargetSummary } from "../../abs/models/target";
+import { ShowSeasonSummary } from "./show-season";
 
 export class ShowSummary extends TargetSummary<ShortRating> {
 
@@ -16,9 +17,9 @@ export class ShowDetail extends TargetDetail<ShortRating> {
 
   startYear : number;
   endYear : number;
-  premierDate : number;
+  premiereDate : number;
 
-  //TODO: Seasons
+  seasons : ShowSeasonSummary[];
 
 }
 

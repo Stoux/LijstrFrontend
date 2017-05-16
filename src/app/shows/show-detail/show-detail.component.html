@@ -4,8 +4,8 @@
       <small>({{target.imdbId}})</small>
     </h1>
     <lijstr-target-detail-summary [target]="target"></lijstr-target-detail-summary>
-    <!--<lijstr-movie-detail-table [movie]="target" [users]="targetUsers">-->
-    <!--</lijstr-movie-detail-table>-->
+    <lijstr-target-detail-table [show]="target" [users]="targetUsers">
+    </lijstr-target-detail-table>
   </div>
   <div class="col-sm-3">
     <lijstr-target-detail-poster [target]="target" [path]="'shows'">

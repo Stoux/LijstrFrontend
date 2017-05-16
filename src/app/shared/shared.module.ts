@@ -5,6 +5,7 @@ import { LoadingComponent } from "./loading/loading.component";
 import { YoutubeViewerComponent } from './youtube-viewer/youtube-viewer.component';
 import { TargetDetailSummaryComponent } from "./target/detail-summary/target-detail-summary.component";
 import { TargetDetailPosterComponent } from "./target/detail-poster/target-detail-poster.component";
+import { TargetDetailTableComponent } from "./target/detail-table/target-detail-table.component";
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { TargetDetailPosterComponent } from "./target/detail-poster/target-detai
     LoadingComponent,
     YoutubeViewerComponent,
     TargetDetailSummaryComponent,
-    TargetDetailPosterComponent
+    TargetDetailPosterComponent,
+    TargetDetailTableComponent
   ],
   exports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { TargetDetailPosterComponent } from "./target/detail-poster/target-detai
     LoadingComponent,
     YoutubeViewerComponent,
     TargetDetailSummaryComponent,
-    TargetDetailPosterComponent
+    TargetDetailPosterComponent,
+    TargetDetailTableComponent
   ]
 })
 export class SharedModule { }

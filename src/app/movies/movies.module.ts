@@ -21,7 +21,6 @@ import { MovieRequestService } from "./services/movie-request.service";
 import { MovieRequestListComponent } from "./movie-request/movie-request-list/movie-request-list.component";
 import { MovieTimelineComponent } from "./movie-detail/movie-timeline/movie-timeline.component";
 import { MovieOutstandingComponent } from "./movie-outstanding/movie-outstanding.component";
-import { MovieDetailTableComponent } from "./movie-detail/movie-detail-table/movie-detail-table.component";
 import { OldSiteService } from "./movie-outstanding/old-site.service";
 import { MovieWatchlistIconComponent } from "./movie-detail/movie-watchlist-icon/movie-watchlist-icon.component";
 import { MovieRequestModComponent } from "./movie-request/movie-request-mod/movie-request-mod.component";
@@ -57,7 +56,6 @@ import { MovieListPagerComponent } from "./movie-list/list-pager/list-pager.comp
     MovieRequestListComponent,
     MovieTimelineComponent,
     MovieOutstandingComponent,
-    MovieDetailTableComponent,
     MovieWatchlistIconComponent,
     MovieRequestModComponent,
     MovieRequestUserComponent,
