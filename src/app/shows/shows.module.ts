@@ -1,5 +1,4 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import { ShowsComponent } from "./shows.component";
 import { ShowDetailComponent } from "./show-detail/show-detail.component";
 import { ShowListComponent } from "./show-list/show-list.component";
@@ -13,6 +12,7 @@ import { SharedModule } from "../shared/shared.module";
 import { ShowsRoutingModule } from "./shows-routing.module";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { ModalModule } from "ngx-bootstrap";
+import { ShowDetailService } from "./services/show-detail.service";
 
 @NgModule({
   imports: [
@@ -32,7 +32,8 @@ import { ModalModule } from "ngx-bootstrap";
   ],
   providers: [
     ShowUsersService,
-    ShowListService
+    ShowListService,
+    ShowDetailService
   ]
 })
 export class ShowsModule {

@@ -41,9 +41,9 @@ const routes : Routes = [
           {
             path: ':id',
             component: MovieDetailComponent,
-            data: {resolveTitle: 'movieDetail.title'},
+            data: {resolveTitle: 'detail.title'},
             resolve: {
-              movieDetail: MovieDetailResolver
+              detail: MovieDetailResolver
             }
           },
           {

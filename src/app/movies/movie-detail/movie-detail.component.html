@@ -1,19 +1,19 @@
 <div class="row">
   <div class="col-sm-9">
-    <h1 class="title">{{movie.title}}
-      <small>({{movie.imdbId}})</small>
+    <h1 class="title">{{target.title}}
+      <small>({{target.imdbId}})</small>
     </h1>
-    <lijstr-movie-detail-summary [movie]="movie"></lijstr-movie-detail-summary>
-    <lijstr-movie-detail-table [movie]="movie" [users]="movieUsers">
+    <lijstr-target-detail-summary [target]="target"></lijstr-target-detail-summary>
+    <lijstr-movie-detail-table [movie]="target" [users]="targetUsers">
     </lijstr-movie-detail-table>
   </div>
   <div class="col-sm-3">
-    <lijstr-movie-detail-poster [movie]="movie">
-    </lijstr-movie-detail-poster>
+    <lijstr-target-detail-poster [target]="target" [path]="'movies'">
+    </lijstr-target-detail-poster>
     <div class="text-center center-block icons">
-      <lijstr-movie-watchlist-icon *ngIf="isMovieUser" [movie]="movie">
+      <lijstr-movie-watchlist-icon *ngIf="isTargetUser" [movie]="target">
       </lijstr-movie-watchlist-icon>
-      <lijstr-youtube-viewer [youtubeId]="movie.youtubeUrl"></lijstr-youtube-viewer>
+      <lijstr-youtube-viewer [youtubeId]="target.youtubeUrl"></lijstr-youtube-viewer>
     </div>
   </div>
 </div>
@@ -23,14 +23,14 @@
 <div class="row">
   <div class="col-md-8">
     <h4>Ratings</h4>
-    <lijstr-movie-ratings [availableUsers]="movieUsers"
-                          [availableRatings]="movie.latestMovieRatings">
+    <lijstr-movie-ratings [availableUsers]="targetUsers"
+                          [availableRatings]="target.latestMovieRatings">
     </lijstr-movie-ratings>
   </div>
 
-  <div class="col-md-4" *ngIf="isMovieUser">
+  <div class="col-md-4" *ngIf="isTargetUser">
     <h4>Rating aanpassen</h4>
-    <lijstr-movie-rating [movie]="movie"></lijstr-movie-rating>
+    <lijstr-movie-rating [movie]="target"></lijstr-movie-rating>
   </div>
 </div>
 
@@ -40,13 +40,13 @@
   <div class="col-md-6">
     <lijstr-movie-timeline
       #timeline
-      [availableUsers]="movieUsers"
-      [movie]="movie">
+      [availableUsers]="targetUsers"
+      [movie]="target">
     </lijstr-movie-timeline>
   </div>
 
-  <div class="col-md-6" *ngIf="isMovieUser">
-    <lijstr-movie-comment-form [movie]="movie" (newComment)="timeline.refresh()">
+  <div class="col-md-6" *ngIf="isTargetUser">
+    <lijstr-movie-comment-form [movie]="target" (newComment)="timeline.refresh()">
     </lijstr-movie-comment-form>
   </div>
 </div>

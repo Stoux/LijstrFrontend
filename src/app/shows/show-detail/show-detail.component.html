@@ -1,3 +1,19 @@
-<p>
-  show-detail works!
-</p>
+<div class="row">
+  <div class="col-sm-9">
+    <h1 class="title">{{target.title}}
+      <small>({{target.imdbId}})</small>
+    </h1>
+    <lijstr-target-detail-summary [target]="target"></lijstr-target-detail-summary>
+    <!--<lijstr-movie-detail-table [movie]="target" [users]="targetUsers">-->
+    <!--</lijstr-movie-detail-table>-->
+  </div>
+  <div class="col-sm-3">
+    <lijstr-target-detail-poster [target]="target" [path]="'shows'">
+    </lijstr-target-detail-poster>
+    <div class="text-center center-block icons">
+      <!--<lijstr-movie-watchlist-icon *ngIf="isTargetUser" [movie]="target">-->
+      <!--</lijstr-movie-watchlist-icon>-->
+      <lijstr-youtube-viewer [youtubeId]="target.youtubeUrl"></lijstr-youtube-viewer>
+    </div>
+  </div>
+</div>

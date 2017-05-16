@@ -6,20 +6,13 @@ import { DataWrapper } from "../../core/models/common";
 import { ExtendedRating } from "../../shared/models/ratings";
 import { MovieComment } from "../models/timeline";
 import { Response } from "@angular/http";
+import { TargetDetailService } from "../../abs/detail/target-detail.service";
 
 @Injectable()
-export class MovieDetailService {
+export class MovieDetailService extends TargetDetailService<MovieDetail> {
 
-  constructor(private api : ApiService) {
-  }
-
-  /**
-   * Get the details of a movie.
-   * @param id The movie's ID
-   * @returns {Observable<MovieDetail>}
-   */
-  getMovieDetail(id : number) : Observable<MovieDetail> {
-    return this.api.get('/movies/' + id);
+  constructor(api : ApiService) {
+    super(api, 'movies');
   }
 
   /**
@@ -28,7 +21,7 @@ export class MovieDetailService {
    * @returns {Observable<(ExtendedRating|MovieComment)[]>} ordered array of ratings and comments
    */
   getMovieTimeline(id : number) : Observable<(ExtendedRating|MovieComment)[]> {
-    return this.api.get('/movies/' + id + '/timeline?includeRatings=false')
+    return this.api.get(this.pathForId(id) + '/timeline?includeRatings=false')
       .map((items : any[]) => {
         let result : (ExtendedRating|MovieComment)[] = [];
         for (let item of items) {
@@ -48,7 +41,7 @@ export class MovieDetailService {
    * @returns {Observable<MovieUserMeta>}
    */
   getMovieUserMeta(movieId : number) : Observable<MovieUserMeta> {
-    return this.api.get('/movies/' + movieId + '/meta');
+    return this.api.get(this.pathForId(movieId) + '/meta');
   }
 
   /**
@@ -58,7 +51,7 @@ export class MovieDetailService {
    * @returns {Observable<Response>}
    */
   saveMovieUserMeta(movieId : number, meta : MovieUserMeta) : Observable<Response> {
-    return this.api.put('/movies/' + movieId + '/meta', meta);
+    return this.api.put(this.pathForId(movieId) + '/meta', meta);
   }
 
   /**
@@ -68,7 +61,7 @@ export class MovieDetailService {
    * @returns {Observable<any>} ID of the comment
    */
   placeComment(movieId : number, comment : string) : Observable<any> {
-    return this.api.post('/movies/' + movieId + '/comments', {'comment' : comment});
+    return this.api.post(this.pathForId(movieId) + '/comments', {'comment' : comment});
   }
 
 }

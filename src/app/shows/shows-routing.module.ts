@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { ShowsComponent } from "./shows.component";
 import { ShowSelectComponent } from "./show-list/show-select/show-select.component";
 import { ShowListComponent } from "./show-list/show-list.component";
+import { ShowDetailComponent } from "./show-detail/show-detail.component";
+import { ShowDetailResolver } from "./show-detail/resolver/show-detail-resolver";
 
 const routes : Routes = [
   {
@@ -19,14 +21,14 @@ const routes : Routes = [
         component: ShowListComponent,
         data: {title: 'Series'},
         children: [
-          // {
-          //   path: ':id',
-          //   component: MovieDetailComponent,
-          //   data: {resolveTitle: 'movieDetail.title'},
-          //   resolve: {
-          //     movieDetail: MovieDetailResolver
-          //   }
-          // },
+          {
+            path: ':id',
+            component: ShowDetailComponent,
+            data: {resolveTitle: 'detail.title'},
+            resolve: {
+              detail: ShowDetailResolver
+            }
+          },
           {
             path: '',
             component: ShowSelectComponent
@@ -41,7 +43,7 @@ const routes : Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    // MovieDetailResolver
+    ShowDetailResolver
   ]
 })
 export class ShowsRoutingModule {

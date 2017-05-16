@@ -36,13 +36,13 @@
     <lijstr-movie-detail-table [movie]="currentMovie"  [users]="availableUsers"
                                [languages]="false" [genres]="false">
     </lijstr-movie-detail-table>
-    <lijstr-movie-detail-summary [movie]="currentMovie"></lijstr-movie-detail-summary>
+    <lijstr-target-detail-summary [target]="currentMovie"></lijstr-target-detail-summary>
   </div>
   <div class="col-md-12 hidden-xs hidden-sm">
     <hr />
   </div>
   <div class="col-md-3">
-    <lijstr-movie-detail-poster [movie]="currentMovie"></lijstr-movie-detail-poster>
+    <lijstr-target-detail-poster [target]="currentMovie" [path]="'movies'"></lijstr-target-detail-poster>
   </div>
   <div class="col-md-9">
     <lijstr-movie-ratings [availableUsers]="availableUsers"

@@ -3,27 +3,14 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@a
 import { MovieDetail } from "../models/movie";
 import { Observable, Subject } from "rxjs";
 import { MovieDetailService } from "../services/movie-detail.service";
+import { TargetDetailResolver } from "../../abs/detail/target-detail.service";
 
 @Injectable()
-export class MovieDetailResolver implements Resolve<MovieDetail>{
+export class MovieDetailResolver extends TargetDetailResolver<MovieDetail> {
 
-  constructor(private detailService : MovieDetailService,
-              private router : Router) {
+  constructor(detailService : MovieDetailService,
+              router : Router) {
+    super(detailService, router, 'movies');
   }
 
-  resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) : Observable<MovieDetail> {
-    let id = route.params['id'];
-    let subject : Subject<MovieDetail> = new Subject();
-    this.detailService.getMovieDetail(id).finally(() => subject.complete()).subscribe(
-      movie => {
-        subject.next(movie);
-      },
-      error => {
-        this.router.navigate(['/movies']);
-        subject.next(null);
-      }
-    );
-
-    return subject.asObservable();
-  }
 }

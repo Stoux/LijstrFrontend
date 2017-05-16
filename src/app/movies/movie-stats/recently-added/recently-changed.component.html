@@ -5,19 +5,19 @@
 <ul class="main list-unstyled">
 
   <li *ngFor="let result of results">
-    <h5 *ngIf="!result.movie">
+    <h5 *ngIf="!result.target">
       {{result.title}}
       <small>- {{result.created | date:"dd-MM-yyyy"}}</small> <!-- TODO: Added by who -->
     </h5>
-    <h5 *ngIf="result.movie">
-      {{result.movie.title}}
+    <h5 *ngIf="result.target">
+      {{result.target.title}}
       <small>@ {{result.change.lastModified | date:"dd-MM-yyyy HH:mm"}}</small>
     </h5>
     <lijstr-movie-single-rating *ngIf="result.change?.latest"
       [userRating]="toUserRating(result)" [ratingsService]="ratingsService">
     </lijstr-movie-single-rating>
 
-    <blockquote *ngIf="result.movie && !result.change.latest">
+    <blockquote *ngIf="result.target && !result.change.latest">
       <p>{{result.change.comment}}</p>
       <footer>
         <strong>{{fetchUserName(result)}}</strong>
