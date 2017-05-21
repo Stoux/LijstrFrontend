@@ -2,20 +2,29 @@ import { Injectable } from "@angular/core";
 import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs";
 import { LijstrException } from "../../../core/exceptions";
+import { ApiService } from "../../../core/services/api.service";
 
 export class OmdbObject {
-  constructor(public imdbId : string,
-              public title : string,
-              public year : string,
-              public plot : string,
-              public posterUrl : string) {
-  }
+
+  imdbId : string;
+  title : string;
+  year : string;
+  released : string;
+  runtime : string;
+  imdbRating : string;
+  imdbVotes : string;
+  type : string;
+  plot : string;
+  poster : string;
+  response : string;
+  error : string;
+
 }
 
 @Injectable()
 export class OmdbApiService {
 
-  constructor(private http : Http) {
+  constructor(private api : ApiService) {
   }
 
   /**
@@ -24,33 +33,16 @@ export class OmdbApiService {
    * @returns {Observable<OmdbObject>}
    */
   getMovie(imdbId : string) : Observable<OmdbObject> {
-    return this.http.get('https://www.omdbapi.com/?i=' + imdbId + '&plot=short&r=json')
-      .map(OmdbApiService.handleResponse)
-      .catch(OmdbApiService.handleError);
+    return this.api.get('/omdb/' + imdbId)
+      .map(OmdbApiService.handleResponse);
   }
 
-  private static handleResponse(response : Response) : any {
-    if (response.text()) {
-      let result = response.json();
-      if (result['Response'] == 'True') {
-        if (result['Type'] != 'movie') {
-          return LijstrException.forErrorMessage(400, 'Niet een film.');
-        }
-
-        return new OmdbObject(
-          result['imdbID'], result['Title'], result['Year'],
-          result['Plot'], result['Poster']
-        );
-      }
+  private static handleResponse(result : any) : any {
+    if (result.type != 'movie') {
+      return LijstrException.forErrorMessage(400, 'Niet een film.');
     }
 
-    return LijstrException.forErrorMessage(404, 'Niet gevonden.');
-  }
-
-  private static handleError(error : any) {
-    console.log(error);
-    let exception = LijstrException.forErrorMessage(500, 'Er is iets mis gegaan...');
-    return Observable.throw(exception);
+    return result;
   }
 
 }

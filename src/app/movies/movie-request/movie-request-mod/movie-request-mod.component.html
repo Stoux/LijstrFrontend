@@ -39,7 +39,7 @@
   <div class="col-md-3 col-sm-4" *ngIf="!searching && !typing && !submitting && error == null">
     <div class="text-center center-block" *ngIf="result != null">
       <img class="img-rounded poster-image"
-           src="{{result.posterUrl == 'N/A' ? '/assets/no-poster.png' : result.posterUrl}}"/>
+           src="{{result.poster == 'N/A' ? '/assets/no-poster.png' : result.poster}}"/>
     </div>
   </div>
 

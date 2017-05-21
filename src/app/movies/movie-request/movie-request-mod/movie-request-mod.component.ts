@@ -119,10 +119,10 @@ export class MovieRequestModComponent implements OnInit {
     this.reset();
     this.previousResults.set(imdbId, result);
 
-    if (result instanceof OmdbObject) {
-      this.result = result;
+    if ('successful' in result) {
+      this.result = <OmdbObject> result;
     } else if (result instanceof LijstrException) {
-      this.error = result;
+      this.error = <LijstrException> result;
     }
   }
 
