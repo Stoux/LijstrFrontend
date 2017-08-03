@@ -4,12 +4,12 @@
 
 <ul class="main list-unstyled">
 
-  <li *ngFor="let result of results">
-    <h5 *ngIf="!result.movie">
+  <li *ngFor="let result of results" class="changed-item">
+    <h5 *ngIf="!result.movie" (click)="toMovie(result)">
       {{result.title}}
       <small>- {{result.created | date:"dd-MM-yyyy"}}</small> <!-- TODO: Added by who -->
     </h5>
-    <h5 *ngIf="result.movie">
+    <h5 *ngIf="result.movie" (click)="toMovie(result.movie)">
       {{result.movie.title}}
       <small>@ {{result.change.lastModified | date:"dd-MM-yyyy HH:mm"}}</small>
     </h5>

@@ -8,6 +8,8 @@ import { MovieRatingsService } from "../../services/movie-ratings.service";
 import { MovieChange } from "../../models/movie-stats";
 import { MovieRating, UserRating } from "../../models/ratings";
 import { MovieComment } from "../../models/timeline";
+import { MovieSummary } from "../../models/movie";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'lijstr-recently-changed',
@@ -27,7 +29,8 @@ export class RecentlyChangedComponent implements OnInit {
 
   users : User[];
 
-  constructor(private ratingsService : MovieRatingsService,
+  constructor(private router : Router,
+              private ratingsService : MovieRatingsService,
               private movieUsersService : MovieUsersService) {
   }
 
@@ -52,6 +55,10 @@ export class RecentlyChangedComponent implements OnInit {
       this.fetchUserName(ratingChange),
       ratingChange.change
     );
+  }
+
+  toMovie(movie : MovieSummary) : void {
+    this.router.navigate(['movies', movie.id]);
   }
 
   fetchUserName(anyChange : MovieChange<MovieRating|MovieComment>) : string {

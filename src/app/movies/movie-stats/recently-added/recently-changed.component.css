@@ -5,3 +5,7 @@ li:not(:last-child) {
 lijstr-movie-single-rating /deep/ *, blockquote {
   font-size: 0.95em;
 }
+
+.changed-item > h5 {
+  cursor: pointer;
+}
