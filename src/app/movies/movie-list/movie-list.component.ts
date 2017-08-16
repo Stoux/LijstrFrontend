@@ -61,8 +61,12 @@ export class MovieListComponent implements OnInit, RowCaller {
   }
 
   onNewList(summaries : MovieSummary[]) {
-    this.summaries = this.listPager.sort(summaries);
     this.summaries = this.extendedFilter.onNewList(summaries);
+    this.onNewAppliedFilters(this.summaries);
+  }
+
+  onNewAppliedFilters(summaries : MovieSummary[]) {
+    this.summaries = this.listPager.sort(summaries);
   }
 
   setColumns(columns) {

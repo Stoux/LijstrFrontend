@@ -18,7 +18,7 @@
 
   <div class="col-xs-12" [class.hidden]="!showExtendedFilter">
     <lijstr-list-extended-filter #extendedFilter
-                                 (filtered)="summaries = $event">
+                                 (filtered)="onNewAppliedFilters($event)">
     </lijstr-list-extended-filter>
   </div>
 
