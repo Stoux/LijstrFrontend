@@ -5,7 +5,7 @@
       <ng-select [allowClear]="true"
                  [multiple]="true"
                  [items]="availableGenres"
-                 [disabled]="availableGenres.length === 0"
+                 [disabled]="genres === null"
                  [placeholder]="genresPlaceholder"
                  (data)="setSelectedGenres($event)">
       </ng-select>
@@ -18,7 +18,7 @@
       <ng-select [allowClear]="true"
                  [multiple]="true"
                  [items]="availableLanguages"
-                 [disabled]="availableLanguages.length === 0"
+                 [disabled]="languages === null"
                  [placeholder]="languagesPlaceholder"
                  (data)="setSelectedLanguages($event)">
       </ng-select>

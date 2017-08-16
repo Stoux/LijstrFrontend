@@ -30,15 +30,15 @@ export class ListExtendedFilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.languages = null;
+    this.genres = null;
     this.selectedGenres = [];
     this.availableGenres = [];
-    this.languagesPlaceholder = 'Laden...';
+    this.genresPlaceholder = 'Laden...';
 
-    this.genres = null;
+    this.languages = null;
     this.selectedLanguages = [];
     this.availableLanguages = [];
-    this.genresPlaceholder = 'Laden...';
+    this.languagesPlaceholder = 'Laden...';
   }
 
   onNewList(summaries : MovieSummary[]) : MovieSummary[] {
@@ -66,14 +66,19 @@ export class ListExtendedFilterComponent implements OnInit {
   private filter(summaries : MovieSummary[]) : MovieSummary[] {
     let result = summaries;
 
-    result = this.applyFilter(
-      result, this.selectedGenres, this.genres,
-      s => s.genres, options => this.availableGenres = options
+    //Go through the filters
+    result = this.applyFilter(result, this.selectedGenres, s => s.genres);
+    result = this.applyFilter(result, this.selectedLanguages, s => s.languages);
+
+    //Set available options
+    this.setAvailable(
+      result, this.genres, s => s.genres,
+      options => this.availableGenres = options
     );
 
-    result = this.applyFilter(
-      result, this.selectedLanguages, this.languages,
-      s => s.languages, options => this.availableLanguages = options
+    this.setAvailable(
+      result, this.languages, s => s.languages,
+        options => this.availableLanguages = options
     );
 
     return result;
@@ -81,17 +86,13 @@ export class ListExtendedFilterComponent implements OnInit {
 
   private applyFilter(summaries : MovieSummary[],
                       selected : SelectItem[],
-                      allOptions : SelectItem[],
-                      getSummaryMap : (s : MovieSummary) => any,
-                      setAvailable : (options : SelectItem[]) => void) : MovieSummary[] {
+                      getSummaryMap : (s : MovieSummary) => any) : MovieSummary[] {
     if (selected.length === 0) {
-      setAvailable(allOptions);
       return summaries;
     }
 
     //Filter out all that don't have all required
-    const available = new Map();
-    const filtered = summaries.filter(summary => {
+    return summaries.filter(summary => {
       const items = getSummaryMap(summary);
       for (let item of selected) {
         if (!(item.id in items)) {
@@ -99,18 +100,24 @@ export class ListExtendedFilterComponent implements OnInit {
         }
       }
 
-      //Set all genres that movie has as available for further filtering
+      return true;
+    });
+  }
+
+  private setAvailable(summaries,
+                       allOptions : SelectItem[],
+                       getSummaryMap : (s : MovieSummary) => any,
+                       setMethod : (options : SelectItem[]) => void) {
+    const available = new Map();
+    for (let summary of summaries) {
+      const items = getSummaryMap(summary);
       for (let key in items) {
         available.set(key, true);
       }
-
-      return true;
-    });
+    }
 
     //Set available
-    setAvailable(allOptions.filter(item => available.has(item.id)));
-
-    return filtered;
+    setMethod(allOptions.filter(item => available.has(item.id)));
   }
 
   setEnabled(active : boolean) : void {
