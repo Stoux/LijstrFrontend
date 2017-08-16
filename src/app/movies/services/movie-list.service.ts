@@ -50,7 +50,7 @@ export class MovieListService {
       return response;
     }
 
-    let getRequest : Observable<MovieSummary[]> = this.api.get('/movies');
+    let getRequest : Observable<MovieSummary[]> = this.api.get('/movies?includeGenres=true&includeLanguages=true');
     this.request = getRequest.finally(() => this.request = null).subscribe(
       summaries => {
         this.changeList(summaries);

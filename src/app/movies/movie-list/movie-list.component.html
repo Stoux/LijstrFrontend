@@ -6,9 +6,22 @@
     <button class="btn btn-primary" [disabled]="!settingsEditable" (click)="settingsModal.show()">
       <span class="glyphicon glyphicon-cog"></span>
     </button>
+    <button class="btn btn-primary"
+            [class.btn-primary]="!showExtendedFilter"
+            [class.btn-success]="showExtendedFilter"
+            (click)="extendFilter()">
+      <span class="glyphicon glyphicon-filter"></span>
+    </button>
     <lijstr-list-filter (filtered)="onNewList($event)">
     </lijstr-list-filter>
   </div>
+
+  <div class="col-xs-12" [class.hidden]="!showExtendedFilter">
+    <lijstr-list-extended-filter #extendedFilter
+                                 (filtered)="summaries = $event">
+    </lijstr-list-extended-filter>
+  </div>
+
 </div>
 
 <lijstr-list-pager #pager [caller]="getCaller()"></lijstr-list-pager>

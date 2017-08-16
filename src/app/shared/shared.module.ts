@@ -3,6 +3,8 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { LoadingComponent } from "./loading/loading.component";
 import { YoutubeViewerComponent } from './youtube-viewer/youtube-viewer.component';
+import { SelectModule } from "ng2-select";
+import { ImdbService } from "./services/imdb.service";
 
 @NgModule({
   imports: [
@@ -16,7 +18,11 @@ import { YoutubeViewerComponent } from './youtube-viewer/youtube-viewer.componen
     CommonModule,
     FormsModule,
     LoadingComponent,
-    YoutubeViewerComponent
+    YoutubeViewerComponent,
+    SelectModule
+  ],
+  providers: [
+    ImdbService
   ]
 })
 export class SharedModule { }

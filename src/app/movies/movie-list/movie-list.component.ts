@@ -5,6 +5,7 @@ import { ShortRating } from "../models/ratings";
 import { DecimalPipe } from "@angular/common";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { ListPagerComponent, RowCaller } from "./list-pager/list-pager.component";
+import {ListExtendedFilterComponent} from "./list-extended-filter/list-extended-filter.component";
 
 @Component({
   selector: 'lijstr-movie-list',
@@ -19,6 +20,7 @@ export class MovieListComponent implements OnInit, RowCaller {
   @ViewChild('userCell') userCell;
   @ViewChild('movieList') listTable : DatatableComponent;
   @ViewChild('pager') listPager : ListPagerComponent;
+  @ViewChild('extendedFilter') extendedFilter : ListExtendedFilterComponent;
 
   settingsEditable : boolean;
   requiredColumns = [];
@@ -27,6 +29,8 @@ export class MovieListComponent implements OnInit, RowCaller {
   columns = [];
   selected = [];
   summaries : MovieSummary[];
+
+  showExtendedFilter : boolean;
 
   private numberPipe : DecimalPipe;
 
@@ -37,6 +41,7 @@ export class MovieListComponent implements OnInit, RowCaller {
 
   ngOnInit() {
     this.settingsEditable = false;
+    this.showExtendedFilter = false;
     this.requiredColumns = [{name: "Titel", prop: "title", flexGrow: 4, cellTemplate: this.valueCell}];
     this.availableColumns = [
       {name: "Jaar", prop: "year", flexGrow: 1, cellTemplate: this.valueCell},
@@ -50,8 +55,14 @@ export class MovieListComponent implements OnInit, RowCaller {
     this.router.navigate([selected[0].id], {relativeTo: this.route});
   }
 
+  extendFilter() : void {
+    this.showExtendedFilter = !this.showExtendedFilter;
+    this.extendedFilter.setEnabled(this.showExtendedFilter);
+  }
+
   onNewList(summaries : MovieSummary[]) {
     this.summaries = this.listPager.sort(summaries);
+    this.summaries = this.extendedFilter.onNewList(summaries);
   }
 
   setColumns(columns) {
