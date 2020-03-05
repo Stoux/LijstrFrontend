@@ -1,10 +1,9 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { User } from "../../../core/models/user";
-import { ShortRating, Seen, UserRating } from "../../models/ratings";
-import { DecimalPipe } from "@angular/common";
-import { MovieRatingsService } from "../../services/movie-ratings.service";
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { User } from '../../../core/models/user';
+import { ShortRating, Seen, UserRating } from '../../models/ratings';
+import { MovieRatingsService } from '../../services/movie-ratings.service';
 
-//TODO: Add sorting? Or delegate to caller and base order on availableUsers?
+// TODO: Add sorting? Or delegate to caller and base order on availableUsers?
 @Component({
   selector: 'lijstr-movie-ratings',
   templateUrl: './movie-ratings.component.html',
@@ -12,21 +11,25 @@ import { MovieRatingsService } from "../../services/movie-ratings.service";
 })
 export class MovieRatingsComponent implements OnChanges {
 
-  @Input() availableUsers : User[];
-  @Input() availableRatings : ShortRating[];
-
-  ratings : UserRating[];
-
-  constructor(private ratingsService : MovieRatingsService) {
+  constructor(public ratingsService: MovieRatingsService) {
     this.availableUsers = [];
     this.availableRatings = [];
   }
 
-  ngOnChanges(changes : SimpleChanges) : void {
+  @Input() availableUsers: User[];
+  @Input() availableRatings: ShortRating[];
+
+  ratings: UserRating[];
+
+  private static hasValues(arr: any[]) {
+    return arr != null && arr.length > 0;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.ratings = [];
 
     if (this.hasUsers()) {
-      for (let user of this.availableUsers) {
+      for (const user of this.availableUsers) {
         this.ratings.push(new UserRating(
           user.displayName,
           this.getUsersRating(user)
@@ -35,21 +38,17 @@ export class MovieRatingsComponent implements OnChanges {
     }
   }
 
-  hasUsers() : boolean {
+  hasUsers(): boolean {
     return MovieRatingsComponent.hasValues(this.availableUsers);
   }
 
-  private getUsersRating(user : User) : ShortRating {
-    for (let rating of this.availableRatings) {
+  private getUsersRating(user: User): ShortRating {
+    for (const rating of this.availableRatings) {
       if (rating.user == user.id) {
         return rating;
       }
     }
     return null;
-  }
-
-  private static hasValues(arr : any[]) {
-    return arr != null && arr.length > 0;
   }
 
 }

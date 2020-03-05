@@ -1,5 +1,5 @@
-import { Component, HostListener, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { Component, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'lijstr-youtube-viewer',
@@ -8,23 +8,23 @@ import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 })
 export class YoutubeViewerComponent implements OnChanges {
 
-  @Input() youtubeId : string;
-  youtubeUrl : SafeResourceUrl;
+  @Input() youtubeId: string;
+  youtubeUrl: SafeResourceUrl;
 
-  showButton : boolean;
-  showVideo : boolean;
+  showButton: boolean;
+  showVideo: boolean;
 
-  constructor(private sanitizer : DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer) {
 
   }
 
-  ngOnChanges(changes : SimpleChanges) : void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.showButton = this.youtubeId != null;
     this.showVideo = false;
 
     if (this.youtubeId != null) {
       this.youtubeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        "https://www.youtube.com/embed/" + this.youtubeId + "?autoplay=1"
+        'https://www.youtube.com/embed/' + this.youtubeId + '?autoplay=1'
       );
     }
   }
@@ -38,8 +38,8 @@ export class YoutubeViewerComponent implements OnChanges {
 
 
 
-  show(event : Event) {
-    let mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  show(event: Event) {
+    const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (!mobile) {
       event.preventDefault();
       this.showVideo = true;

@@ -1,8 +1,9 @@
-import { Component, Output, EventEmitter, Input, ViewChild, OnChanges } from "@angular/core";
-import { MovieDetail } from "../../models/movie";
-import { NgForm } from "@angular/forms";
-import { MovieDetailService } from "../../services/movie-detail.service";
-import { LijstrException } from "../../../core/exceptions";
+import { Component, Output, EventEmitter, Input, ViewChild, OnChanges } from '@angular/core';
+import { MovieDetail } from '../../models/movie';
+import { NgForm } from '@angular/forms';
+import { MovieDetailService } from '../../services/movie-detail.service';
+import { LijstrException } from '../../../core/exceptions';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'lijstr-movie-comment-form',
@@ -11,29 +12,29 @@ import { LijstrException } from "../../../core/exceptions";
 })
 export class MovieCommentFormComponent implements OnChanges {
 
-  @ViewChild('commentForm') private form : NgForm;
+  @ViewChild('commentForm') private form: NgForm;
 
-  @Input() movie : MovieDetail;
+  @Input() movie: MovieDetail;
   @Output() newComment = new EventEmitter<any>();
 
-  submitting : boolean;
-  comment : string;
-  error : LijstrException;
+  submitting: boolean;
+  comment: string;
+  error: LijstrException;
 
-  constructor(private detailService : MovieDetailService) {
+  constructor(private detailService: MovieDetailService) {
   }
 
-  ngOnChanges() : void {
+  ngOnChanges(): void {
     this.submitting = false;
     this.comment = null;
     this.error = null;
     this.form.reset();
   }
 
-  onSubmit() : void {
+  onSubmit(): void {
     this.submitting = true;
     this.detailService.placeComment(this.movie.id, this.comment)
-      .finally(() => this.submitting = false)
+      .pipe(finalize(() => this.submitting = false))
       .subscribe(
         (result) => {
           this.newComment.emit(result);

@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { MovieSummary } from "../../models/movie";
-import { ListPagerSorting } from "./list-pager-sorting";
-import { ListPagerKeys } from "./list-pager-keys";
+import { Component, Input, OnInit } from '@angular/core';
+import { MovieSummary } from '../../models/movie';
+import { ListPagerSorting } from './list-pager-sorting';
+import { ListPagerKeys } from './list-pager-keys';
 
 export interface RowCaller {
-  goToRow(row : number) : void;
+  goToRow(row: number): void;
 }
 
 @Component({
@@ -14,13 +14,13 @@ export interface RowCaller {
 })
 export class ListPagerComponent implements OnInit {
 
-  @Input() caller : RowCaller;
+  @Input() caller: RowCaller;
 
-  private onProp : string;
-  private direction : string;
+  private onProp: string;
+  private direction: string;
 
-  keys : string[];
-  private keyFoundAt : Map<string, number>;
+  keys: string[];
+  private keyFoundAt: Map<string, number>;
 
   constructor() {
   }
@@ -30,7 +30,7 @@ export class ListPagerComponent implements OnInit {
     this.direction = null;
   }
 
-  sort(rows : MovieSummary[]) : MovieSummary[] {
+  sort(rows: MovieSummary[]): MovieSummary[] {
     if (this.onProp == null) {
       this.onProp = 'title';
       this.direction = 'asc';
@@ -55,31 +55,31 @@ export class ListPagerComponent implements OnInit {
     return result;
   }
 
-  onSort(onProp : string, direction : string, availableRows : MovieSummary[]) : MovieSummary[] {
+  onSort(onProp: string, direction: string, availableRows: MovieSummary[]): MovieSummary[] {
     this.onProp = onProp;
     this.direction = direction;
     return this.sort(availableRows);
   }
 
-  goToKey(key : string) {
+  goToKey(key: string) {
     this.caller.goToRow(this.keyFoundAt.get(key));
   }
 
-  private isNumberProp() : boolean {
+  private isNumberProp(): boolean {
     return this.onProp == 'year' || this.onProp == 'imdbRating'
       || this.onProp == 'metacriticScore' || this.onProp == 'runtime';
   }
 
-  private isUserRatingProp() : boolean {
+  private isUserRatingProp(): boolean {
     return this.onProp.indexOf('latestRatings.') > -1;
   }
 
 
-  private buildKeys(rows : MovieSummary[]) : void {
+  private buildKeys(rows: MovieSummary[]): void {
     this.keys = [];
     this.keyFoundAt = new Map<string, number>();
 
-    let method : (movie : MovieSummary) => string;
+    let method: (movie: MovieSummary) => string;
     if (this.onProp == 'title') {
       method = ListPagerKeys.getTitleKey;
     } else if (this.isUserRatingProp()) {

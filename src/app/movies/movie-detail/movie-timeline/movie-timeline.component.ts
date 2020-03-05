@@ -1,10 +1,10 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { MovieDetail } from "../../models/movie";
-import { MovieRating } from "../../models/ratings";
-import { MovieComment, MovieCreation } from "../../models/timeline";
-import { MovieDetailService } from "../../services/movie-detail.service";
-import { LijstrException } from "../../../core/exceptions";
-import { User } from "../../../core/models/user";
+import { MovieDetail } from '../../models/movie';
+import { MovieRating } from '../../models/ratings';
+import { MovieComment, MovieCreation } from '../../models/timeline';
+import { MovieDetailService } from '../../services/movie-detail.service';
+import { LijstrException } from '../../../core/exceptions';
+import { User } from '../../../core/models/user';
 
 @Component({
   selector: 'lijstr-movie-timeline',
@@ -13,20 +13,20 @@ import { User } from "../../../core/models/user";
 })
 export class MovieTimelineComponent implements OnInit, OnChanges {
 
-  @ViewChild('timelineTop') timelineTop : ElementRef;
+  @ViewChild('timelineTop', {read: ElementRef}) timelineTop?: ElementRef<HTMLElement>;
 
-  @Input() movie : MovieDetail;
-  @Input() availableUsers : User[];
+  @Input() movie: MovieDetail;
+  @Input() availableUsers: User[];
 
-  fetching : boolean;
-  timeline : (MovieRating|MovieComment|MovieCreation)[];
-  error : LijstrException;
-
-
-  constructor(private detailService : MovieDetailService) { }
+  fetching: boolean;
+  timeline: (MovieRating|MovieComment|MovieCreation)[];
+  error: LijstrException;
 
 
-  ngOnChanges(changes : SimpleChanges) {
+  constructor(private detailService: MovieDetailService) { }
+
+
+  ngOnChanges(changes: SimpleChanges) {
     if ('movie' in changes) {
       this.fetching = false;
       this.timeline = null;
@@ -35,16 +35,22 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.scrolled();
+    // TODO: Fix scrolled()
+    this.fetch();
   }
 
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll', [])
   scrolled() {
+    if (!this.timelineTop) {
+      console.log('Nope', this.timelineTop);
+      return;
+    }
+
     let node = this.timelineTop.nativeElement;
-    while(node.offsetTop == 0 && node.parentElement != null) {
+    while (node.offsetTop == 0 && node.parentElement != null) {
       node = node.parentElement;
     }
-    let offsetTop = node.offsetTop;
+    const offsetTop = node.offsetTop;
 
     if (window.innerHeight + document.body.scrollTop > offsetTop) {
       if (!this.fetching && this.timeline == null) {
@@ -53,10 +59,10 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
     }
   }
 
-  getDisplayName(userId : number) {
-    if (userId == null) return null;
+  getDisplayName(userId: number) {
+    if (userId == null) { return null; }
     if (this.availableUsers != null) {
-      for (let user of this.availableUsers) {
+      for (const user of this.availableUsers) {
         if (user.id == userId) {
           return user.displayName;
         }
@@ -65,15 +71,15 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
     return 'Onbekend';
   }
 
-  isRating(obj : any) : boolean {
+  isRating(obj: any): boolean {
     return obj instanceof MovieRating;
   }
 
-  isComment(obj : any) : boolean {
+  isComment(obj: any): boolean {
     return obj instanceof MovieComment;
   }
 
-  isNewMovie(obj : any) : boolean {
+  isNewMovie(obj: any): boolean {
     return obj instanceof MovieCreation;
   }
 
@@ -91,7 +97,7 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
           this.timeline.push(new MovieCreation(currentMovie.created, currentMovie.addedBy));
         }
       },
-      (error : LijstrException) => {
+      (error: LijstrException) => {
         if (currentMovie == this.movie) {
           this.error = error;
         }

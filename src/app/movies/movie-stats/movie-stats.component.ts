@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { MovieStatsService } from "../services/movie-stats.service";
-import { MovieStats, MovieUserStats } from "../models/movie-stats";
-import { LijstrException } from "../../core/exceptions";
-import { MovieUsersService } from "../services/movie-users.service";
-import { User } from "../../core/models/user";
-import { PageResult } from "../../core/models/common";
-import { Observable } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { MovieStatsService } from '../services/movie-stats.service';
+import { MovieStats, MovieUserStats } from '../models/movie-stats';
+import { LijstrException } from '../../core/exceptions';
+import { MovieUsersService } from '../services/movie-users.service';
+import { User } from '../../core/models/user';
+import { PageResult } from '../../core/models/common';
+import { Observable } from 'rxjs';
 
 export class UserWrapper {
-  constructor(public user : string, public stats : MovieUserStats) {
+  constructor(public user: string, public stats: MovieUserStats) {
   }
 }
 
@@ -19,25 +19,25 @@ export class UserWrapper {
 })
 export class MovieStatsComponent implements OnInit {
 
-  keys = ["filledIn", "seen", "notSeen", "noIdea", "unknownRating", "withComment"];
+  constructor(private statsService: MovieStatsService,
+              private movieUsersService: MovieUsersService) { }
 
-  recentlyAddedFunc = (page : number) : Observable<PageResult<any>> =>
-    this.statsService.getRecentlyAdded(page);
-  newRatingsFunc = (page : number) : Observable<PageResult<any>> =>
-    this.statsService.getNewRatings(page);
-  newCommentsFunc = (page : number) : Observable<PageResult<any>> =>
-    this.statsService.getNewComments(page);
+  keys = ['filledIn', 'seen', 'notSeen', 'noIdea', 'unknownRating', 'withComment'];
 
-  stats : MovieStats;
-  userStats : UserWrapper[];
-  lazyStats : string[];
-  ceilings : Map<string, any>;
-  error : LijstrException;
+  stats: MovieStats;
+  userStats: UserWrapper[];
+  lazyStats: string[];
+  ceilings: Map<string, any>;
+  error: LijstrException;
 
-  users : User[];
+  users: User[];
 
-  constructor(private statsService : MovieStatsService,
-              private movieUsersService : MovieUsersService) { }
+  recentlyAddedFunc = (page: number): Observable<PageResult<any>> =>
+    this.statsService.getRecentlyAdded(page)
+  newRatingsFunc = (page: number): Observable<PageResult<any>> =>
+    this.statsService.getNewRatings(page)
+  newCommentsFunc = (page: number): Observable<PageResult<any>> =>
+    this.statsService.getNewComments(page)
 
   ngOnInit() {
     this.statsService.getStats().subscribe(
@@ -56,13 +56,13 @@ export class MovieStatsComponent implements OnInit {
     );
   }
 
-  getClassesForKey(key : string, userWrapper : UserWrapper) {
+  getClassesForKey(key: string, userWrapper: UserWrapper) {
     const ceilings = this.ceilings.get(key);
     const value = userWrapper.stats[key];
     return {
-      'danger': ceilings['low'] == value,
-      'success': ceilings['high'] == value && key != 'filledIn'
-    }
+      danger: ceilings.low == value,
+      success: ceilings.high == value && key != 'filledIn'
+    };
   }
 
   private setup() {
@@ -72,9 +72,9 @@ export class MovieStatsComponent implements OnInit {
 
     this.userStats = [];
     this.lazyStats = [];
-    for (let user of this.users) {
+    for (const user of this.users) {
       if (user.id in this.stats.userToStats) {
-        const statValue : MovieUserStats = this.stats.userToStats[user.id];
+        const statValue: MovieUserStats = this.stats.userToStats[user.id];
         if (statValue.filledIn == 0) {
           this.lazyStats.push(user.displayName);
         } else {
@@ -84,18 +84,18 @@ export class MovieStatsComponent implements OnInit {
     }
 
     this.ceilings = new Map();
-    for (let key of this.keys) {
+    for (const key of this.keys) {
       this.determineCeilings(key);
     }
-    this.determineCeilings("averageRating");
+    this.determineCeilings('averageRating');
   }
 
-  private determineCeilings(key : string) {
+  private determineCeilings(key: string) {
     let lowest = Number.MAX_SAFE_INTEGER;
     let highest = Number.MIN_SAFE_INTEGER;
 
-    for (let w of this.userStats) {
-      let stat = w.stats[key];
+    for (const w of this.userStats) {
+      const stat = w.stats[key];
       if (stat < lowest) {
         lowest = stat;
       }
@@ -104,7 +104,7 @@ export class MovieStatsComponent implements OnInit {
       }
     }
 
-    this.ceilings.set(key, {'low' : lowest, 'high' : highest});
+    this.ceilings.set(key, {low : lowest, high : highest});
   }
 
 

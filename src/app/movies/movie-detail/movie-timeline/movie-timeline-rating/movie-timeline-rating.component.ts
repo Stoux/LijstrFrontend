@@ -1,6 +1,6 @@
-import { Component, Input } from "@angular/core";
-import { MovieRating } from "../../../models/ratings";
-import { MovieRatingsService } from "../../../services/movie-ratings.service";
+import { Component, Input } from '@angular/core';
+import { MovieRating } from '../../../models/ratings';
+import { MovieRatingsService } from '../../../services/movie-ratings.service';
 
 @Component({
   selector: 'lijstr-movie-timeline-rating',
@@ -8,16 +8,16 @@ import { MovieRatingsService } from "../../../services/movie-ratings.service";
 })
 export class MovieTimelineRatingComponent {
 
-  @Input() rating : MovieRating;
-  @Input() displayName : string;
+  @Input() rating: MovieRating;
+  @Input() displayName: string;
 
-  constructor(private ratingsService : MovieRatingsService) { }
+  constructor(private ratingsService: MovieRatingsService) { }
 
-  shortRatingText() : string {
+  shortRatingText(): string {
     return this.ratingsService.shortRatingText(this.rating);
   }
 
-  longRatingText() : string {
+  longRatingText(): string {
     return this.ratingsService.longRatingText(this.rating);
   }
 

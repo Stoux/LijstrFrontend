@@ -2,12 +2,13 @@
   <div class="col-xs-12 col-sm-6">
     <div class="form-group">
       <label>Genre</label>
-      <ng-select [allowClear]="true"
+      <ng-select [clearable]="true"
                  [multiple]="true"
                  [items]="availableGenres"
                  [disabled]="genres === null"
                  [placeholder]="genresPlaceholder"
-                 (data)="setSelectedGenres($event)">
+                 (change)="emitChange()"
+                 [(ngModel)]="selectedGenres">
       </ng-select>
     </div>
   </div>
@@ -15,13 +16,15 @@
   <div class="col-xs-12 col-sm-6">
     <div class="form-group">
       <label>Taal</label>
-      <ng-select [allowClear]="true"
+      <ng-select [clearable]="true"
                  [multiple]="true"
                  [items]="availableLanguages"
                  [disabled]="languages === null"
                  [placeholder]="languagesPlaceholder"
-                 (data)="setSelectedLanguages($event)">
+                 (change)="emitChange()"
+                 [(ngModel)]="selectedLanguages">
       </ng-select>
     </div>
   </div>
+
 </div>

@@ -1,6 +1,6 @@
-import { Component, Input } from "@angular/core";
-import { UserRating } from "../../../models/ratings";
-import { MovieRatingsService } from "../../../services/movie-ratings.service";
+import { Component, Input } from '@angular/core';
+import { UserRating } from '../../../models/ratings';
+import { MovieRatingsService } from '../../../services/movie-ratings.service';
 
 @Component({
   selector: 'lijstr-movie-single-rating',
@@ -8,8 +8,8 @@ import { MovieRatingsService } from "../../../services/movie-ratings.service";
 })
 export class MovieSingleRatingComponent {
 
-  @Input() userRating : UserRating;
-  @Input() ratingsService : MovieRatingsService;
+  @Input() userRating: UserRating;
+  @Input() ratingsService: MovieRatingsService;
 
   constructor() {
   }

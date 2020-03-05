@@ -1,11 +1,11 @@
-import { ShortRating } from "./ratings";
+import { ShortRating } from './ratings';
 
 /**
  * Payload for adding a new movie.
  */
 export class AddMoviePayload {
 
-  constructor(public imdbId : string, public youtubeId : string) {
+  constructor(public imdbId: string, public youtubeId: string) {
   }
 
 }
@@ -16,7 +16,7 @@ export class AddMoviePayload {
  */
 export class MovieRequest extends AddMoviePayload {
 
-  ratingRequest : ShortRating;
+  ratingRequest: ShortRating;
 
 }
 
@@ -25,14 +25,14 @@ export class MovieRequest extends AddMoviePayload {
  */
 export class SavedMovieRequest extends AddMoviePayload {
 
-  id : number;
-  requestedBy : number;
-  created : number;
+  id: number;
+  requestedBy: number;
+  created: number;
 
-  title : string;
-  year : string;
-  imdbRating : string;
+  title: string;
+  year: string;
+  imdbRating: string;
 
-  approvedBy : number;
+  approvedBy: number;
 
 }

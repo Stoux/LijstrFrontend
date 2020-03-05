@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ImdbService} from "../../../shared/services/imdb.service";
-import {MovieSummary} from "../../models/movie";
+import {ImdbService} from '../../../shared/services/imdb.service';
+import {MovieSummary} from '../../models/movie';
 
 @Component({
   selector: 'lijstr-list-extended-filter',
@@ -11,21 +11,21 @@ export class ListExtendedFilterComponent implements OnInit {
 
   @Output() filtered = new EventEmitter<MovieSummary[]>();
 
-  private active : boolean;
-  private summaries : MovieSummary[];
-  private loading : boolean;
+  private active: boolean;
+  private summaries: MovieSummary[];
+  private loading: boolean;
 
-  languages : SelectItem[];
-  availableLanguages : SelectItem[];
-  selectedLanguages : SelectItem[];
-  languagesPlaceholder : string;
+  languages: SelectItem[];
+  availableLanguages: SelectItem[];
+  selectedLanguages: SelectItem[];
+  languagesPlaceholder: string;
 
-  genres : SelectItem[];
-  availableGenres : SelectItem[];
-  selectedGenres : SelectItem[];
-  genresPlaceholder : string;
+  genres: SelectItem[];
+  availableGenres: SelectItem[];
+  selectedGenres: SelectItem[];
+  genresPlaceholder: string;
 
-  constructor(private imdbService : ImdbService) {
+  constructor(private imdbService: ImdbService) {
     this.loading = false;
   }
 
@@ -41,36 +41,26 @@ export class ListExtendedFilterComponent implements OnInit {
     this.languagesPlaceholder = 'Laden...';
   }
 
-  onNewList(summaries : MovieSummary[]) : MovieSummary[] {
-    this.summaries = summaries; //Save the original list
+  onNewList(summaries: MovieSummary[]): MovieSummary[] {
+    this.summaries = summaries; // Save the original list
     if (!this.active) {
       return summaries;
     }
     return this.filter(summaries);
   }
 
-  setSelectedGenres(selected : SelectItem[]) {
-    this.selectedGenres = selected;
-    this.emitChange();
-  }
-
-  setSelectedLanguages(selected : SelectItem[]) {
-    this.selectedLanguages = selected;
-    this.emitChange();
-  }
-
-  private emitChange() {
+  emitChange() {
     this.filtered.emit(this.filter(this.summaries));
   }
 
-  private filter(summaries : MovieSummary[]) : MovieSummary[] {
+  private filter(summaries: MovieSummary[]): MovieSummary[] {
     let result = summaries;
 
-    //Go through the filters
+    // Go through the filters
     result = this.applyFilter(result, this.selectedGenres, s => s.genres);
     result = this.applyFilter(result, this.selectedLanguages, s => s.languages);
 
-    //Set available options
+    // Set available options
     this.setAvailable(
       result, this.genres, s => s.genres,
       options => this.availableGenres = options
@@ -84,17 +74,17 @@ export class ListExtendedFilterComponent implements OnInit {
     return result;
   }
 
-  private applyFilter(summaries : MovieSummary[],
-                      selected : SelectItem[],
-                      getSummaryMap : (s : MovieSummary) => any) : MovieSummary[] {
+  private applyFilter(summaries: MovieSummary[],
+                      selected: SelectItem[],
+                      getSummaryMap: (s: MovieSummary) => any): MovieSummary[] {
     if (selected.length === 0) {
       return summaries;
     }
 
-    //Filter out all that don't have all required
+    // Filter out all that don't have all required
     return summaries.filter(summary => {
       const items = getSummaryMap(summary);
-      for (let item of selected) {
+      for (const item of selected) {
         if (!(item.id in items)) {
           return false;
         }
@@ -105,27 +95,29 @@ export class ListExtendedFilterComponent implements OnInit {
   }
 
   private setAvailable(summaries,
-                       allOptions : SelectItem[],
-                       getSummaryMap : (s : MovieSummary) => any,
-                       setMethod : (options : SelectItem[]) => void) {
+                       allOptions: SelectItem[],
+                       getSummaryMap: (s: MovieSummary) => any,
+                       setMethod: (options: SelectItem[]) => void) {
     const available = new Map();
-    for (let summary of summaries) {
+    for (const summary of summaries) {
       const items = getSummaryMap(summary);
-      for (let key in items) {
-        available.set(key, true);
+      for (const key in items) {
+        if (items.hasOwnProperty(key)) {
+          available.set(key, true);
+        }
       }
     }
 
-    //Set available
+    // Set available
     setMethod(allOptions.filter(item => available.has(item.id)));
   }
 
-  setEnabled(active : boolean) : void {
+  setEnabled(active: boolean): void {
     this.active = active;
 
     if (active) {
       if (this.genres === null && !this.loading) {
-        //Load the data
+        // Load the data
         this.loading = true;
 
         this.imdbService.getGenres().subscribe(
@@ -149,21 +141,21 @@ export class ListExtendedFilterComponent implements OnInit {
           }
         );
       } else if (this.hasSelectedItems()) {
-        //Reapply the filters
+        // Reapply the filters
         this.emitChange();
 
       }
     }
 
     if (!active && this.hasSelectedItems()) {
-      //Reset the list
+      // Reset the list
       this.filtered.emit(this.summaries);
     }
   }
 
-  private toSelectFormat(map : Map<string, string>) : SelectItem[] {
-    const result : SelectItem[] = [];
-    for (let key in map) {
+  private toSelectFormat(map: Map<string, string>): SelectItem[] {
+    const result: SelectItem[] = [];
+    for (const key of map.keys()) {
       result.push(new SelectItem(key, map[key]));
     }
     result.sort((a, b) => {
@@ -182,12 +174,12 @@ export class ListExtendedFilterComponent implements OnInit {
     return result;
   }
 
-  private hasSelectedItems() : boolean {
+  private hasSelectedItems(): boolean {
     return this.selectedLanguages.length !== 0 || this.selectedGenres.length !== 0;
   }
 
 }
 
 class SelectItem {
-  constructor(public id : string, public text : string) { }
+  constructor(public id: string, public text: string) { }
 }

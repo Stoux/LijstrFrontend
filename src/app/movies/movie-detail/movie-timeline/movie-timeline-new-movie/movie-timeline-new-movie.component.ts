@@ -1,5 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { MovieCreation } from "../../../models/timeline";
+import { Component, Input } from '@angular/core';
+import { MovieCreation } from '../../../models/timeline';
 
 @Component({
   selector: 'lijstr-movie-timeline-new-movie',
@@ -7,8 +7,8 @@ import { MovieCreation } from "../../../models/timeline";
 })
 export class MovieTimelineNewMovieComponent {
 
-  @Input() creation : MovieCreation;
-  @Input() displayName : string;
+  @Input() creation: MovieCreation;
+  @Input() displayName: string;
 
   constructor() { }
 

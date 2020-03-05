@@ -1,66 +1,66 @@
-import { ShortRating } from "./ratings";
-import { Genre, Language } from "./imdb";
+import { ShortRating } from './ratings';
+import { Genre, Language } from './imdb';
 
 export class MovieSummary {
 
-  id : number;
-  imdbId : string;
-  title : string;
-  year : number;
+  id: number;
+  imdbId: string;
+  title: string;
+  year: number;
 
-  imdbRating : number;
-  metacriticScore : number;
+  imdbRating: number;
+  metacriticScore: number;
 
-  ageRating : string;
+  ageRating: string;
 
-  genres : Map<number, string>;
-  languages : Map<number, string>;
+  genres: Map<number, string>;
+  languages: Map<number, string>;
 
-  latestRatings : Map<number, ShortRating>;
+  latestRatings: Map<number, ShortRating>;
 
-  constructor(title : string) {
+  constructor(title: string) {
     this.title = title;
   }
 }
 
 export class MovieDetail {
 
-  id : number;
-  oldSiteId : number;
+  id: number;
+  oldSiteId: number;
 
-  created : number;
-  lastUpdated : number;
+  created: number;
+  lastUpdated: number;
 
-  imdbId : string;
-  title : string;
-  originalTitle : string;
-  dutchTitle : string;
+  imdbId: string;
+  title: string;
+  originalTitle: string;
+  dutchTitle: string;
 
-  year : number;
-  released : number;
-  runtime : number;
+  year: number;
+  released: number;
+  runtime: number;
 
-  imdbRating : number;
-  imdbVotes : number;
-  metacriticScore : number;
+  imdbRating: number;
+  imdbVotes: number;
+  metacriticScore: number;
 
-  shortPlot : string;
-  longPlot : string;
+  shortPlot: string;
+  longPlot: string;
 
-  ageRating : string;
-  hasPoster : boolean;
+  ageRating: string;
+  hasPoster: boolean;
 
-  youtubeUrl : string;
+  youtubeUrl: string;
 
-  addedBy : number;
+  addedBy: number;
 
-  genres : Genre[];
-  languages : Language[];
+  genres: Genre[];
+  languages: Language[];
 
-  latestMovieRatings : ShortRating[];
+  latestMovieRatings: ShortRating[];
 
 }
 
 export class MovieUserMeta {
-  wantToWatch : boolean;
+  wantToWatch: boolean;
 }

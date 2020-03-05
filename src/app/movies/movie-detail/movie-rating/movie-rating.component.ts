@@ -1,12 +1,13 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild, EventEmitter, Output } from "@angular/core";
-import { MovieDetail } from "../../models/movie";
-import { Seen, MovieRating } from "../../models/ratings";
-import { DataWrapper } from "../../../core/models/common";
-import { LijstrException } from "../../../core/exceptions";
-import { NgForm } from "@angular/forms";
-import { Observable, Subscription } from "rxjs";
-import { MovieRatingsService } from "../../services/movie-ratings.service";
-import { MovieOutstandingService } from "../../../core/services/section/movie-outstanding.service";
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, EventEmitter, Output } from '@angular/core';
+import { MovieDetail } from '../../models/movie';
+import { Seen, MovieRating } from '../../models/ratings';
+import { DataWrapper } from '../../../core/models/common';
+import { LijstrException } from '../../../core/exceptions';
+import { NgForm } from '@angular/forms';
+import {Observable, Subscription, timer} from 'rxjs';
+import { MovieRatingsService } from '../../services/movie-ratings.service';
+import { MovieOutstandingService } from '../../../core/services/section/movie-outstanding.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'lijstr-movie-rating',
@@ -15,31 +16,8 @@ import { MovieOutstandingService } from "../../../core/services/section/movie-ou
 })
 export class MovieRatingComponent implements OnChanges {
 
-  private static readonly EDIT_BUFFER : number = (30 * 60 * 1000);
-
-  @ViewChild('ratingForm') private form : NgForm;
-
-  @Input() private movie : MovieDetail;
-  @Input() private findOldRatings : boolean; //Should try to find old ratings
-  @Input() showNotSeenButton : boolean;
-  @Output() private ratingChanged : EventEmitter<MovieRating>;
-
-  submitting : boolean;
-  changeSubscription : Subscription;
-  cachedRating : MovieRating;
-  userRating : MovieRating;
-  error : string;
-  foundOldRating : boolean;
-
-  seenOptions = [
-    {value: Seen.YES, title: "Ja"},
-    {value: Seen.NO, title: "Nee"},
-    {value: Seen.UNKNOWN, title: "Weet niet meer"}
-  ];
-  unknownRating : boolean;
-
-  constructor(private ratingsService : MovieRatingsService,
-              private outstandingService : MovieOutstandingService) {
+  constructor(private ratingsService: MovieRatingsService,
+              private outstandingService: MovieOutstandingService) {
     this.unknownRating = false;
     this.submitting = false;
     this.findOldRatings = true;
@@ -47,7 +25,34 @@ export class MovieRatingComponent implements OnChanges {
     this.ratingChanged = new EventEmitter();
   }
 
-  ngOnChanges(changes : SimpleChanges) {
+  private static readonly EDIT_BUFFER: number = (30 * 60 * 1000);
+
+  @ViewChild('ratingForm') private form: NgForm;
+
+  @Input() private movie: MovieDetail;
+  @Input() private findOldRatings: boolean; // Should try to find old ratings
+  @Input() showNotSeenButton: boolean;
+  @Output() private ratingChanged: EventEmitter<MovieRating>;
+
+  submitting: boolean;
+  changeSubscription: Subscription;
+  cachedRating: MovieRating;
+  userRating: MovieRating;
+  error: string;
+  foundOldRating: boolean;
+
+  seenOptions = [
+    {value: Seen.YES, title: 'Ja'},
+    {value: Seen.NO, title: 'Nee'},
+    {value: Seen.UNKNOWN, title: 'Weet niet meer'}
+  ];
+  unknownRating: boolean;
+
+  private static isEditable(rating: MovieRating) {
+    return new Date().getTime() < rating.created + MovieRatingComponent.EDIT_BUFFER;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
     this.error = null;
 
     if ('movie' in changes) {
@@ -60,13 +65,13 @@ export class MovieRatingComponent implements OnChanges {
       if (this.findOldRatings) {
         this.ratingsService.getLatestMovieRatingForUser(this.movie.id)
           .subscribe(
-            (ratingWrapper : DataWrapper<MovieRating>) => {
+            (ratingWrapper: DataWrapper<MovieRating>) => {
               if (this.movie.id == currentMovie.id && ratingWrapper.data != null) {
                 this.foundOldRating = true;
                 this.setActiveIfEditable(ratingWrapper.data);
               }
             },
-            (error : LijstrException) => {
+            (error: LijstrException) => {
               this.error = LijstrException.toString(error);
             }
           );
@@ -86,19 +91,19 @@ export class MovieRatingComponent implements OnChanges {
     }
 
     const isNewRating = !this.foundOldRating;
-    let ratingCall : Observable<MovieRating>;
+    let ratingCall: Observable<MovieRating>;
     if (this.isEdit()) {
       ratingCall = this.ratingsService.editRating(this.movie.id, this.userRating);
     } else {
       ratingCall = this.ratingsService.addRating(this.movie.id, this.userRating);
     }
 
-    ratingCall.finally(() => this.submitting = false)
+    ratingCall.pipe(finalize(() => this.submitting = false))
       .subscribe(
-        (newRating : MovieRating) => {
+        (newRating: MovieRating) => {
           this.setActiveIfEditable(newRating);
           this.ratingsService.onChange(this.movie.id, newRating);
-          this.changeSubscription = Observable.timer(3000).subscribe(
+          this.changeSubscription = timer(3000).subscribe(
             x => this.changeSubscription = null
           );
 
@@ -108,7 +113,7 @@ export class MovieRatingComponent implements OnChanges {
 
           this.ratingChanged.emit(newRating);
         },
-        (error : LijstrException) => {
+        (error: LijstrException) => {
           this.error = LijstrException.toString(error);
         },
         () => this.submitting = false
@@ -128,7 +133,7 @@ export class MovieRatingComponent implements OnChanges {
       return true;
     }
 
-    let curRatingvalue = this.unknownRating ? null : this.userRating.rating;
+    const curRatingvalue = this.unknownRating ? null : this.userRating.rating;
     return curRatingvalue != this.cachedRating.rating;
   }
 
@@ -143,20 +148,20 @@ export class MovieRatingComponent implements OnChanges {
     }
   }
 
-  handleRatingKeyPress(key : string) {
+  handleRatingKeyPress(key: string) {
     if (key == '?') {
       this.toggleUnknownRating();
     }
   }
 
-  private setActiveRating(rating : MovieRating) {
+  private setActiveRating(rating: MovieRating) {
     this.userRating = rating;
     this.unknownRating = this.isSeenYes() && rating.rating == null;
     this.cachedRating = new MovieRating();
     this.copyFields(rating, this.cachedRating);
   }
 
-  private setActiveIfEditable(rating : MovieRating) {
+  private setActiveIfEditable(rating: MovieRating) {
     this.foundOldRating = true;
     if (MovieRatingComponent.isEditable(rating)) {
       this.setActiveRating(rating);
@@ -167,14 +172,10 @@ export class MovieRatingComponent implements OnChanges {
     }
   }
 
-  private copyFields(source : MovieRating, target : MovieRating) {
+  private copyFields(source: MovieRating, target: MovieRating) {
     target.seen = source.seen;
     target.rating = source.rating;
     target.comment = source.comment;
-  }
-
-  private static isEditable(rating : MovieRating) {
-    return new Date().getTime() < rating.created + MovieRatingComponent.EDIT_BUFFER;
   }
 
 

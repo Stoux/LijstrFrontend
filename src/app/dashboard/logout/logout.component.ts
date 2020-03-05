@@ -1,6 +1,5 @@
-import { Component } from "@angular/core";
-import { AuthService } from "../../core/services/auth.service";
-import { LoginService } from "../../core/services/login.service";
+import { Component } from '@angular/core';
+import { LoginService } from '../../core/services/login.service';
 
 @Component({
   selector: 'lijstr-logout',
@@ -9,12 +8,12 @@ import { LoginService } from "../../core/services/login.service";
 })
 export class LogoutComponent {
 
-  constructor(private loginService : LoginService) {
+  constructor(private loginService: LoginService) {
   }
 
   logout() {
     this.loginService.logout(false);
-    window.location.replace("/");
+    window.location.replace('/');
   }
 
 }

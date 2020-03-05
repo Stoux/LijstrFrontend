@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { FullUser } from "../../../core/models/user";
+import { Component, OnInit, Input } from '@angular/core';
+import { FullUser } from '../../../core/models/user';
 
 @Component({
   selector: 'lijstr-edit-user',
@@ -8,7 +8,7 @@ import { FullUser } from "../../../core/models/user";
 })
 export class EditUserComponent implements OnInit {
 
-  @Input() user : FullUser;
+  @Input() user: FullUser;
 
   constructor() {
   }

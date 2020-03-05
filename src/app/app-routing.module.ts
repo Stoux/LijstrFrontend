@@ -1,10 +1,10 @@
-import { Routes, RouterModule } from "@angular/router";
-import { HomeComponent } from "./core/home/home.component";
-import { NgModule } from "@angular/core";
-import { ErrorPageComponent } from "./core/error-page/error-page.component";
-import { AdminGuard } from "./core/guards/admin-guard.service";
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './core/home/home.component';
+import { NgModule } from '@angular/core';
+import { ErrorPageComponent } from './core/error-page/error-page.component';
+import { AdminGuard } from './core/guards/admin-guard.service';
 
-export const routes : Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
@@ -12,16 +12,16 @@ export const routes : Routes = [
   },
   {
     path: 'movies',
-    loadChildren: 'app/movies/movies.module#MoviesModule'
+    loadChildren: () => import('./movies/movies.module').then(m => m.MoviesModule),
   },
   {
     path: 'admin',
-    loadChildren: 'app/admin/admin.module#AdminModule',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
     canActivate: [AdminGuard]
   },
   {
     path: 'dashboard',
-    loadChildren: 'app/dashboard/dashboard.module#DashboardModule'
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {
     path: '**',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MovieDetail } from "../../models/movie";
-import { environment } from "../../../../environments/environment";
+import { MovieDetail } from '../../models/movie';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'lijstr-movie-detail-poster',
@@ -9,13 +9,13 @@ import { environment } from "../../../../environments/environment";
 })
 export class MovieDetailPosterComponent {
 
-  @Input() movie : MovieDetail;
+  @Input() movie: MovieDetail;
 
   constructor() { }
 
-  getPosterURL() : string {
-    return "http" + (environment.endpointSSL ? "s" : "") + "://" + environment.endpoint +
-      "/movies/" + this.movie.id + "/poster";
+  getPosterURL(): string {
+    return 'http' + (environment.endpointSSL ? 's' : '') + '://' + environment.endpoint +
+      '/movies/' + this.movie.id + '/poster';
   }
 
 }

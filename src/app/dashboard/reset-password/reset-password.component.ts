@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { NewPasswordRequest } from "../../core/models/authentication";
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { LijstrException } from "../../core/exceptions";
-import { LoginService } from "../../core/services/login.service";
-import { WithoutUserComponent } from "../core/WithoutUserComponent";
-import { UserService } from "../../core/services/user.service";
-import { RedirectService } from "../../core/services/redirect.service";
+import { NewPasswordRequest } from '../../core/models/authentication';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { LijstrException } from '../../core/exceptions';
+import { LoginService } from '../../core/services/login.service';
+import { WithoutUserComponent } from '../core/WithoutUserComponent';
+import { UserService } from '../../core/services/user.service';
+import { RedirectService } from '../../core/services/redirect.service';
 
 @Component({
   selector: 'lijstr-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent extends WithoutUserComponent {
+export class ResetPasswordComponent extends WithoutUserComponent implements OnInit {
 
-  submitting : boolean;
-  error : string;
+  submitting: boolean;
+  error: string;
 
-  request : NewPasswordRequest;
-  repeatPassword : string;
+  request: NewPasswordRequest;
+  repeatPassword: string;
 
-  constructor(private loginService : LoginService,
-              userService : UserService,
-              redirectService : RedirectService,
-              router : Router,
-              private activatedRoute : ActivatedRoute) {
+  constructor(private loginService: LoginService,
+              userService: UserService,
+              redirectService: RedirectService,
+              router: Router,
+              private activatedRoute: ActivatedRoute) {
     super(userService, router, redirectService);
   }
 
@@ -32,12 +32,12 @@ export class ResetPasswordComponent extends WithoutUserComponent {
     this.submitting = false;
     this.request = new NewPasswordRequest();
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      if (!params['token']) {
+      if (!params.token) {
         this.router.navigate(['/']);
         return;
       }
 
-      this.request.resetToken = params['token'];
+      this.request.resetToken = params.token;
     });
 
     super.ngOnInit();
@@ -50,7 +50,7 @@ export class ResetPasswordComponent extends WithoutUserComponent {
       () => {
         this.router.navigate(['/dashboard/login']);
       },
-      (error : LijstrException) => {
+      (error: LijstrException) => {
         this.submitting = false;
         this.error = LijstrException.toString(error);
       }

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { MovieSummary } from "../../models/movie";
-import { MovieListService } from "../../services/movie-list.service";
-import { UserService } from "../../../core/services/user.service";
-import { Subscription } from "rxjs";
-import { LijstrException } from "../../../core/exceptions";
+import { MovieSummary } from '../../models/movie';
+import { MovieListService } from '../../services/movie-list.service';
+import { UserService } from '../../../core/services/user.service';
+import { Subscription } from 'rxjs';
+import { LijstrException } from '../../../core/exceptions';
 
 @Component({
   selector: 'lijstr-list-filter',
@@ -15,20 +15,20 @@ export class ListFilterComponent implements OnInit, OnDestroy {
   @Output() filtered = new EventEmitter<MovieSummary[]>();
   @Output() error = new EventEmitter<LijstrException>();
 
-  summaries : MovieSummary[];
-  private filter : string;
+  summaries: MovieSummary[];
+  private filter: string;
 
-  private wantToWatch : boolean;
-  private wantToWatchMap : Map<number, number>;
+  public wantToWatch: boolean;
+  public wantToWatchMap: Map<number, number>;
 
-  private listSubscription : Subscription;
-  private userSubscription : Subscription;
-  isMovieUser : boolean;
+  private listSubscription: Subscription;
+  private userSubscription: Subscription;
+  isMovieUser: boolean;
 
-  constructor(private userService : UserService,
-              private listService : MovieListService) { }
+  constructor(private userService: UserService,
+              private listService: MovieListService) { }
 
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.isMovieUser = false;
     this.wantToWatch = false;
     this.wantToWatchMap = null;
@@ -48,7 +48,7 @@ export class ListFilterComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() : void {
+  ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
     this.listSubscription.unsubscribe();
   }
@@ -65,7 +65,7 @@ export class ListFilterComponent implements OnInit, OnDestroy {
       this.listService.getWantToWatchMovies().subscribe(
         movies => {
           this.wantToWatchMap = new Map();
-          for (let movie of movies) {
+          for (const movie of movies) {
             this.wantToWatchMap.set(movie, movie);
           }
           this.applyFilters();
@@ -82,18 +82,18 @@ export class ListFilterComponent implements OnInit, OnDestroy {
   private applyFilters() {
     let result = this.summaries;
 
-    //Apply the text filter (on title)
-    let filter = this.filter;
+    // Apply the text filter (on title)
+    const filter = this.filter;
     if (filter != null && filter.length > 0) {
-      result = result.filter(function (d) {
+      result = result.filter(d => {
         return d.title.toLowerCase().indexOf(filter) !== -1 || !filter;
       });
     }
 
-    //Apply 'wantToWatch' movies
+    // Apply 'wantToWatch' movies
     if (this.wantToWatch && this.wantToWatchMap != null) {
       const map = this.wantToWatchMap;
-      result = result.filter(function (d) {
+      result = result.filter(d => {
         return map.has(d.id);
       });
     }

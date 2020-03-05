@@ -15,7 +15,7 @@
     <td>
       <ul class="list-unstyled">
         <li *ngFor="let gp of user.grantedPermissions">
-          {{gp.authority | slice:5 | lowercase}}
+          {{gp.authority | lowercase | slice:5 }}
         </li>
       </ul>
     </td>

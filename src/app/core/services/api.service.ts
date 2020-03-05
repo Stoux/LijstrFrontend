@@ -1,53 +1,76 @@
-import { Injectable } from "@angular/core";
-import { Http, Response, RequestOptions, Headers } from "@angular/http";
-import { environment } from "../../../environments/environment";
-import { LijstrException } from "../exceptions";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { LijstrException } from '../exceptions';
+import {Observable, throwError} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 /**
  * A request header injector.
  */
 export interface Injector {
-  inject(headers : Headers, authToken : boolean) : void;
+  inject(headers: HttpHeaders, authToken: boolean): HttpHeaders;
 }
 
 @Injectable()
 export class ApiService {
 
-  private readonly domain : string;
-  private readonly endpoint : string;
-  private http : Http;
-  private injectors : Injector[];
-
-  constructor(http : Http) {
+  constructor(http: HttpClient) {
     this.http = http;
     this.domain = environment.endpoint;
     this.endpoint = 'http' + (environment.endpointSSL ? 's' : '') + '://' + environment.endpoint;
     this.injectors = [];
   }
 
-  get<T>(path : string, authToken : boolean = true) : Observable<T> {
-    return this.http.get(this.endpoint + path, this.createRequestOptions(authToken))
-      .map(ApiService.handleResponse)
-      .catch(ApiService.handleError);
+  private readonly domain: string;
+  private readonly endpoint: string;
+  private http: HttpClient;
+  private injectors: Injector[];
+
+  private static handleResponse(response: Response) {
+    if (response.text()) {
+      return response.json();
+    } else {
+      return response;
+    }
   }
 
-  post<T>(path : string, body? : any, authToken : boolean = true) : Observable<T> {
-    return this.http.post(this.endpoint + path, body, this.createRequestOptions(authToken))
-      .map(ApiService.handleResponse)
-      .catch(ApiService.handleError);
+  private static handleError(error: HttpErrorResponse) {
+    let exception = null;
+
+    if (error.error instanceof ErrorEvent) {
+      console.error('[WTF] Server did not return a LijstrException.. \'' + error.toString() + '\'');
+      exception = LijstrException.forMessage(error.toString());
+    } else {
+      exception = new LijstrException().fromJSON(error.error);
+      console.log('[' + exception.status + '] [' + exception.error + '] ' + exception.message);
+    }
+
+    return throwError(exception);
   }
 
-  put<T>(path : string, body? : any, authToken : boolean = true) : Observable<T> {
-    return this.http.put(this.endpoint + path, body, this.createRequestOptions(authToken))
-      .map(ApiService.handleResponse)
-      .catch(ApiService.handleError);
+  get<T>(path: string, authToken: boolean = true): Observable<T> {
+    return this.http.get<T>(this.endpoint + path, this.createRequestOptions(authToken)).pipe(
+      catchError(ApiService.handleError)
+    );
   }
 
-  del<T>(path : string, authToken : boolean = true) : Observable<T> {
-    return this.http.delete(this.endpoint + path, this.createRequestOptions(authToken))
-      .map(ApiService.handleResponse)
-      .catch(ApiService.handleError);
+  post<T>(path: string, body?: any, authToken: boolean = true): Observable<T> {
+    return this.http.post<T>(this.endpoint + path, body, this.createRequestOptions(authToken)).pipe(
+      catchError(ApiService.handleError)
+    );
+  }
+
+  put<T>(path: string, body?: any, authToken: boolean = true): Observable<T> {
+    return this.http.put<T>(this.endpoint + path, body, this.createRequestOptions(authToken)).pipe(
+      catchError(ApiService.handleError)
+    );
+  }
+
+  del<T>(path: string, authToken: boolean = true): Observable<T> {
+    return this.http.delete<T>(this.endpoint + path, this.createRequestOptions(authToken)).pipe(
+      catchError(ApiService.handleError)
+    );
   }
 
   /**
@@ -57,7 +80,7 @@ export class ApiService {
    *  - authToken (boolean whether an authToken should be injected)
    * @param interceptor the function
    */
-  addHeaderInterceptor(interceptor : Injector) {
+  addHeaderInterceptor(interceptor: Injector) {
     this.injectors.push(interceptor);
   }
 
@@ -68,35 +91,29 @@ export class ApiService {
    * the request depending on their individual settings.
    * @param authToken should inject authToken
    */
-  private createRequestOptions(authToken : boolean) {
-    let headers = new Headers({
+  private createRequestOptions(authToken: boolean): {
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    observe?: 'body';
+    params?: HttpParams | {
+      [param: string]: string | string[];
+    };
+    reportProgress?: boolean;
+    responseType?: 'json';
+    withCredentials?: boolean;
+  } {
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Allow-Control-Allow-Origin': this.domain
     });
-    for (let injector of this.injectors) {
-      injector.inject(headers, authToken);
+    for (const injector of this.injectors) {
+      headers = injector.inject(headers, authToken);
     }
-    return new RequestOptions({headers: headers});
-  }
 
-  private static handleResponse(response : Response) {
-    if (response.text()) {
-      return response.json();
-    } else {
-      return response;
-    }
-  }
-
-  private static handleError(error : Response | any) {
-    let exception = null;
-    if (error instanceof Response) {
-      exception = new LijstrException().fromJSON(error.json());
-      console.log("[" + exception.status + "] [" + exception.error + "] " + exception.message);
-    } else {
-      console.error("[WTF] Server did not return a LijstrException.. '" + error.toString() + "'");
-      exception = LijstrException.forMessage(error.toString())
-    }
-    return Observable.throw(exception);
+    return {
+      headers,
+    };
   }
 
 }

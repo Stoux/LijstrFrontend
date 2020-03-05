@@ -1,21 +1,22 @@
-import { OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
-import { UserService } from "../../core/services/user.service";
-import { Router } from "@angular/router";
-import { RedirectService } from "../../core/services/redirect.service";
+import { OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserService } from '../../core/services/user.service';
+import { Router } from '@angular/router';
+import { RedirectService } from '../../core/services/redirect.service';
+import {filter} from 'rxjs/operators';
 
 export abstract class WithoutUserComponent implements OnInit, OnDestroy {
 
-  private userSubscription : Subscription;
+  private userSubscription: Subscription;
 
-  constructor(protected userService : UserService,
+  constructor(protected userService: UserService,
               protected router: Router,
-              protected redirect : RedirectService) {
+              protected redirect: RedirectService) {
   }
 
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.userSubscription = this.userService.userChangeFeed()
-      .filter(x => x != null)
+      .pipe(filter(x => x != null))
       .subscribe(
         user => {
           this.redirectRoute();
@@ -23,13 +24,13 @@ export abstract class WithoutUserComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnDestroy() : void {
+  ngOnDestroy(): void {
     this.unsubscribeUserFeed();
   }
 
   protected redirectRoute() {
     if (this.redirect.hasUrl()) {
-      let url = this.redirect.popUrl();
+      const url = this.redirect.popUrl();
       this.router.navigate([url]);
     } else {
       this.router.navigate(['/dashboard']);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MovieDetail } from "../../models/movie";
+import { MovieDetail } from '../../models/movie';
 
 @Component({
   selector: 'lijstr-movie-detail-summary',
@@ -8,8 +8,8 @@ import { MovieDetail } from "../../models/movie";
 })
 export class MovieDetailSummaryComponent {
 
-  @Input() movie : MovieDetail;
-  shortPlot : boolean;
+  @Input() movie: MovieDetail;
+  shortPlot: boolean;
 
   constructor() {
     this.shortPlot = true;

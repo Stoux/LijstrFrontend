@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { AdminUserService } from "../services/admin-user.service";
-import { FullUser } from "../../core/models/user";
-import { LijstrException } from "../../core/exceptions";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { AdminUserService } from '../services/admin-user.service';
+import { FullUser } from '../../core/models/user';
+import { LijstrException } from '../../core/exceptions';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'lijstr-users',
@@ -11,12 +11,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class UsersComponent implements OnInit {
 
-  users : FullUser[];
-  error : LijstrException;
+  users: FullUser[];
+  error: LijstrException;
 
-  constructor(private adminUserService : AdminUserService,
+  constructor(private adminUserService: AdminUserService,
               private route: ActivatedRoute,
-              private router : Router) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -27,10 +27,10 @@ export class UsersComponent implements OnInit {
       error => {
         this.error = error;
       }
-    )
+    );
   }
 
-  toUser(user : FullUser) {
+  toUser(user: FullUser) {
     this.router.navigate([user.id], { relativeTo: this.route });
   }
 

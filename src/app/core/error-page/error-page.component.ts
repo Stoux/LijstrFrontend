@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'lijstr-error-page',
@@ -10,17 +10,17 @@ export class ErrorPageComponent implements OnInit {
 
   private static readonly digitsOnly = new RegExp('^\\d+$');
 
-  errorCode : number;
-  message : string;
+  errorCode: number;
+  message: string;
 
-  constructor(private route : ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.url.subscribe(segments => {
-      if (segments.length == 1) {
-        let path = segments[0].path;
+      if (segments.length === 1) {
+        const path = segments[0].path;
         if (ErrorPageComponent.digitsOnly.test(path)) {
-          let errorCode = parseInt(path);
+          const errorCode = parseInt(path, 10);
           this.handleErrorCode(errorCode);
           return;
         }
@@ -30,19 +30,19 @@ export class ErrorPageComponent implements OnInit {
     });
   }
 
-  private handleErrorCode(code : number) {
+  private handleErrorCode(code: number) {
     this.errorCode = code;
-    switch(code) {
+    switch (code) {
       case 404:
-        this.message = "Ja deze pagina is er dus niet";
+        this.message = 'Ja deze pagina is er dus niet';
         break;
 
       case 403:
-        this.message = "Ja das dus alleen voor grote jongentjes";
+        this.message = 'Ja das dus alleen voor grote jongentjes';
         break;
 
       default:
-        this.message = "RIP";
+        this.message = 'RIP';
     }
   }
 

@@ -1,18 +1,19 @@
-import { Injectable } from "@angular/core";
-import { ApiService } from "../api.service";
-import { Observable, BehaviorSubject, Subject } from "rxjs";
-import { UserService } from "../user.service";
-import { LijstrException } from "../../exceptions";
-import { MovieDetail } from "../../../movies/models/movie";
+import { Injectable } from '@angular/core';
+import { ApiService } from '../api.service';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { UserService } from '../user.service';
+import { LijstrException } from '../../exceptions';
+import { MovieDetail } from '../../../movies/models/movie';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class MovieOutstandingService {
 
-  private outstandingMovies : number;
-  private feed : Subject<number>;
+  private outstandingMovies: number;
+  private feed: Subject<number>;
 
-  constructor(private apiService : ApiService,
-              private userService : UserService) {
+  constructor(private apiService: ApiService,
+              private userService: UserService) {
     this.feed = new BehaviorSubject(null);
 
     this.userService.userChangeFeed().subscribe(
@@ -31,33 +32,31 @@ export class MovieOutstandingService {
   /**
    * Get the current number of movies that still need to be filled in for the current number.
    * Returns a NULL value if there's no data or if there's no user.
-   * @returns {Observable<number>}
    */
-  public getOutstandingCount() : Observable<number> {
+  public getOutstandingCount(): Observable<number> {
     return this.feed.asObservable();
   }
 
   /**
    * Get all outstanding movies for the current user.
-   * @returns {Observable<MovieDetail[]>}
    */
-  public getOutstanding() : Observable<MovieDetail[]> {
+  public getOutstanding(): Observable<MovieDetail[]> {
     return this.apiService.get('/movies/outstanding')
-      .map((movies : MovieDetail[]) => {
+      .pipe(map((movies: MovieDetail[]) => {
         this.next(movies.length);
         return movies;
-      });
+      }));
   }
 
   /**
    * Preform a recount (using the server) of the current number of oustanding movies.
    */
-  public recount() : void {
+  public recount(): void {
     this.apiService.get('/movies/outstanding/count').subscribe(
-      result => this.next(result['total']),
-      (error : LijstrException) => {
-        this.next(null); //Shouldn't happen..
-        console.log("Failed to fetch count: " + error.toString());
+      (result: any) => this.next(result.total),
+      (error: LijstrException) => {
+        this.next(null); // Shouldn't happen..
+        console.log('Failed to fetch count: ' + error.toString());
       }
     );
   }
@@ -65,7 +64,7 @@ export class MovieOutstandingService {
   /**
    * Increase the current number of outstanding movies.
    */
-  public increase() : void {
+  public increase(): void {
     if (this.outstandingMovies != null) {
       this.next(++this.outstandingMovies);
     }
@@ -74,13 +73,13 @@ export class MovieOutstandingService {
   /**
    * Decrease the current number of outstanding movies.
    */
-  public decrease() : void {
+  public decrease(): void {
     if (this.outstandingMovies != null && (this.outstandingMovies - 1) >= 0) {
       this.next(--this.outstandingMovies);
     }
   }
 
-  private next(count : number) : void {
+  private next(count: number): void {
     this.outstandingMovies = count;
     this.feed.next(count);
   }

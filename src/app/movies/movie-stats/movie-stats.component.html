@@ -64,7 +64,7 @@
 
 <div *ngIf="error != null" class="alert alert-danger">
   Er is iets mis gegaan... <br/>
-  {{alert.toString()}}
+  {{error.toString()}}
 </div>
 
 <lijstr-loading *ngIf="stats == null && error == null"></lijstr-loading>

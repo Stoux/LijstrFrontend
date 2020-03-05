@@ -1,7 +1,8 @@
-import { Component, HostListener, OnInit } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { TitleService } from "./core/services/title.service";
-import { AuthService } from "./core/services/auth.service";
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { TitleService } from './core/services/title.service';
+import { AuthService } from './core/services/auth.service';
+import {filter, flatMap, map, mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,37 +11,37 @@ import { AuthService } from "./core/services/auth.service";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private router : Router,
-              private activatedRoute : ActivatedRoute,
-              private authService : AuthService,
-              private titleApi : TitleService) {
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
+              private titleApi: TitleService) {
   }
 
-  ngOnInit() : void {
-    this.router.events
-      .filter(x => x instanceof NavigationEnd) //Only trigger when navigation has finished
-      .map(() => this.activatedRoute) //Replace the event with the activated route
-      .flatMap(route => { //Include all the sub-routes as well
-        let withChildren = [route];
+  ngOnInit(): void {
+    this.router.events.pipe(
+      filter(x => x instanceof NavigationEnd), // Only trigger when navigation has finished
+      map(() => this.activatedRoute), // Replace the event with the activated route
+      flatMap(route => { // Include all the sub-routes as well
+        const withChildren = [route];
         let current = route;
         while (current.firstChild) {
           current = current.firstChild;
           withChildren.push(current);
         }
         return withChildren;
-      })
-      .filter(route => route.outlet === 'primary') //Only care about the main outlet
-      .mergeMap(route => route.data) //Get the data
-      .subscribe(event => {
-        if (event['title']) { //Check if title data value is set
-          this.titleApi.setTitle(event['title']);
-        } else if (event['resolveTitle']) { //Try to resolve it if path is set
-          let splitPath : string[] = event['resolveTitle'].split('.');
+      }),
+      filter(route => route.outlet === 'primary'), // Only care about the main outlet
+      mergeMap(route => route.data) // Get the data
+    ).subscribe(event => {
+        if (event.title) { // Check if title data value is set
+          this.titleApi.setTitle(event.title);
+        } else if (event.resolveTitle) { // Try to resolve it if path is set
+          const splitPath: string[] = event.resolveTitle.split('.');
           let value = event;
-          for (let path of splitPath) {
+          for (const path of splitPath) {
             value = value[path];
           }
-          if (value != event && event != null) {
+          if (value !== event && event !== null) {
             this.titleApi.setTitle(value.toString());
           }
         }
@@ -48,8 +49,8 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('document:visibilitychange', ['$event'])
-  onVisibilityChange(event : any) : void {
-    if (event.target.visibilityState == 'visible') {
+  onVisibilityChange(event: any): void {
+    if (event.target.visibilityState === 'visible') {
       this.authService.validateToken();
     }
   }

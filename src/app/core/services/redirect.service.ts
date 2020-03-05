@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class RedirectService {
@@ -10,17 +10,17 @@ export class RedirectService {
 
   constructor() { }
 
-  setUrl(url : string) {
+  setUrl(url: string) {
     this.redirectUrl = url;
   }
 
   popUrl() {
-    let url = this.redirectUrl;
+    const url = this.redirectUrl;
     this.redirectUrl = null;
     return url;
   }
 
-  hasUrl() : boolean {
+  hasUrl(): boolean {
     return this.redirectUrl != null;
   }
 

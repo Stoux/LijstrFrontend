@@ -1,9 +1,9 @@
 export class Genre {
-  id : number;
-  genre : string;
+  id: number;
+  genre: string;
 }
 
 export class Language {
-  id : number;
-  language : string;
+  id: number;
+  language: string;
 }

@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { MovieDetail } from "../../models/movie";
-import { MovieUsersService } from "../../services/movie-users.service";
-import { User } from "../../../core/models/user";
+import { Component, Input } from '@angular/core';
+import { MovieDetail } from '../../models/movie';
+import { User } from '../../../core/models/user';
 
 @Component({
   selector: 'lijstr-movie-detail-table',
@@ -10,20 +9,20 @@ import { User } from "../../../core/models/user";
 })
 export class MovieDetailTableComponent {
 
-  @Input() movie : MovieDetail;
-  @Input() genres : boolean;
-  @Input() languages : boolean;
-  @Input() users : User[];
+  @Input() movie: MovieDetail;
+  @Input() genres: boolean;
+  @Input() languages: boolean;
+  @Input() users: User[];
 
   constructor() {
     this.genres = true;
     this.languages = true;
   }
 
-  getUserRepresentation() : any {
-    let addedBy = this.movie.addedBy;
+  getUserRepresentation(): any {
+    const addedBy = this.movie.addedBy;
     if (this.users != null && addedBy != null) {
-      for (let user of this.users) {
+      for (const user of this.users) {
         if (user.id == addedBy) {
           return user.displayName;
         }
@@ -32,15 +31,15 @@ export class MovieDetailTableComponent {
     return this.movie.addedBy;
   }
 
-  getRuntime() : string {
-    let runtime = this.movie.runtime;
+  getRuntime(): string {
+    const runtime = this.movie.runtime;
     if (runtime == null) {
-      return "N/A";
+      return 'N/A';
     }
 
-    let hours = Math.floor(runtime / 60);
-    let mins = runtime - (hours * 60);
-    return hours + " uur & " + mins + " minuten (" + runtime + " mins)";
+    const hours = Math.floor(runtime / 60);
+    const mins = runtime - (hours * 60);
+    return hours + ' uur & ' + mins + ' minuten (' + runtime + ' mins)';
   }
 
 }

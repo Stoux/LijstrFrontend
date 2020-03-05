@@ -1,11 +1,11 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { MovieSummary } from "../models/movie";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ShortRating } from "../models/ratings";
-import { DecimalPipe } from "@angular/common";
-import { DatatableComponent } from "@swimlane/ngx-datatable";
-import { ListPagerComponent, RowCaller } from "./list-pager/list-pager.component";
-import {ListExtendedFilterComponent} from "./list-extended-filter/list-extended-filter.component";
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MovieSummary } from '../models/movie';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ShortRating } from '../models/ratings';
+import { DecimalPipe } from '@angular/common';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { ListPagerComponent, RowCaller } from './list-pager/list-pager.component';
+import {ListExtendedFilterComponent} from './list-extended-filter/list-extended-filter.component';
 
 @Component({
   selector: 'lijstr-movie-list',
@@ -14,40 +14,40 @@ import {ListExtendedFilterComponent} from "./list-extended-filter/list-extended-
 })
 export class MovieListComponent implements OnInit, RowCaller {
 
-  @ViewChild('valueCell') valueCell : TemplateRef<any>;
-  @ViewChild('imdbCell') imdbCell : TemplateRef<any>;
-  @ViewChild('numberCell') numberCell : TemplateRef<any>;
+  @ViewChild('valueCell') valueCell: TemplateRef<any>;
+  @ViewChild('imdbCell') imdbCell: TemplateRef<any>;
+  @ViewChild('numberCell') numberCell: TemplateRef<any>;
   @ViewChild('userCell') userCell;
-  @ViewChild('movieList') listTable : DatatableComponent;
-  @ViewChild('pager') listPager : ListPagerComponent;
-  @ViewChild('extendedFilter') extendedFilter : ListExtendedFilterComponent;
+  @ViewChild('movieList') listTable: DatatableComponent;
+  @ViewChild('pager') listPager: ListPagerComponent;
+  @ViewChild('extendedFilter') extendedFilter: ListExtendedFilterComponent;
 
-  settingsEditable : boolean;
+  settingsEditable: boolean = false;
   requiredColumns = [];
   availableColumns = [];
 
   columns = [];
   selected = [];
-  summaries : MovieSummary[];
+  summaries: MovieSummary[];
 
-  showExtendedFilter : boolean;
+  showExtendedFilter: boolean;
 
-  private numberPipe : DecimalPipe;
+  private numberPipe: DecimalPipe;
 
-  constructor(private route : ActivatedRoute,
-              private router : Router) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
     this.numberPipe = new DecimalPipe('en-US');
   }
 
   ngOnInit() {
-    this.settingsEditable = false;
+    // this.settingsEditable = false;
     this.showExtendedFilter = false;
-    this.requiredColumns = [{name: "Titel", prop: "title", flexGrow: 4, cellTemplate: this.valueCell}];
+    this.requiredColumns = [{name: 'Titel', prop: 'title', flexGrow: 4, cellTemplate: this.valueCell}];
     this.availableColumns = [
-      {name: "Jaar", prop: "year", flexGrow: 1, cellTemplate: this.valueCell},
-      {name: "IMDB", prop: "imdbRating", flexGrow: 1, cellTemplate: this.imdbCell},
-      {name: "MC", prop: "metacriticScore", flexGrow: 1, cellTemplate: this.numberCell},
-      {name: "Looptijd", prop: "runtime", flexGrow: 1, cellTemplate: this.numberCell}
+      {name: 'Jaar', prop: 'year', flexGrow: 1, cellTemplate: this.valueCell},
+      {name: 'IMDB', prop: 'imdbRating', flexGrow: 1, cellTemplate: this.imdbCell},
+      {name: 'MC', prop: 'metacriticScore', flexGrow: 1, cellTemplate: this.numberCell},
+      {name: 'Looptijd', prop: 'runtime', flexGrow: 1, cellTemplate: this.numberCell}
     ];
   }
 
@@ -55,17 +55,17 @@ export class MovieListComponent implements OnInit, RowCaller {
     this.router.navigate([selected[0].id], {relativeTo: this.route});
   }
 
-  extendFilter() : void {
+  extendFilter(): void {
     this.showExtendedFilter = !this.showExtendedFilter;
     this.extendedFilter.setEnabled(this.showExtendedFilter);
   }
 
-  onNewList(summaries : MovieSummary[]) {
+  onNewList(summaries: MovieSummary[]) {
     this.summaries = this.extendedFilter.onNewList(summaries);
     this.onNewAppliedFilters(this.summaries);
   }
 
-  onNewAppliedFilters(summaries : MovieSummary[]) {
+  onNewAppliedFilters(summaries: MovieSummary[]) {
     this.summaries = this.listPager.sort(summaries);
   }
 
@@ -73,33 +73,33 @@ export class MovieListComponent implements OnInit, RowCaller {
     this.columns = columns;
   }
 
-  setSettingsEditable(editable : boolean) {
+  setSettingsEditable(editable: boolean) {
     this.settingsEditable = editable;
   }
 
-  representativeRating(rating : ShortRating) : string {
+  representativeRating(rating: ShortRating): string {
     if (!rating) {
-      return "N/A";
+      return 'N/A';
     }
 
     switch (rating.seen) {
-      case 0: //Yes
+      case 0: // Yes
         if (rating.rating == null) {
-          return "?";
+          return '?';
         } else {
           return this.numberPipe.transform(rating.rating, '1.1-1');
         }
 
-      case 1: //No
-        return "Nee";
+      case 1: // No
+        return 'Nee';
 
       default:
       case 2:
-        return "Ja?";
+        return 'Ja?';
     }
   }
 
-  goToRow(row : number) : void {
+  goToRow(row: number): void {
     const bodyComponent = this.listTable.bodyComponent;
     const offset = bodyComponent.rowHeightsCache.query(row - 1);
     bodyComponent.scroller.setOffset(offset);
@@ -110,7 +110,7 @@ export class MovieListComponent implements OnInit, RowCaller {
     this.summaries = this.listPager.onSort(sort.prop, sort.dir, this.summaries);
   }
 
-  getCaller() : RowCaller {
+  getCaller(): RowCaller {
     return this;
   }
 

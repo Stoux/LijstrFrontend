@@ -1,30 +1,30 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { AuthenticationRequest } from "../../core/models/authentication";
-import { LoginService } from "../../core/services/login.service";
-import { Observable } from "rxjs";
-import { FullUser } from "../../core/models/user";
-import { RedirectService } from "../../core/services/redirect.service";
-import { Router } from "@angular/router";
-import { UserService } from "../../core/services/user.service";
-import { LijstrException } from "../../core/exceptions";
-import { WithoutUserComponent } from "../core/WithoutUserComponent";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthenticationRequest } from '../../core/models/authentication';
+import { LoginService } from '../../core/services/login.service';
+import { Observable } from 'rxjs';
+import { FullUser } from '../../core/models/user';
+import { RedirectService } from '../../core/services/redirect.service';
+import { Router } from '@angular/router';
+import { UserService } from '../../core/services/user.service';
+import { LijstrException } from '../../core/exceptions';
+import { WithoutUserComponent } from '../core/WithoutUserComponent';
 
 @Component({
   selector: 'lijstr-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent extends WithoutUserComponent {
+export class LoginComponent extends WithoutUserComponent implements OnInit {
 
-  model : AuthenticationRequest;
-  submitting : boolean;
-  userRestriction : boolean;
-  error : string;
+  model: AuthenticationRequest;
+  submitting: boolean;
+  userRestriction: boolean;
+  error: string;
 
-  constructor(private loginService : LoginService,
-              userService : UserService,
+  constructor(private loginService: LoginService,
+              userService: UserService,
               router: Router,
-              redirect : RedirectService) {
+              redirect: RedirectService) {
     super(userService, router, redirect);
   }
 
@@ -32,7 +32,7 @@ export class LoginComponent extends WithoutUserComponent {
     this.model = new AuthenticationRequest();
     this.userRestriction = true;
 
-    let loginStatus = this.loginService.getLoginStatus();
+    const loginStatus = this.loginService.getLoginStatus();
     if (loginStatus != null) {
       this.submitting = true;
       this.subscribe(loginStatus);
@@ -47,18 +47,18 @@ export class LoginComponent extends WithoutUserComponent {
   onSubmit() {
     this.submitting = true;
     this.unsubscribeUserFeed();
-    let loginStatus = this.loginService.login(this.model);
+    const loginStatus = this.loginService.login(this.model);
     this.subscribe(loginStatus);
   }
 
-  private subscribe(userObservable : Observable<FullUser>) {
+  private subscribe(userObservable: Observable<FullUser>) {
     userObservable.subscribe(
       user => {
         this.redirectRoute();
       },
-      (error : LijstrException) => {
+      (error: LijstrException) => {
         this.submitting = false;
-        console.log("Failed to login: " + error.message);
+        console.log('Failed to login: ' + error.message);
         this.error = LijstrException.toString(error);
       }
     );

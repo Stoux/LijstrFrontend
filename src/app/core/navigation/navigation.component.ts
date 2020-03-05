@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { UserService } from "../services/user.service";
-import { MovieOutstandingService } from "../services/section/movie-outstanding.service";
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
+import { MovieOutstandingService } from '../services/section/movie-outstanding.service';
 
 @Component({
   selector: 'lijstr-navigation',
@@ -10,19 +10,19 @@ import { MovieOutstandingService } from "../services/section/movie-outstanding.s
 export class NavigationComponent implements OnInit {
 
   isCollapsed: boolean;
-  name : string;
-  loggedIn : boolean;
-  admin : boolean;
-  movieUser : boolean;
-  movieMod : boolean;
+  name: string;
+  loggedIn: boolean;
+  admin: boolean;
+  movieUser: boolean;
+  movieMod: boolean;
 
-  outstandingMovies : number;
+  outstandingMovies: number;
 
-  constructor(public userService : UserService,
-              private movieService : MovieOutstandingService) {
+  constructor(public userService: UserService,
+              private movieService: MovieOutstandingService) {
   }
 
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.loggedIn = false;
     this.admin = false;
     this.isCollapsed = true;
