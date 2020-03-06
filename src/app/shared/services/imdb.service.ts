@@ -25,12 +25,12 @@ export class ImdbService {
 
 }
 
-class ImdbFetcher {
+export class ImdbFetcher {
 
-  private subject: ReplaySubject<{ [key: number]: string }>;
-  private hasRequested: boolean;
+  protected subject: ReplaySubject<{ [key: number]: string }>;
+  protected hasRequested: boolean;
 
-  constructor(private api: ApiService, private path: string) {
+  constructor(protected api: ApiService, protected path: string) {
     this.subject = new ReplaySubject(1);
     this.hasRequested = false;
   }

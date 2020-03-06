@@ -1,6 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ImdbService} from '../../../shared/services/imdb.service';
 import {MovieSummary} from '../../models/movie';
+import {MoviePeopleService} from '../../services/movie-people.service';
+import {ListPersonFilterComponent} from './list-person-filter/list-person-filter.component';
 
 @Component({
   selector: 'lijstr-list-extended-filter',
@@ -9,9 +11,14 @@ import {MovieSummary} from '../../models/movie';
 })
 export class ListExtendedFilterComponent implements OnInit {
 
+  constructor(private imdbService: ImdbService,
+              public peopleService: MoviePeopleService) {
+    this.loading = false;
+  }
+
   @Output() filtered = new EventEmitter<MovieSummary[]>();
 
-  private active: boolean;
+  active: boolean;
   private summaries: MovieSummary[];
   private loading: boolean;
 
@@ -25,8 +32,30 @@ export class ListExtendedFilterComponent implements OnInit {
   selectedGenres: SelectItem[];
   genresPlaceholder: string;
 
-  constructor(private imdbService: ImdbService) {
-    this.loading = false;
+  @ViewChild('writerFilter') writerFilter: ListPersonFilterComponent;
+  @ViewChild('directorFilter') directorFilter: ListPersonFilterComponent;
+
+  public static toSelectFormat(map: { [key: number]: string }): SelectItem[] {
+    const result: SelectItem[] = [];
+    for (const key in map) {
+      if (map.hasOwnProperty(key)) {
+        result.push(new SelectItem(key, map[key]));
+      }
+    }
+    result.sort((a, b) => {
+      const lcA = a.text.toLowerCase();
+      const lcB = b.text.toLowerCase();
+
+      if (lcA < lcB) {
+        return -1;
+      } else if (lcA > lcB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return result;
   }
 
   ngOnInit() {
@@ -55,6 +84,11 @@ export class ListExtendedFilterComponent implements OnInit {
 
   private filter(summaries: MovieSummary[]): MovieSummary[] {
     let result = summaries;
+
+    const filters: MovieListFilter[] = [ this.writerFilter, this.directorFilter ];
+    for (const filter of filters) {
+      result = filter.filter(result);
+    }
 
     // Go through the filters
     result = this.applyFilter(result, this.selectedGenres, s => s.genres);
@@ -122,7 +156,7 @@ export class ListExtendedFilterComponent implements OnInit {
 
         this.imdbService.getGenres().subscribe(
           data => {
-            this.genres = this.toSelectFormat(data);
+            this.genres = ListExtendedFilterComponent.toSelectFormat(data);
             this.availableGenres = this.genres;
             this.genresPlaceholder = '';
           },
@@ -132,7 +166,7 @@ export class ListExtendedFilterComponent implements OnInit {
         );
         this.imdbService.getLanguages().subscribe(
           data => {
-            this.languages = this.toSelectFormat(data);
+            this.languages = ListExtendedFilterComponent.toSelectFormat(data);
             this.availableLanguages = this.languages;
             this.languagesPlaceholder = '';
           },
@@ -140,6 +174,7 @@ export class ListExtendedFilterComponent implements OnInit {
             this.languagesPlaceholder = 'Laden mislukt.';
           }
         );
+
       } else if (this.hasSelectedItems()) {
         // Reapply the filters
         this.emitChange();
@@ -153,35 +188,22 @@ export class ListExtendedFilterComponent implements OnInit {
     }
   }
 
-  private toSelectFormat(map: { [key: number]: string }): SelectItem[] {
-    const result: SelectItem[] = [];
-    for (const key in map) {
-      if (map.hasOwnProperty(key)) {
-        result.push(new SelectItem(key, map[key]));
-      }
-    }
-    result.sort((a, b) => {
-      const lcA = a.text.toLowerCase();
-      const lcB = b.text.toLowerCase();
-
-      if (lcA < lcB) {
-        return -1;
-      } else if (lcA > lcB) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-
-    return result;
-  }
-
   private hasSelectedItems(): boolean {
     return this.selectedLanguages.length !== 0 || this.selectedGenres.length !== 0;
   }
 
 }
 
-class SelectItem {
+export class SelectItem {
   constructor(public id: string, public text: string) { }
+}
+
+export interface MovieListFilter {
+
+  /**
+   * Filter out any movies.
+   * @param summaries The movies
+   */
+  filter(summaries: MovieSummary[]): MovieSummary[];
+
 }

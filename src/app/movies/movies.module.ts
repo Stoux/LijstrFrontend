@@ -37,7 +37,9 @@ import { RecentlyChangedComponent } from './movie-stats/recently-added/recently-
 import { MovieSingleRatingComponent } from './movie-detail/movie-ratings/movie-single-rating/movie-single-rating.component';
 import { MovieCommentFormComponent } from './movie-detail/movie-comment-form/movie-comment-form.component';
 import { ListPagerComponent } from './movie-list/list-pager/list-pager.component';
-import {ListExtendedFilterComponent} from './movie-list/list-extended-filter/list-extended-filter.component';
+import { ListExtendedFilterComponent } from './movie-list/list-extended-filter/list-extended-filter.component';
+import { MoviePeopleService } from './services/movie-people.service';
+import { ListPersonFilterComponent } from './movie-list/list-extended-filter/list-person-filter/list-person-filter.component';
 
 @NgModule({
   imports: [
@@ -73,7 +75,8 @@ import {ListExtendedFilterComponent} from './movie-list/list-extended-filter/lis
     MovieSingleRatingComponent,
     MovieCommentFormComponent,
     ListPagerComponent,
-    ListExtendedFilterComponent
+    ListExtendedFilterComponent,
+    ListPersonFilterComponent
   ],
   providers: [
     MovieUserGuard,
@@ -84,6 +87,7 @@ import {ListExtendedFilterComponent} from './movie-list/list-extended-filter/lis
     MovieRatingsService,
     MovieRequestService,
     MovieStatsService,
+    MoviePeopleService,
     OldSiteService
   ]
 })

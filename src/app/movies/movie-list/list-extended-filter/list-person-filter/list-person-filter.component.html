@@ -1,0 +1,12 @@
+<div class="form-group">
+  <label>{{ label }}</label>
+  <ng-select [clearable]="true"
+             [multiple]="multiple"
+             bindLabel="text"
+             [items]="people"
+             [disabled]="people === null"
+             [placeholder]="placeholder"
+             (change)="onSelected()"
+             [(ngModel)]="selected">
+  </ng-select>
+</div>

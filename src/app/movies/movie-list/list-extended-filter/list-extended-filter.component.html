@@ -29,4 +29,22 @@
     </div>
   </div>
 
+  <div class="col-xs-12 col-sm-6">
+    <lijstr-list-person-filter #directorFilter *ngIf="active"
+                               [multiple]="false"
+                               label="Directors"
+                               [peopleFetcher]="peopleService.directors"
+                               (updated)="emitChange()">
+    </lijstr-list-person-filter>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+    <lijstr-list-person-filter #writerFilter *ngIf="active"
+                               [multiple]="false"
+                               label="Schrijvers"
+                               [peopleFetcher]="peopleService.writers"
+                               (updated)="emitChange()">
+    </lijstr-list-person-filter>
+  </div>
+
 </div>
