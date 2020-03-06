@@ -112,6 +112,8 @@ export class ListSettingsComponent implements OnInit {
     } else {
       this.setAvailableUsers(users);
     }
+
+    setTimeout(() => this.emit(), 1);
   }
 
   private setAvailableUsers(users: User[]) {
