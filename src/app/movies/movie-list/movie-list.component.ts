@@ -22,7 +22,7 @@ export class MovieListComponent implements OnInit, RowCaller {
   @ViewChild('pager') listPager: ListPagerComponent;
   @ViewChild('extendedFilter') extendedFilter: ListExtendedFilterComponent;
 
-  settingsEditable: boolean = false;
+  settingsEditable: boolean;
   requiredColumns = [];
   availableColumns = [];
 
@@ -40,7 +40,7 @@ export class MovieListComponent implements OnInit, RowCaller {
   }
 
   ngOnInit() {
-    // this.settingsEditable = false;
+    this.settingsEditable = false;
     this.showExtendedFilter = false;
     this.requiredColumns = [{name: 'Titel', prop: 'title', flexGrow: 4, cellTemplate: this.valueCell}];
     this.availableColumns = [
@@ -61,8 +61,15 @@ export class MovieListComponent implements OnInit, RowCaller {
   }
 
   onNewList(summaries: MovieSummary[]) {
-    this.summaries = this.extendedFilter.onNewList(summaries);
-    this.onNewAppliedFilters(this.summaries);
+    setTimeout(() => {
+      if (!this.extendedFilter) {
+        console.warn('No extendedFilter yet');
+        return;
+      }
+
+      this.summaries = this.extendedFilter.onNewList(summaries);
+      this.onNewAppliedFilters(this.summaries);
+    });
   }
 
   onNewAppliedFilters(summaries: MovieSummary[]) {

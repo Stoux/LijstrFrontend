@@ -128,7 +128,9 @@ export class ListSettingsComponent implements OnInit {
       ListSettingsComponent.USERS_KEY,
       this.availableUsers
     );
-    this.editable.next(true);
+
+    // Wait for components to init (if already loaded)
+    setTimeout(() => this.editable.next(true));
   }
 
   emit() {
