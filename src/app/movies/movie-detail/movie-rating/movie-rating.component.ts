@@ -57,7 +57,10 @@ export class MovieRatingComponent implements OnChanges {
 
     if ('movie' in changes) {
       this.setActiveRating(MovieRating.newRating());
-      this.form.reset();
+      if (this.form) {
+        // Chance that the form hasn't been rendered yet, so nothing to reset.
+        this.form.reset();
+      }
       this.foundOldRating = false;
       this.changeSubscription = null;
 
@@ -66,7 +69,7 @@ export class MovieRatingComponent implements OnChanges {
         this.ratingsService.getLatestMovieRatingForUser(this.movie.id)
           .subscribe(
             (ratingWrapper: DataWrapper<MovieRating>) => {
-              if (this.movie.id == currentMovie.id && ratingWrapper.data != null) {
+              if (this.movie.id === currentMovie.id && ratingWrapper.data != null) {
                 this.foundOldRating = true;
                 this.setActiveIfEditable(ratingWrapper.data);
               }

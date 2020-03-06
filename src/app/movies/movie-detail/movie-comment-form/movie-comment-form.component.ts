@@ -28,7 +28,10 @@ export class MovieCommentFormComponent implements OnChanges {
     this.submitting = false;
     this.comment = null;
     this.error = null;
-    this.form.reset();
+    if (this.form) {
+      // Chance that the form hasn't been rendered yet, so nothing to reset.
+      this.form.reset();
+    }
   }
 
   onSubmit(): void {
