@@ -15,11 +15,11 @@ export class ImdbService {
     this.languages = new ImdbFetcher(api, '/languages');
   }
 
-  getGenres(): Observable<Map<string, string>> {
+  getGenres(): Observable<{ [key: number]: string }> {
     return this.genres.get();
   }
 
-  getLanguages(): Observable<Map<string, string>> {
+  getLanguages(): Observable<{ [key: number]: string }> {
     return this.languages.get();
   }
 
@@ -27,7 +27,7 @@ export class ImdbService {
 
 class ImdbFetcher {
 
-  private subject: ReplaySubject<Map<string, string>>;
+  private subject: ReplaySubject<{ [key: number]: string }>;
   private hasRequested: boolean;
 
   constructor(private api: ApiService, private path: string) {
@@ -35,14 +35,14 @@ class ImdbFetcher {
     this.hasRequested = false;
   }
 
-  get(): Observable<Map<string, string>> {
+  get(): Observable<{ [key: number]: string }> {
     if (this.hasRequested) {
       return this.single();
     }
 
     this.hasRequested = true;
 
-    const request: Observable<Map<string, string>> = this.api.get(this.path);
+    const request: Observable<{ [key: number]: string }> = this.api.get(this.path);
     request.subscribe(
       result => {
         this.subject.next(result);
@@ -55,7 +55,7 @@ class ImdbFetcher {
     return this.single();
   }
 
-  private single(): Observable<Map<string, string>> {
+  private single(): Observable<{ [key: number]: string }> {
     return this.subject.asObservable().pipe(
       first()
     );

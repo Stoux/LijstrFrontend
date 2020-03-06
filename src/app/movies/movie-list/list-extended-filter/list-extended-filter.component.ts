@@ -153,10 +153,12 @@ export class ListExtendedFilterComponent implements OnInit {
     }
   }
 
-  private toSelectFormat(map: Map<string, string>): SelectItem[] {
+  private toSelectFormat(map: { [key: number]: string }): SelectItem[] {
     const result: SelectItem[] = [];
-    for (const key of map.keys()) {
-      result.push(new SelectItem(key, map[key]));
+    for (const key in map) {
+      if (map.hasOwnProperty(key)) {
+        result.push(new SelectItem(key, map[key]));
+      }
     }
     result.sort((a, b) => {
       const lcA = a.text.toLowerCase();

@@ -4,6 +4,7 @@
       <label>Genre</label>
       <ng-select [clearable]="true"
                  [multiple]="true"
+                 [bindLabel]="'text'"
                  [items]="availableGenres"
                  [disabled]="genres === null"
                  [placeholder]="genresPlaceholder"
@@ -18,6 +19,7 @@
       <label>Taal</label>
       <ng-select [clearable]="true"
                  [multiple]="true"
+                 [bindLabel]="'text'"
                  [items]="availableLanguages"
                  [disabled]="languages === null"
                  [placeholder]="languagesPlaceholder"
