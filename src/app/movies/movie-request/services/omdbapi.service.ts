@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Observable, throwError} from 'rxjs';
+import { Observable } from 'rxjs';
 import { LijstrException } from '../../../core/exceptions';
 import { ApiService } from '../../../core/services/api.service';
+import { map } from 'rxjs/operators';
 
 export class OmdbObject {
 
@@ -27,8 +28,8 @@ export class OmdbApiService {
   }
 
   private static handleResponse(result: any): any {
-    if (result.type != 'movie') {
-      return throwError(LijstrException.forErrorMessage(400, 'Niet een film.'));
+    if (result.type !== 'movie') {
+      throw LijstrException.forErrorMessage(400, 'Niet een film.');
     }
 
     return result;
@@ -37,11 +38,10 @@ export class OmdbApiService {
   /**
    * Get a movie.
    * @param imdbId The IMDB id
-   * @returns {Observable<OmdbObject>}
    */
   getMovie(imdbId: string): Observable<OmdbObject> {
     return this.api.get<OmdbObject>('/omdb/' + imdbId)
-      .pipe(OmdbApiService.handleResponse);
+      .pipe(map(OmdbApiService.handleResponse));
   }
 
 }
