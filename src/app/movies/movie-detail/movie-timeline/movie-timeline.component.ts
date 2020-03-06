@@ -1,4 +1,13 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef, OnChanges, SimpleChanges, Input } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  ViewChild,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+  Input,
+  AfterViewInit
+} from '@angular/core';
 import { MovieDetail } from '../../models/movie';
 import { MovieRating } from '../../models/ratings';
 import { MovieComment, MovieCreation } from '../../models/timeline';
@@ -9,9 +18,9 @@ import { User } from '../../../core/models/user';
 @Component({
   selector: 'lijstr-movie-timeline',
   templateUrl: 'movie-timeline.component.html',
-  styleUrls: ['movie-timeline.component.css']
+  styleUrls: ['movie-timeline.component.css'],
 })
-export class MovieTimelineComponent implements OnInit, OnChanges {
+export class MovieTimelineComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('timelineTop', {read: ElementRef}) timelineTop?: ElementRef<HTMLElement>;
 
@@ -30,29 +39,27 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
     if ('movie' in changes) {
       this.fetching = false;
       this.timeline = null;
-      this.scrolled();
+      this.onScrolled();
     }
   }
 
-  ngOnInit() {
-    // TODO: Fix scrolled()
-    this.fetch();
+  ngAfterViewInit() {
+    this.onScrolled();
   }
 
-  @HostListener('window:scroll', [])
-  scrolled() {
+  @HostListener('document:scroll', [])
+  onScrolled() {
     if (!this.timelineTop) {
-      console.log('Nope', this.timelineTop);
       return;
     }
 
     let node = this.timelineTop.nativeElement;
-    while (node.offsetTop == 0 && node.parentElement != null) {
+    while (node.offsetTop === 0 && node.parentElement != null) {
       node = node.parentElement;
     }
     const offsetTop = node.offsetTop;
 
-    if (window.innerHeight + document.body.scrollTop > offsetTop) {
+    if ((window.innerHeight + document.documentElement.scrollTop) > offsetTop) {
       if (!this.fetching && this.timeline == null) {
         this.fetch();
       }
@@ -63,7 +70,7 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
     if (userId == null) { return null; }
     if (this.availableUsers != null) {
       for (const user of this.availableUsers) {
-        if (user.id == userId) {
+        if (user.id === userId) {
           return user.displayName;
         }
       }
@@ -92,13 +99,13 @@ export class MovieTimelineComponent implements OnInit, OnChanges {
     const currentMovie = this.movie;
     this.detailService.getMovieTimeline(currentMovie.id).subscribe(
       items => {
-        if (currentMovie == this.movie) {
+        if (currentMovie === this.movie) {
           this.timeline = items;
           this.timeline.push(new MovieCreation(currentMovie.created, currentMovie.addedBy));
         }
       },
       (error: LijstrException) => {
-        if (currentMovie == this.movie) {
+        if (currentMovie === this.movie) {
           this.error = error;
         }
       }
