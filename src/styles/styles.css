@@ -1,14 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-input.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
   border: 1px solid red;
 }
 
-input.ng-valid.ng-touched {
+input.ng-valid.ng-touched, textarea.ng-valid.ng-touched {
   border: 1px solid green;
 }
 
 .poster-image {
   width: 100%;
   max-width: 250px;
+}
+
+.ngx-datatable.material .datatable-body .datatable-body-row.active .datatable-body-cell {
+  color: white;
 }
