@@ -34,6 +34,7 @@ export class ListExtendedFilterComponent implements OnInit {
 
   @ViewChild('writerFilter') writerFilter: ListPersonFilterComponent;
   @ViewChild('directorFilter') directorFilter: ListPersonFilterComponent;
+  @ViewChild('actorFilter') actorFilter: ListPersonFilterComponent;
 
   public static toSelectFormat(map: { [key: number]: string }): SelectItem[] {
     const result: SelectItem[] = [];
@@ -85,7 +86,7 @@ export class ListExtendedFilterComponent implements OnInit {
   private filter(summaries: MovieSummary[]): MovieSummary[] {
     let result = summaries;
 
-    const filters: MovieListFilter[] = [ this.writerFilter, this.directorFilter ];
+    const filters: MovieListFilter[] = [ this.writerFilter, this.directorFilter, this.actorFilter ];
     for (const filter of filters) {
       result = filter.filter(result);
     }
