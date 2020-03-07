@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --sourceMap=true",
+    "watch": "ng serve --sourceMap=true",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
