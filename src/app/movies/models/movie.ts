@@ -1,5 +1,5 @@
 import { ShortRating } from './ratings';
-import { Genre, Language } from './imdb';
+import { Genre, Language, Person } from './imdb';
 
 export class MovieSummary {
 
@@ -56,6 +56,8 @@ export class MovieDetail {
 
   genres: Genre[];
   languages: Language[];
+  writers: Person[];
+  directors: Person[];
 
   latestMovieRatings: ShortRating[];
 

@@ -51,6 +51,30 @@
       </ul>
     </td>
   </tr>
+  <tr *ngIf="languages">
+    <th>Talen</th>
+    <td>
+      <ul class="list-unstyled">
+        <li *ngFor="let wrapper of movie.languages">{{wrapper.language}}</li>
+      </ul>
+    </td>
+  </tr>
+  <tr *ngIf="people && movie.writers">
+    <th>Schrijvers</th>
+    <td>
+      <ul class="list-unstyled">
+        <li *ngFor="let person of movie.writers">{{person.name}}</li>
+      </ul>
+    </td>
+  </tr>
+  <tr *ngIf="people && movie.directors">
+    <th>Directors</th>
+    <td>
+      <ul class="list-unstyled">
+        <li *ngFor="let person of movie.directors">{{person.name}}</li>
+      </ul>
+    </td>
+  </tr>
   <tr *ngIf="movie.addedBy != null">
     <th>Toegevoegd door</th>
     <td>{{getUserRepresentation()}}</td>

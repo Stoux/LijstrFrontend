@@ -7,3 +7,9 @@ export class Language {
   id: number;
   language: string;
 }
+
+export class Person {
+  id: number;
+  imdbId: string;
+  name: string;
+}

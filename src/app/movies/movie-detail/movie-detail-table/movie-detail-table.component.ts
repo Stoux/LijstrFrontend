@@ -12,11 +12,13 @@ export class MovieDetailTableComponent {
   @Input() movie: MovieDetail;
   @Input() genres: boolean;
   @Input() languages: boolean;
+  @Input() people: boolean;
   @Input() users: User[];
 
   constructor() {
     this.genres = true;
     this.languages = true;
+    this.people = true;
   }
 
   getUserRepresentation(): any {
