@@ -73,10 +73,6 @@ export class ListPersonFilterComponent implements OnInit, MovieListFilter {
         })
       )
     );
-
-    this.people.subscribe((data) => {
-      console.log('Data', data);
-    });
   }
 
   onSelected() {
@@ -132,14 +128,14 @@ export class ListPersonFilterComponent implements OnInit, MovieListFilter {
 
     // Filter summaries by selected items
     return summaries.filter(summary => {
-      // If any of the persons has this movie we allow it
+      // If all of the people are in this movie
       for (const byPerson of Object.values(this.byPeople)) {
-        if (byPerson.hasOwnProperty(summary.id)) {
-          return true;
+        if (!byPerson.hasOwnProperty(summary.id)) {
+          return false;
         }
       }
 
-      return false;
+      return true;
     });
   }
 
