@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ListExtendedFilterComponent, MovieListFilter, SelectItem} from '../list-extended-filter.component';
 import {MoviePeopleFetcher} from '../../../services/movie-people.service';
 import {MovieSummary} from '../../../models/movie';
+import {concat, Observable, of, Subject} from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'lijstr-list-person-filter',
@@ -10,15 +12,19 @@ import {MovieSummary} from '../../../models/movie';
 })
 export class ListPersonFilterComponent implements OnInit, MovieListFilter {
 
+  readonly minCharacters = 2;
+
   @Output() updated = new EventEmitter<void>();
   @Input() label: string;
   @Input() multiple: boolean;
   @Input() peopleFetcher: MoviePeopleFetcher;
-  people?: SelectItem[];
+  people?: Observable<SelectItem[]>;
   // Map of [Person ID] => { [MovieID] => [Movie Title] }
   byPeople?: {[key: number]: { [key: number]: string }};
   placeholder: string;
   selected: SelectItem|SelectItem[];
+  searchInput = new Subject<string>();
+  loading = false;
 
   constructor() { }
 
@@ -47,16 +53,30 @@ export class ListPersonFilterComponent implements OnInit, MovieListFilter {
   }
 
   ngOnInit(): void {
-    // Fetch the data
-    this.peopleFetcher.get().subscribe(
-      data => {
-        this.people = ListExtendedFilterComponent.toSelectFormat(data);
-        this.placeholder = '';
-      },
-      error => {
-        this.placeholder = 'Laden mislukt.';
-      }
+    this.people = concat(
+      of([]),
+      this.searchInput.pipe(
+        distinctUntilChanged(),
+        tap(() => this.loading = true),
+        debounceTime(250),
+        switchMap(term => {
+          if (!term || term.length < this.minCharacters) {
+            this.loading = false;
+            return of([]);
+          }
+
+          return this.peopleFetcher.get(term).pipe(
+            tap(() => this.loading = false),
+            catchError(() => of([])),
+            map(ListExtendedFilterComponent.toSelectFormat)
+          );
+        })
+      )
     );
+
+    this.people.subscribe((data) => {
+      console.log('Data', data);
+    });
   }
 
   onSelected() {
@@ -92,6 +112,10 @@ export class ListPersonFilterComponent implements OnInit, MovieListFilter {
 
   private onUpdate() {
     this.updated.emit();
+  }
+
+  trackById(item: SelectItem) {
+    return item.id;
   }
 
   filter(summaries: MovieSummary[]): MovieSummary[] {

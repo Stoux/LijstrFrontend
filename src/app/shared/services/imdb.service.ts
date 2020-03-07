@@ -35,24 +35,34 @@ export class ImdbFetcher {
     this.hasRequested = false;
   }
 
-  get(): Observable<{ [key: number]: string }> {
-    if (this.hasRequested) {
+  /**
+   * Fetch all people
+   * @param query optional name query
+   */
+  get(query?: string): Observable<{ [key: number]: string }> {
+    // Cache requests that have no query
+    if (query === null || query === '') {
+      if (this.hasRequested) {
+        return this.single();
+      }
+
+      this.hasRequested = true;
+
+      const request: Observable<{ [key: number]: string }> = this.api.get(this.path);
+      request.subscribe(
+        result => {
+          this.subject.next(result);
+        },
+        error => {
+          this.subject.error(error);
+        }
+      );
+
       return this.single();
     }
 
-    this.hasRequested = true;
-
-    const request: Observable<{ [key: number]: string }> = this.api.get(this.path);
-    request.subscribe(
-      result => {
-        this.subject.next(result);
-      },
-      error => {
-        this.subject.error(error);
-      }
-    );
-
-    return this.single();
+    const params = query ? { name: query } : {};
+    return this.api.get<{ [key: number]: string }>(this.path, true, params);
   }
 
   private single(): Observable<{ [key: number]: string }> {

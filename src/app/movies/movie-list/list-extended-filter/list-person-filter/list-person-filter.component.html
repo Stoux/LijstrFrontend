@@ -3,10 +3,15 @@
   <ng-select [clearable]="true"
              [multiple]="multiple"
              bindLabel="text"
-             [items]="people"
+             [items]="people | async"
              [disabled]="people === null"
              [placeholder]="placeholder"
+             [minTermLength]="minCharacters"
+             [trackByFn]="trackById"
+             [loading]="loading"
+             typeToSearchText="Please enter 2 or more characters"
              (change)="onSelected()"
+             [typeahead]="searchInput"
              [(ngModel)]="selected">
   </ng-select>
 </div>

@@ -49,8 +49,8 @@ export class ApiService {
     return throwError(exception);
   }
 
-  get<T>(path: string, authToken: boolean = true): Observable<T> {
-    return this.http.get<T>(this.endpoint + path, this.createRequestOptions(authToken)).pipe(
+  get<T>(path: string, authToken: boolean = true, httpParams?: { [param: string]: string | string[] }): Observable<T> {
+    return this.http.get<T>(this.endpoint + path, this.createRequestOptions(authToken, httpParams)).pipe(
       catchError(ApiService.handleError)
     );
   }
@@ -90,8 +90,9 @@ export class ApiService {
    * That dictionary could contain {'authToken' : authToken}, this way other possible injectors can also modify
    * the request depending on their individual settings.
    * @param authToken should inject authToken
+   * @param params Optional HTTP params
    */
-  private createRequestOptions(authToken: boolean): {
+  private createRequestOptions(authToken: boolean, params?: { [param: string]: string | string[] }): {
     headers?: HttpHeaders | {
       [header: string]: string | string[];
     };
@@ -113,6 +114,7 @@ export class ApiService {
 
     return {
       headers,
+      params
     };
   }
 
