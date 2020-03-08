@@ -25,18 +25,10 @@ export class ApiService {
   private readonly domain: string;
   private readonly endpoint: string;
   private http: HttpClient;
-  private injectors: Injector[];
-
-  private static handleResponse(response: Response) {
-    if (response.text()) {
-      return response.json();
-    } else {
-      return response;
-    }
-  }
+  private readonly injectors: Injector[];
 
   private static handleError(error: HttpErrorResponse) {
-    let exception = null;
+    let exception;
 
     if (error.error instanceof ErrorEvent) {
       console.error('[WTF] Server did not return a LijstrException.. \'' + error.toString() + '\'');
@@ -106,7 +98,6 @@ export class ApiService {
   } {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Allow-Control-Allow-Origin': this.domain
     });
     for (const injector of this.injectors) {
       headers = injector.inject(headers, authToken);
