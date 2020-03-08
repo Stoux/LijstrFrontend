@@ -1,3 +1,50 @@
-<p>
-  edit-user works!
-</p>
+<h2>User: {{ user.displayName }}</h2>
+<form #userForm="ngForm" (ngSubmit)="onSubmit($event)" >
+
+  <div class="row">
+    <div class="col-sm-8">
+
+      <div class="form-group">
+        <label for="user-edit-username">Username</label>
+        <input type="text" class="form-control" id="user-edit-username" [(ngModel)]="user.username" name="username" [disabled]="disabled" />
+      </div>
+
+      <div class="form-group">
+        <label for="user-edit-display-name">Display name</label>
+        <input type="text" class="form-control" id="user-edit-display-name" [(ngModel)]="user.displayName" name="displayName" [disabled]="disabled" />
+      </div>
+
+      <div class="form-group">
+          <label for="user-edit-email">Email</label>
+          <input type="text" class="form-control" id="user-edit-email" [(ngModel)]="user.email" name="email" [disabled]="disabled" />
+      </div>
+
+    </div>
+
+    <div class="col-sm-4">
+      <h4>Permissions</h4>
+      <div class="checkbox" *ngFor="let choice of availablePermissions">
+        <label>
+          <input type="checkbox" [checked]="choice.selected" (change)="choice.selected = $event.target.checked" [disabled]="disabled" />
+          {{ choice.permission.name | formatPermission }}
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row final-edit-user-row">
+    <div class="col-sm-4">
+      <button class="btn btn-success" [disabled]="disabled || saving" type="submit">
+        {{ saving ? 'Saving...' : 'Save' }}
+      </button>
+    </div>
+
+    <div class="col-sm-8" *ngIf="messages && messages.length">
+      <div class="alert alert-{{ message.type }}" role="alert" *ngFor="let message of messages" >
+        {{ message.text }}
+      </div>
+    </div>
+  </div>
+
+</form>

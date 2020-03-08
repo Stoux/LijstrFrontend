@@ -5,6 +5,8 @@ import { UsersComponent } from './users/users.component';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { OldSiteSyncComponent } from './dev/old-site-sync/old-site-sync.component';
+import { UserResolver } from './users/user-resolver.service';
+import { FullUser } from '../core/models/user';
 
 const routes: Routes = [
   {
@@ -28,7 +30,13 @@ const routes: Routes = [
       },
       {
         path: ':id',
-        component: EditUserComponent
+        component: EditUserComponent,
+        data: {
+          resolveTitle: ( data: { user: FullUser } ) => `${data.user.displayName} | Gebruikers`
+        },
+        resolve: {
+          user: UserResolver
+        }
       }
     ]
   }

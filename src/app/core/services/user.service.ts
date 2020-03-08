@@ -59,6 +59,18 @@ export class UserService {
   }
 
   /**
+   * Update the general info of a user.
+   */
+  updateUser(id: number, user: FullUser | { username: string, displayName: string, email: string }): Observable<FullUser> {
+    return this.api.put<FullUser>(`/users/${id}`, {
+      username: user.username,
+      displayName: user.displayName,
+      email: user.email,
+      // approvedFor: null, // TODO
+    });
+  }
+
+  /**
    * Check whether the user is currently logged in.
    * @returns is logged in
    */
