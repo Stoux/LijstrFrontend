@@ -5,6 +5,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { YoutubeViewerComponent } from './youtube-viewer/youtube-viewer.component';
 import { ImdbService } from './services/imdb.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormatPermissionPipe } from './pipes/format-permission.pipe';
 
 @NgModule({
   imports: [
@@ -12,14 +13,16 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   declarations: [
     LoadingComponent,
-    YoutubeViewerComponent
+    YoutubeViewerComponent,
+    FormatPermissionPipe,
   ],
   exports: [
     CommonModule,
     FormsModule,
     LoadingComponent,
     YoutubeViewerComponent,
-    NgSelectModule
+    NgSelectModule,
+    FormatPermissionPipe,
   ],
   providers: [
     ImdbService

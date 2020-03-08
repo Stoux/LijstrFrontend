@@ -1,3 +1,8 @@
+export interface Permission {
+  id: number;
+  name: string;
+}
+
 export class GrantedPermission {
   id: number;
   authority: string;
@@ -22,4 +27,22 @@ export class FullUser extends User {
   oldSiteUser: string;
 
   grantedPermissions: GrantedPermission[];
+}
+
+export class LoginAttempt {
+  id: number;
+  timestamp: number;
+  remoteAddress: string;
+  usedPort: number;
+  userAgent: string;
+  username: string;
+  success: boolean;
+  rejectionReason?: string;
+  loginType: string;
+}
+
+export class UserDetails {
+  user: FullUser;
+  lastLogin?: LoginAttempt;
+  lastFailedLoginAttempt?: LoginAttempt;
 }

@@ -8,12 +8,14 @@ import { RouterModule } from '@angular/router';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { OldSiteSyncComponent } from './dev/old-site-sync/old-site-sync.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
     SharedModule,
     AdminRoutingModule,
-    RouterModule
+    RouterModule,
+    NgxDatatableModule,
   ],
   declarations: [
     AdminComponent,

@@ -1,0 +1,17 @@
+#user-list {
+  height: 500px;
+}
+
+#user-list .list-unstyled {
+  padding: 0;
+}
+
+.users-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.users-header > h1 {
+  flex-grow: 1;
+}
