@@ -33,7 +33,7 @@ if (environment.sentryKey != null) {
     BrowserAnimationsModule,
     CoreModule,
     AppRoutingModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
   ],
   providers: [
     {provide: ErrorHandler, useClass: RavenErrorHandler},

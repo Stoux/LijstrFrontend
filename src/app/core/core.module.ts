@@ -21,10 +21,10 @@ import { MovieOutstandingService } from './services/section/movie-outstanding.se
   ],
   declarations: [
     ErrorPageComponent,
-    HomeComponent
+    HomeComponent,
   ],
   exports: [
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     // Guards
