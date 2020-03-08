@@ -3,6 +3,7 @@ import {ApiService} from '../../core/services/api.service';
 import {Observable} from 'rxjs';
 import {ReplaySubject} from 'rxjs';
 import {first} from 'rxjs/operators';
+import { CachedSubject } from '../classes/cached-subject';
 
 @Injectable()
 export class ImdbService {
@@ -27,12 +28,11 @@ export class ImdbService {
 
 export class ImdbFetcher {
 
-  protected subject: ReplaySubject<{ [key: number]: string }>;
-  protected hasRequested: boolean;
+  private subject: CachedSubject<{ [key: number]: string }>;
 
-  constructor(protected api: ApiService, protected path: string) {
-    this.subject = new ReplaySubject(1);
-    this.hasRequested = false;
+  constructor(protected api: ApiService,
+              protected path: string) {
+    this.subject = new CachedSubject(() => this.api.get(this.path));
   }
 
   /**
@@ -42,23 +42,7 @@ export class ImdbFetcher {
   get(query?: string): Observable<{ [key: number]: string }> {
     // Cache requests that have no query
     if (query === null || query === '') {
-      if (this.hasRequested) {
-        return this.single();
-      }
-
-      this.hasRequested = true;
-
-      const request: Observable<{ [key: number]: string }> = this.api.get(this.path);
-      request.subscribe(
-        result => {
-          this.subject.next(result);
-        },
-        error => {
-          this.subject.error(error);
-        }
-      );
-
-      return this.single();
+      return this.subject.asObservable();
     }
 
     const params = query ? { name: query } : {};
