@@ -36,13 +36,18 @@ export class AppComponent implements OnInit {
         if (event.title) { // Check if title data value is set
           this.titleApi.setTitle(event.title);
         } else if (event.resolveTitle) { // Try to resolve it if path is set
-          const splitPath: string[] = event.resolveTitle.split('.');
-          let value = event;
-          for (const path of splitPath) {
-            value = value[path];
-          }
-          if (value !== event && event !== null) {
-            this.titleApi.setTitle(value.toString());
+          if (typeof event.resolveTitle === 'function') {
+            const title: any = event.resolveTitle(event);
+            this.titleApi.setTitle(title);
+          } else {
+            const splitPath: string[] = event.resolveTitle.split('.');
+            let value = event;
+            for (const path of splitPath) {
+              value = value[path];
+            }
+            if (value !== event && event !== null) {
+              this.titleApi.setTitle(value.toString());
+            }
           }
         }
       });
