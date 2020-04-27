@@ -17,6 +17,8 @@ export class MovieSummary {
   languages: Map<number, string>;
 
   latestRatings: Map<number, ShortRating>;
+  averageUserRating: number;
+  averageUserRatingCount: number;
 
   constructor(title: string) {
     this.title = title;

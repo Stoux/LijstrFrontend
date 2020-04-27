@@ -6,6 +6,7 @@ import { DecimalPipe } from '@angular/common';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ListPagerComponent, RowCaller } from './list-pager/list-pager.component';
 import {ListExtendedFilterComponent} from './list-extended-filter/list-extended-filter.component';
+import { TableColumn } from '@swimlane/ngx-datatable/lib/types/table-column.type';
 
 @Component({
   selector: 'lijstr-movie-list',
@@ -17,6 +18,7 @@ export class MovieListComponent implements OnInit, RowCaller {
   @ViewChild('valueCell') valueCell: TemplateRef<any>;
   @ViewChild('imdbCell') imdbCell: TemplateRef<any>;
   @ViewChild('numberCell') numberCell: TemplateRef<any>;
+  @ViewChild('averageRatingCell') averageRatingCell: TemplateRef<any>;
   @ViewChild('userCell') userCell;
   @ViewChild('movieList') listTable: DatatableComponent;
   @ViewChild('pager') listPager: ListPagerComponent;
@@ -24,7 +26,7 @@ export class MovieListComponent implements OnInit, RowCaller {
 
   settingsEditable: boolean;
   requiredColumns = [];
-  availableColumns = [];
+  availableColumns: TableColumn[] = [];
 
   columns = [];
   selected = [];
@@ -44,10 +46,11 @@ export class MovieListComponent implements OnInit, RowCaller {
     this.showExtendedFilter = false;
     this.requiredColumns = [{name: 'Titel', prop: 'title', flexGrow: 4, cellTemplate: this.valueCell}];
     this.availableColumns = [
-      {name: 'Jaar', prop: 'year', flexGrow: 1, cellTemplate: this.valueCell},
-      {name: 'IMDB', prop: 'imdbRating', flexGrow: 1, cellTemplate: this.imdbCell},
-      {name: 'MC', prop: 'metacriticScore', flexGrow: 1, cellTemplate: this.numberCell},
-      {name: 'Looptijd', prop: 'runtime', flexGrow: 1, cellTemplate: this.numberCell}
+      {name: 'Jaar', prop: 'year', flexGrow: 1},
+      {name: 'IMDB', prop: 'imdbRating', flexGrow: 1},
+      {name: 'MC', prop: 'metacriticScore', flexGrow: 1},
+      {name: 'Looptijd', prop: 'runtime', flexGrow: 1},
+      {name: 'Gem. Rating', prop: 'averageUserRating', flexGrow: 1},
     ];
   }
 
@@ -76,7 +79,19 @@ export class MovieListComponent implements OnInit, RowCaller {
     this.summaries = this.listPager.sort(summaries);
   }
 
-  setColumns(columns) {
+  setColumns(columns: TableColumn[]) {
+    for (const column of columns) {
+      if (column.prop === 'year') {
+        column.cellTemplate = this.valueCell;
+      } else if (column.prop === 'imdbRating') {
+        column.cellTemplate = this.imdbCell;
+      } else if (column.prop === 'metacriticScore' || column.prop === 'runtime') {
+        column.cellTemplate = this.numberCell;
+      } else if (column.prop === 'averageUserRating') {
+        column.cellTemplate = this.averageRatingCell;
+      }
+    }
+
     this.columns = columns;
   }
 

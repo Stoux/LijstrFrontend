@@ -37,7 +37,7 @@ export class ListPagerComponent implements OnInit {
     }
 
     let result;
-    if (this.onProp == 'title') {
+    if (this.onProp === 'title') {
       result = ListPagerSorting.sortRows(
         rows, ListPagerSorting.titleSort, this.onProp, this.direction == 'desc'
       );
@@ -67,7 +67,8 @@ export class ListPagerComponent implements OnInit {
 
   private isNumberProp(): boolean {
     return this.onProp == 'year' || this.onProp == 'imdbRating'
-      || this.onProp == 'metacriticScore' || this.onProp == 'runtime';
+      || this.onProp == 'metacriticScore' || this.onProp == 'runtime'
+      || this.onProp == 'averageUserRating';
   }
 
   private isUserRatingProp(): boolean {
