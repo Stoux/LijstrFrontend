@@ -40,6 +40,8 @@ import { ListPagerComponent } from './movie-list/list-pager/list-pager.component
 import { ListExtendedFilterComponent } from './movie-list/list-extended-filter/list-extended-filter.component';
 import { MoviePeopleService } from './services/movie-people.service';
 import { ListPersonFilterComponent } from './movie-list/list-extended-filter/list-person-filter/list-person-filter.component';
+import { MovieCollectionsComponent } from './movie-collections/movie-collections.component';
+import { MovieCollectionsService } from './services/movie-collections.service';
 
 @NgModule({
   imports: [
@@ -76,7 +78,8 @@ import { ListPersonFilterComponent } from './movie-list/list-extended-filter/lis
     MovieCommentFormComponent,
     ListPagerComponent,
     ListExtendedFilterComponent,
-    ListPersonFilterComponent
+    ListPersonFilterComponent,
+    MovieCollectionsComponent
   ],
   providers: [
     MovieUserGuard,
@@ -87,6 +90,7 @@ import { ListPersonFilterComponent } from './movie-list/list-extended-filter/lis
     MovieRatingsService,
     MovieRequestService,
     MovieStatsService,
+    MovieCollectionsService,
     MoviePeopleService,
     OldSiteService
   ]

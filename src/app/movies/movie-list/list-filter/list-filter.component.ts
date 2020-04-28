@@ -86,7 +86,7 @@ export class ListFilterComponent implements OnInit, OnDestroy {
     const filter = this.filter;
     if (filter != null && filter.length > 0) {
       result = result.filter(d => {
-        return d.title.toLowerCase().indexOf(filter) !== -1 || !filter;
+        return d.title.toLowerCase().indexOf(filter) !== -1 || !filter || this.matchesCollection(d, filter);
       });
     }
 
@@ -99,6 +99,20 @@ export class ListFilterComponent implements OnInit, OnDestroy {
     }
 
     this.filtered.emit(result);
+  }
+
+  private matchesCollection(summary: MovieSummary, filter: string) {
+    if (!summary.collections) {
+      return false;
+    }
+
+    for (const title of Object.values(summary.collections)) {
+      if (title.toLowerCase().indexOf(filter) >= 0) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
 

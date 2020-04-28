@@ -10,6 +10,7 @@ import { MovieRequestComponent } from './movie-request/movie-request.component';
 import { MovieUserGuard } from './services/guards/movie-user-guard.service';
 import { UserGuard } from '../core/guards/user-guard.service';
 import { MovieOutstandingComponent } from './movie-outstanding/movie-outstanding.component';
+import { MovieCollectionsComponent } from './movie-collections/movie-collections.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
     component: MovieOutstandingComponent,
     data: {title: 'Nog niet ingevuld'},
     canActivate: [UserGuard]
+  },
+  {
+    path: 'collections',
+    component: MovieCollectionsComponent,
+    data: {title: 'Collections'},
+    // canActivate: [UserGuard, MovieUserGuard],
   },
   {
     path: '',

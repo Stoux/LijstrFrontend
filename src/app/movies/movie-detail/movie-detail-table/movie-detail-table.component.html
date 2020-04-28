@@ -75,6 +75,19 @@
       </ul>
     </td>
   </tr>
+  <tr *ngIf="movie.collections">
+    <th>Collecties</th>
+    <td>
+      <ul class="list-unstyled">
+        <li *ngFor="let collection of movie.collections">
+          {{ collection.title }}
+<!--          <a href="#" (click)="$event.preventDefault(); applyCollectionFilter(collection)" title="Filter films op deze collectie">-->
+<!--            {{ collection.title }}-->
+<!--          </a>-->
+        </li>
+      </ul>
+    </td>
+  </tr>
   <tr *ngIf="movie.addedBy != null">
     <th>Toegevoegd door</th>
     <td>{{getUserRepresentation()}}</td>

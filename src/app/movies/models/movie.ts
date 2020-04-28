@@ -1,5 +1,6 @@
 import { ShortRating } from './ratings';
 import { Genre, Language, Person } from './imdb';
+import { MovieCollection } from './movie-collections';
 
 export class MovieSummary {
 
@@ -13,10 +14,12 @@ export class MovieSummary {
 
   ageRating: string;
 
-  genres: Map<number, string>;
-  languages: Map<number, string>;
+  genres: {[key: number]: string};
+  languages: {[key: number]: string};
 
-  latestRatings: Map<number, ShortRating>;
+  collections: {[key: number]: string};
+
+  latestRatings: {[key: number]: ShortRating};
   averageUserRating: number;
   averageUserRatingCount: number;
 
@@ -60,6 +63,8 @@ export class MovieDetail {
   languages: Language[];
   writers: Person[];
   directors: Person[];
+
+  collections: MovieCollection[];
 
   latestMovieRatings: ShortRating[];
 

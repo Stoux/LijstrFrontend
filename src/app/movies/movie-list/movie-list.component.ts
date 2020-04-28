@@ -19,6 +19,7 @@ export class MovieListComponent implements OnInit, RowCaller {
   @ViewChild('imdbCell') imdbCell: TemplateRef<any>;
   @ViewChild('numberCell') numberCell: TemplateRef<any>;
   @ViewChild('averageRatingCell') averageRatingCell: TemplateRef<any>;
+  @ViewChild('collectionsCell') collectionsCell: TemplateRef<any>;
   @ViewChild('userCell') userCell;
   @ViewChild('movieList') listTable: DatatableComponent;
   @ViewChild('pager') listPager: ListPagerComponent;
@@ -51,6 +52,7 @@ export class MovieListComponent implements OnInit, RowCaller {
       {name: 'MC', prop: 'metacriticScore', flexGrow: 1},
       {name: 'Looptijd', prop: 'runtime', flexGrow: 1},
       {name: 'Gem. Rating', prop: 'averageUserRating', flexGrow: 1},
+      {name: 'Collecties', prop: 'collections', flexGrow: 1},
     ];
   }
 
@@ -80,6 +82,7 @@ export class MovieListComponent implements OnInit, RowCaller {
   }
 
   setColumns(columns: TableColumn[]) {
+    // Dirty way of setting the templates (they aren't loaded yet on ngInit)
     for (const column of columns) {
       if (column.prop === 'year') {
         column.cellTemplate = this.valueCell;
@@ -89,6 +92,8 @@ export class MovieListComponent implements OnInit, RowCaller {
         column.cellTemplate = this.numberCell;
       } else if (column.prop === 'averageUserRating') {
         column.cellTemplate = this.averageRatingCell;
+      } else if (column.prop === 'collections') {
+        column.cellTemplate = this.collectionsCell;
       }
     }
 
@@ -134,6 +139,17 @@ export class MovieListComponent implements OnInit, RowCaller {
 
   getCaller(): RowCaller {
     return this;
+  }
+
+  formatCollections(collections: { [key: number]: string }) {
+    const result = [];
+    for (const id in collections) {
+      if (collections.hasOwnProperty(id)) {
+        result.push(collections[id]);
+      }
+    }
+
+    return result.join(', ');
   }
 
 }

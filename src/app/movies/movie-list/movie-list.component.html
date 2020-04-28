@@ -39,6 +39,9 @@
 <ng-template let-value="value" let-row="row" #averageRatingCell>
  {{value ? (value | number:"1.1-1") + " (" + row.averageUserRatingCount + ")" : "N/A"}}
 </ng-template>
+<ng-template let-value="value" #collectionsCell>
+  {{ formatCollections(value) }}
+</ng-template>
 <ng-template let-value="value" #userCell>
   <u *ngIf="value && value.comment">{{representativeRating(value)}}</u>
   <ng-container *ngIf="!value || !value.comment">{{representativeRating(value)}}</ng-container>

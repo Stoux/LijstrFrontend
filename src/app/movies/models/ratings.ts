@@ -23,7 +23,7 @@ export class ShortRating extends Serializable {
     r.user = rating.user;
     r.seen = rating.seen;
     r.rating = rating.rating;
-    r.comment = rating.comment == '' ? null : rating.comment;
+    r.comment = rating.comment === '' ? null : rating.comment;
     return r;
   }
 
