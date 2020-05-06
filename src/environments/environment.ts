@@ -20,7 +20,7 @@
 
 export const environment = {
   production: false,
-  endpoint: 'api.lijstr.nl',
-  endpointSSL: true,
+  endpoint: 'localhost:4200/api',
+  endpointSSL: false,
   sentryKey : null
 };
