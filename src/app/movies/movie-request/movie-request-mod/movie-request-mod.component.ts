@@ -27,7 +27,7 @@ export class MovieRequestModComponent implements OnInit {
 
   @ViewChild('requestForm') private form: NgForm;
 
-  imdbPattern = '(?:https?:\\/\\/)?(?:(?:www|m)\\.)?(?:imdb.com\\/title\\/)?(tt\\d{7})(?:\\/.*)?';
+  imdbPattern = '(?:https?:\\/\\/)?(?:(?:www|m)\\.)?(?:imdb.com\\/title\\/)?(tt\\d{7,8})(?:\\/.*)?';
   imdbRegex: RegExp;
   // tslint:disable-next-line:max-line-length
   youtubePattern = '(?:https?:\\/\\/)?(?:www\\.)?(?:youtu\\.be\\/|youtube\\.com\\/(?:embed\\/|v\\/|watch\\?v=|watch\\?.+&v=))?((?:\\w|-){11})(?:\\S+)?';
