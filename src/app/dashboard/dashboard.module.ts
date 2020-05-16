@@ -7,6 +7,9 @@ import { LogoutComponent } from './logout/logout.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RouterModule } from '@angular/router';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { EmailSettingsComponent } from './email-settings/email-settings.component';
+import { EmailSettingsService } from './services/email-settings.service';
+import { MovieUserGuard } from '../movies/services/guards/movie-user-guard.service';
 
 @NgModule({
   imports: [
@@ -19,7 +22,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     LoginComponent,
     LogoutComponent,
     ResetPasswordComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    EmailSettingsComponent,
+  ],
+  providers: [
+    MovieUserGuard,
+    EmailSettingsService,
   ]
 })
 export class DashboardModule {

@@ -41,7 +41,7 @@ export class ApiService {
     return throwError(exception);
   }
 
-  get<T>(path: string, authToken: boolean = true, httpParams?: { [param: string]: string | string[] }): Observable<T> {
+  get<T>(path: string, authToken: boolean = true, httpParams?: { [param: string]: string | string[] | any }): Observable<T> {
     return this.http.get<T>(this.endpoint + path, this.createRequestOptions(authToken, httpParams)).pipe(
       catchError(ApiService.handleError)
     );

@@ -46,3 +46,28 @@ export class UserDetails {
   lastLogin?: LoginAttempt;
   lastFailedLoginAttempt?: LoginAttempt;
 }
+
+export interface EmailSettings {
+  lastUpdate: number;
+  nextScheduledUpdate: number;
+  updateInterval: UpdateInterval;
+  preferredDayOfMonth?: number;
+  preferredDayOfWeek?: DayOfWeek;
+}
+
+export enum UpdateInterval {
+  Weekly = 'WEEKLY',
+  Fortnight = 'FORTNIGHT',
+  Monthly = 'MONTHLY',
+}
+
+export enum DayOfWeek {
+  Monday = 'MONDAY',
+  Tuesday = 'TUESDAY',
+  Wednesday = 'WEDNESDAY',
+  Thursday = 'THURSDAY',
+  Friday = 'FRIDAY',
+  Saturday = 'SATURDAY',
+  Sunday = 'SUNDAY',
+}
+

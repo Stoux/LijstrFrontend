@@ -6,6 +6,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { UserGuard } from '../core/guards/user-guard.service';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { EmailSettingsComponent } from './email-settings/email-settings.component';
+import { MovieUserGuard } from '../movies/services/guards/movie-user-guard.service';
 
 const routes: Routes = [
   {
@@ -13,6 +15,12 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [UserGuard],
     data: {title: 'Dashboard'}
+  },
+  {
+    path: 'email-settings',
+    component: EmailSettingsComponent,
+    canActivate: [UserGuard, MovieUserGuard],
+    data: {title: 'Email Settings'},
   },
   {
     path: 'login',

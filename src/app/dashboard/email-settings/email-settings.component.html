@@ -1,0 +1,78 @@
+<h1>Email instellingen</h1>
+<div *ngIf="settings">
+  <p>
+    <strong>Laatste update:</strong> {{settings.lastUpdate | date:'EEEE d MMM yyyy - HH:mm:ss'}} <br />
+    <strong>Volgende update:</strong> {{settings.nextScheduledUpdate | date: 'd MMM yyyy'}}
+  </p>
+
+  <form #emailSettingsForm="ngForm" (ngSubmit)="onSubmit($event)" >
+
+    <div class="row">
+      <div class="col-sm-12">
+
+        <div class="form-group">
+          <label for="update-interval">Interval</label>
+          <select class="form-control" id="update-interval" required (change)="calculate()"
+                  [(ngModel)]="settings.updateInterval" name="update-interval">
+            <option *ngFor="let updateInterval of getUpdateIntervals()" [value]="updateInterval">{{translate(updateInterval)}}</option>
+          </select>
+          <small class="form-text text-muted">
+            Met welke frequentie je graag updates ontvangt.
+          </small>
+        </div>
+
+        <div class="form-check" *ngIf="isMonthly()">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="useWeekDay" (change)="calculate()"
+                 id="show-day-of-week" name="show-day-of-week">
+          <label class="form-check-label" for="show-day-of-week">Selecteer eerste dag v/d week</label>
+        </div>
+
+        <div class="form-group" *ngIf="isMonthly() && !useWeekDay">
+          <label for="day-of-month">Dag v/d Maand</label>
+          <input type="number" min="1" max="27" id="day-of-month" required (change)="calculate()"
+                 [(ngModel)]="settings.preferredDayOfMonth" name="day-of-month"  class="form-control" />
+          <small class="form-text text-muted">
+            Op welke dag van de maand je het liefste de update krijgt.
+          </small>
+        </div>
+
+        <div class="form-group" *ngIf="!isMonthly() || useWeekDay">
+          <label for="weekday">Weekdag</label>
+          <select class="form-control" id="weekday" required (change)="calculate()"
+                  [(ngModel)]="settings.preferredDayOfWeek" name="day-of-week">
+            <option *ngFor="let dayOfWeek of getWeekDays()" [value]="dayOfWeek">{{translate(dayOfWeek)}}</option>
+          </select>
+          <small class="form-text text-muted">
+            Op welke dag van de week je het liefste de update krijgt.
+          </small>
+        </div>
+
+        <h4 *ngIf="calculating">Nieuwe datum uitrekenen...</h4>
+        <h4 *ngIf="nextDate && !calculating">Nieuwe volgende datum: {{ nextDate | date: 'd MMM yyyy' }}</h4>
+
+      </div>
+
+    </div>
+
+    <div class="row" *ngIf="nextDate">
+      <div class="col-sm-12">
+        <button class="btn btn-success" type="submit" [disabled]="calculating || updating">
+          {{ updating ? 'Opslaan...' : 'Instellingen opslaan' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row"  *ngIf="showUpdateMessage">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="alert alert-info" role="alert" >
+          Aangepast!
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<div class="alert alert-danger" *ngIf="error">
+  Er ging iets mis: {{ error }}
+</div>
