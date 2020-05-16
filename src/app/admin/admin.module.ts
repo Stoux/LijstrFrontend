@@ -10,6 +10,7 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { OldSiteSyncComponent } from './dev/old-site-sync/old-site-sync.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UserResolver } from './users/user-resolver.service';
+import { EndpointDebuggerComponent } from './dev/endpoint-debugger/endpoint-debugger.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { UserResolver } from './users/user-resolver.service';
     UsersComponent,
     AddUserComponent,
     EditUserComponent,
-    OldSiteSyncComponent
+    OldSiteSyncComponent,
+    EndpointDebuggerComponent
   ],
   providers: [
     AdminUserService,

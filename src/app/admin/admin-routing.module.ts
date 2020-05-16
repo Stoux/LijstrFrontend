@@ -7,6 +7,7 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { OldSiteSyncComponent } from './dev/old-site-sync/old-site-sync.component';
 import { UserResolver } from './users/user-resolver.service';
 import { FullUser } from '../core/models/user';
+import { EndpointDebuggerComponent } from './dev/endpoint-debugger/endpoint-debugger.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
     path: 'old-site-sync',
     component: OldSiteSyncComponent,
     data: {title: 'Site-sync'}
+  },
+  {
+    path: 'endpoint-debugger',
+    component: EndpointDebuggerComponent,
+    data: {title: 'Admin | Endpoint Debugger'}
   },
   {
     path: 'users',

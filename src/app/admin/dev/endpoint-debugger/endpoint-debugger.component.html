@@ -1,0 +1,43 @@
+<h1>Endpoint Debugger</h1>
+<p>Here you can send requests to the backend using your current user token.</p>
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group">
+      <label for="path">Path</label>
+      <input type="text" class="form-control" id="path" [(ngModel)]="path" />
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group">
+      <label for="method">Method</label>
+      <select class="form-control" id="method" [(ngModel)]="method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-xs-12" *ngIf="method === 'POST' || method === 'PUT'">
+    <div class="form-group">
+      <label for="data">JSON</label>
+      <textarea type="text" class="form-control" rows="8" id="data" [(ngModel)]="data"></textarea>
+    </div>
+  </div>
+  <div class="cl-xs-12">
+    <button class="btn btn-primary" [disabled]="requesting" (click)="makeRequest()">
+      Make request
+    </button>
+  </div>
+</div>
+
+<div class="row" *ngIf="error !== undefined || response !== undefined">
+  <div class="col-xs-12">
+    <hr />
+    <pre>{{ response | json }}</pre>
+    <div class="alert alert-danger" *ngIf="error">
+      {{ error }}
+    </div>
+  </div>
+</div>
+
