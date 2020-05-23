@@ -21,6 +21,19 @@ export class OmdbObject {
 
 }
 
+export interface OmdbSearchResult {
+
+  imdbId: string;
+  title: string;
+  year: string;
+  type: string;
+  poster: string;
+
+  // Custom label set by us.
+  label?: string;
+
+}
+
 @Injectable()
 export class OmdbApiService {
 
@@ -43,5 +56,16 @@ export class OmdbApiService {
     return this.api.get<OmdbObject>('/omdb/' + imdbId)
       .pipe(map(OmdbApiService.handleResponse));
   }
+
+  /**
+   * Search movies with the given title query.
+   * @param query movie title containing query
+   */
+  searchMovies(query: string): Observable<OmdbSearchResult[]> {
+    return this.api.get('/omdb/search', true, {
+      query
+    });
+  }
+
 
 }

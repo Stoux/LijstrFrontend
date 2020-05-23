@@ -1,6 +1,12 @@
 <h2>Nieuwe film toevoegen</h2>
 <div class="row">
+  <div class="col-xs-12">
+    <lijstr-movie-search (searchResult)="find('https://www.imdb.com/title/' + $event.imdbId + '/')"></lijstr-movie-search>
+  </div>
+</div>
+<div class="row">
   <div class="col-md-4 col-sm-12">
+
     <form #requestForm="ngForm" (ngSubmit)="onSubmit()">
 
       <div class="form-group">

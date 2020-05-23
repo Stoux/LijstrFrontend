@@ -1,0 +1,13 @@
+<div class="form-group">
+  <label>Film zoeken</label>
+  <ng-select [clearable]="true"
+             bindLabel="label"
+             [items]="results | async"
+             [minTermLength]="2"
+             [trackByFn]="trackByImdbId"
+             [loading]="loading"
+             typeToSearchText="Typ op z'n minst 2 tekens"
+             (change)="onSelected($event)"
+             [typeahead]="searchInput">
+  </ng-select>
+</div>

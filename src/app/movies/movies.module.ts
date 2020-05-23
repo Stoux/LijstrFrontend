@@ -42,6 +42,7 @@ import { MoviePeopleService } from './services/movie-people.service';
 import { ListPersonFilterComponent } from './movie-list/list-extended-filter/list-person-filter/list-person-filter.component';
 import { MovieCollectionsComponent } from './movie-collections/movie-collections.component';
 import { MovieCollectionsService } from './services/movie-collections.service';
+import { MovieSearchComponent } from './movie-request/movie-search/movie-search.component';
 
 @NgModule({
   imports: [
@@ -79,7 +80,8 @@ import { MovieCollectionsService } from './services/movie-collections.service';
     ListPagerComponent,
     ListExtendedFilterComponent,
     ListPersonFilterComponent,
-    MovieCollectionsComponent
+    MovieCollectionsComponent,
+    MovieSearchComponent
   ],
   providers: [
     MovieUserGuard,
