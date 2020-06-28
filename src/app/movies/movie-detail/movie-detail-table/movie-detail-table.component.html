@@ -51,14 +51,6 @@
       </ul>
     </td>
   </tr>
-  <tr *ngIf="languages">
-    <th>Talen</th>
-    <td>
-      <ul class="list-unstyled">
-        <li *ngFor="let wrapper of movie.languages">{{wrapper.language}}</li>
-      </ul>
-    </td>
-  </tr>
   <tr *ngIf="people && movie.writers">
     <th>Schrijvers</th>
     <td>
