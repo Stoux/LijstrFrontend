@@ -15,6 +15,14 @@ export const routes: Routes = [
     loadChildren: () => import('./movies/movies.module').then(m => m.MoviesModule),
   },
   {
+    path: 'shows',
+    loadChildren: () => import('./shows/shows.module').then(m => m.ShowsModule),
+  },
+  {
+    path: 'series',
+    redirectTo: 'shows',
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
     canActivate: [AdminGuard]

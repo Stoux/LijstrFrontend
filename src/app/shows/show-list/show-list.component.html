@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1 class="title">Series</h1>
+  </div>
+
+  <!-- TODO: Settings -->
+  <!-- TODO: Filters -->
+
+</div>
+
+<!-- TODO: Pager -->
+
+<!-- TODO [sorts]= -->
+<!-- TODO: [selected]= -->
+<!-- TODO: (sort)= -->
+<!-- TODO: (select)= -->
+<ngx-datatable
+  #showsList
+  id="shows-list"
+  class="material striped"
+  [columnMode]="columnMode"
+  [rows]="summaries"
+  [reorderable]="false"
+  [externalSorting]="true"
+  [scrollbarV]="true"
+  [selectionType]="selectionType"
+  [trackByProp]="'id'"
+  >
+
+  <ngx-datatable-column *ngFor="let column of columns"
+                        [prop]="column.prop" [name]="column.name" [flexGrow]="column.flexGrow ? column.flexGrow : 1">
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+
+      <ng-template [ngIf]="column.isPlain">
+        {{ value }}
+      </ng-template>
+      <ng-template [ngIf]="column.isDate">
+        {{value | date:"d/M/yy"}}
+      </ng-template>
+      <ng-template [ngIf]="column.isRating">
+        {{value ? (value | number:"1.1-1") : "N/A" }}
+      </ng-template>
+      <ng-template [ngIf]="column.isUser">
+        User
+      </ng-template>
+
+    </ng-template>
+  </ngx-datatable-column>
+
+
+</ngx-datatable>
+
+

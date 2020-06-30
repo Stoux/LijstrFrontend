@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'lijstr-movies',
-  templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.css']
+  template: `<router-outlet></router-outlet>`,
 })
 export class MoviesComponent {
 
