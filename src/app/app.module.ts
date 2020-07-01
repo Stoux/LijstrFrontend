@@ -1,6 +1,6 @@
 import * as Raven from 'raven-js';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { ErrorHandler, NgModule, Provider } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -9,6 +9,7 @@ import { CollapseModule } from 'ngx-bootstrap';
 import { TitleService } from './core/services/title.service';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SwiperModule } from 'ngx-swiper-wrapper';
 
 
 export class RavenErrorHandler implements ErrorHandler {
@@ -34,6 +35,7 @@ if (environment.sentryKey != null) {
     CoreModule,
     AppRoutingModule,
     CollapseModule.forRoot(),
+    SwiperModule,
   ],
   providers: [
     {provide: ErrorHandler, useClass: RavenErrorHandler},

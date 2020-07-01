@@ -1,0 +1,36 @@
+<table class="table table-striped details">
+  <tbody>
+  <tr *ngIf="show.imdbRating">
+    <th>IMDB</th>
+    <td>{{show.imdbRating | number:"1.1-1" }}/10
+      <small *ngIf="show.imdbVotes">({{show.imdbVotes | number:"1.0-0" }} votes)</small>
+    </td>
+  </tr>
+
+  <tr *ngIf="show.tmdbRating">
+    <th>TheMovieDatabase</th>
+    <td>{{show.tmdbRating | number:"1.1-1" }}/10
+      <small *ngIf="show.tmdbVotes">({{show.tmdbVotes | number:"1.0-0" }} votes)</small>
+    </td>
+  </tr>
+
+  <tr *ngIf="show.status">
+    <th>Status</th>
+    <td>{{ show.status + (show.inProduction ? ' (in productie)' : '') }}</td>
+  </tr>
+
+  <tr *ngIf="show.type">
+    <th>Type</th>
+    <td>{{ show.type }}</td>
+  </tr>
+
+  <tr *ngIf="show.addedBy">
+    <th>Toegevoegd door</th>
+    <!-- TODO: Added by is goind to be an ID -->
+    <td>{{ show.addedBy.displayName }}</td>
+  </tr>
+
+
+
+  </tbody>
+</table>

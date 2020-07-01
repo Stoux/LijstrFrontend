@@ -15,8 +15,8 @@
 <!-- TODO: (sort)= -->
 <!-- TODO: (select)= -->
 <ngx-datatable
-  #showsList
-  id="shows-list"
+  #showList
+  id="show-list"
   class="material striped"
   [columnMode]="columnMode"
   [rows]="summaries"
@@ -25,6 +25,7 @@
   [scrollbarV]="true"
   [selectionType]="selectionType"
   [trackByProp]="'id'"
+  (select)="onSelect($event)"
   >
 
   <ngx-datatable-column *ngFor="let column of columns"
@@ -50,4 +51,6 @@
 
 </ngx-datatable>
 
+<hr />
 
+<router-outlet></router-outlet>

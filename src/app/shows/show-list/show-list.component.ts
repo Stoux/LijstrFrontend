@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ColumnMode, SelectionType, TableColumn } from '@swimlane/ngx-datatable';
-import { ShowSummary } from '../models/show';
+import { ShowDetail, ShowSummary } from '../models/show';
 import { ShowListService } from '../services/show-list.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'lijstr-show-list',
@@ -27,10 +28,16 @@ export class ShowListComponent implements OnInit {
   ];
   public summaries: ShowSummary[] = [];
 
-  constructor(private api: ShowListService) { }
+  constructor(private api: ShowListService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.api.getSummaries().subscribe(summaries => this.summaries = summaries);
+  }
+
+  onSelect(event: { selected: ShowDetail[] }) {
+    this.router.navigate([event.selected[0].id], {relativeTo: this.route});
   }
 
 }

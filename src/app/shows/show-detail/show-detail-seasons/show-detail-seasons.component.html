@@ -1,0 +1,15 @@
+<swiper [config]="config">
+
+  <div *ngFor="let season of show.seasonsIncludingSpecials" class="season-item">
+
+    <div class="season-item__inner" (click)="toSeason($event, season)">
+        <figure class="ratio">
+          <div style="padding-bottom: 132%;"></div>
+          <img src="https://image.tmdb.org/t/p/w500{{season.posterImage}}" />
+          <div class="season-overlay" *ngIf="season.seasonNumber <= 5" [ngStyle]="{ 'width': season.seasonNumber < 5 ? '100%' : '63%' }"></div>
+          <div class="season-overlay-status" *ngIf="season.seasonNumber < 5">&#10003;</div>
+        </figure>
+    </div>
+  </div>
+
+</swiper>

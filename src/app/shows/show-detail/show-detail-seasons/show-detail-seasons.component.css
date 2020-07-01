@@ -1,0 +1,33 @@
+.seasons {
+  position: relative;
+  height: 350px;
+}
+
+.season-item {
+  width: 250px;
+  padding: 0 4px;
+  position: relative;
+
+}
+
+.swiper-slide {
+  width: 250px !important;
+}
+
+.season-overlay {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.season-overlay-status {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  color: white;
+  font-size: 40px;
+}

@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <h1 class="title">
+        {{ show.title }}
+        <small>({{ show.imdbId }})</small>
+      </h1>
+
+      <blockquote class="plot">
+        <p>{{ show.overview }}</p>
+      </blockquote>
+
+      <lijstr-show-detail-table [show]="show"></lijstr-show-detail-table>
+
+
+    </div>
+    <div class="col-sm-3">
+
+      <div class="text-center center-block">
+        <a href="{{ getImdbUrl() }}" target="_blank">
+          <img class="img-rounded poster-image" src="{{ getPosterURL() }}" alt="{{ show.title }} - Poster"/>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <hr />
+
+</div>
+
+<lijstr-show-detail-seasons [show]="show"></lijstr-show-detail-seasons>
+
+<div class="container">
+  <hr />
+
+  <!-- TODO: Ratings -->
+
+  <pre>{{ show | json }}</pre>
+
+
+</div>
+
+
