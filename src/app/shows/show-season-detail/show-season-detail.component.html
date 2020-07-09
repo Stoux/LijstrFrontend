@@ -1,1 +1,55 @@
-<p>show-season-detail works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9">
+      <h1 class="title">
+        <a href="#">
+          <!-- TODO: Link to show overview -->
+          {{ show.title }}
+        </a>
+        -
+        <ng-template [ngIf]="season.specials">
+          Specials
+        </ng-template>
+        <ng-template [ngIf]="!season.specials">
+          S{{ season.seasonNumber | number:'2.0-0' }}
+        </ng-template>
+      </h1>
+
+      <blockquote class="plot">
+        <!-- TODO: Hide in no-spoiler mode -->
+        <p>{{ season.overview ? season.overview : 'Er is geen beschrijving van dit seizoen.' }}</p>
+      </blockquote>
+
+      <!-- TODO: Table with general rating, # of episodes, first episode date, last episode date? -->
+
+    </div>
+    <div class="col-sm-3">
+
+      <div class="text-center center-block">
+        <img class="img-rounded poster-image" src="{{ getPosterURL() }}" alt="{{ show.title }} - Season {{ season.seasonNumber }} - Poster"/>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr />
+
+<lijstr-show-season-episodes-swiper [season]="season"></lijstr-show-season-episodes-swiper>
+
+<!--
+TODO: Swiper for episodes
+- Episode progress
+- Easy ability to mark a episode as watched
+- Show reactions & add ability to leave a reaction
+-->
+
+<!--
+
+-->
+
+<hr />
+
+<div style="height: 500px;">
+
+</div>

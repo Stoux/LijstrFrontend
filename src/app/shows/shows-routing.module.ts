@@ -6,6 +6,7 @@ import { ShowDetailComponent } from './show-detail/show-detail.component';
 import { ShowDetailResolverService } from './show-detail/show-detail-resolver.service';
 import { ShowSeasonDetailComponent } from './show-season-detail/show-season-detail.component';
 import { ShowDetail, ShowSeasonDetail } from './models/show';
+import { ShowSeasonDetailResolverService } from './show-season-detail/show-season-detail-resolver.service';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
         data: {title: 'Series'},
         children: [
           {
-            path: ':id',
+            path: ':showId',
             component: ShowDetailComponent,
             data: { resolveTitle: 'showDetail.title' },
             resolve: {
@@ -27,13 +28,16 @@ const routes: Routes = [
             }
           },
           {
-            path: ':showId/seasons/:seasonId',
+            path: ':showId/seasons/:seasonNumber',
             component: ShowSeasonDetailComponent,
-            // data: {
-            //   resolveTitle: ( data: { show: ShowDetail, season: ShowSeasonDetail } ) => {
-            //   console.log(data);
-            //   return `${data.show.title} - Season ?`;
-            // }},
+            data: {
+              resolveTitle: ( data: { show: ShowDetail, season: ShowSeasonDetail } ) => {
+              return `${data.show.title} - ${data.season.title}`;
+            }},
+            resolve: {
+              show: ShowDetailResolverService,
+              season: ShowSeasonDetailResolverService,
+            },
           }
         ],
       }

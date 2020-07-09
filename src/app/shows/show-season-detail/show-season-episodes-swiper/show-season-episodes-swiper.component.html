@@ -1,0 +1,40 @@
+<swiper [config]="config">
+
+  <div *ngFor="let episode of season.episodes" class="season-item">
+
+    <div class="season-item__inner">
+      <div class="screenshot-container">
+        <img class="screenshot" [class.spoiler]="!season.specials && episode.episodeNumber > 4" *ngIf="episode.screenshotImage"
+             src="https://image.tmdb.org/t/p/w500{{ episode.screenshotImage }}" />
+        <div class="no-screenshot" *ngIf="!episode.screenshotImage">Helaasch. Geen plaatje.</div>
+        <ng-template [ngIf]="episode.episodeNumber < 5">
+          <div class="overlay"></div>
+          <div class="overlay-status">&#10003;</div>
+        </ng-template>
+        <div class="overlay-data">
+
+        </div>
+      </div>
+      <div class="season-item__content">
+        <ng-template [ngIf]="season.specials">
+          <strong>{{ episode.title }}</strong>
+        </ng-template>
+        <div *ngIf="!season.specials" class="episode-info">
+          <div class="episode-info-title">
+            <strong style="flex-grow: 1;">Episode {{ episode.episodeNumber }}</strong>
+            <small>{{ episode.airDate | date:"d MMMM yyyy" }}</small>
+          </div>
+          <p *ngIf="episode.title">{{ episode.title }}</p>
+          <div class="badges">
+            <span class="badge" *ngIf="episode.tmdbRating">IMDB: {{ episode.tmdbRating | number:"1.2-2" }}</span>
+            <span class="badge" *ngIf="episode.tmdbRating">TMDB: {{ episode.tmdbRating | number:"1.2-2" }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reactions">
+      🙃🙃
+    </div>
+  </div>
+
+</swiper>

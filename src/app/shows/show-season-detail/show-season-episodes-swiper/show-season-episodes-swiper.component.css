@@ -1,0 +1,145 @@
+.seasons {
+  position: relative;
+  height: 350px;
+}
+
+.season-item {
+  width: 250px;
+  position: relative;
+  padding: 8px 4px;
+  margin-right: 12px;
+  margin-bottom: 32px;
+  margin-top: 16px;
+  overflow: visible !important;
+}
+
+.season-item__inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border: 1px solid lightgray;
+  background-color: white;
+  z-index: 5;
+}
+
+/* On mouse-over, add a deeper shadow */
+.season-item__inner:hover {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.swiper-slide {
+  width: 250px !important;
+  height: auto !important;
+}
+
+.screenshot-container {
+  position: relative;
+  width: 100%;
+  height: 136px;
+  overflow: hidden;
+  border-bottom: 1px solid lightgray;
+}
+
+.screenshot {
+  width: 100%;
+}
+
+.screenshot.spoiler {
+  width: calc(100% + 16px);
+  margin-left: -8px;
+  filter: blur(8px);
+}
+
+.overlay {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+
+.overlay-status {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  color: white;
+  font-size: 40px;
+}
+
+.overlay-data {
+  position: absolute;
+  display: flex;
+  color: white;
+  flex-direction: row;
+  font-size: 1.2em;
+  width: 100%;
+  bottom: 0;
+  padding: 4px 4px 4px 8px;
+}
+
+.overlay-data > img {
+  width: 16px;
+  height: 16px;
+}
+
+
+.no-screenshot {
+  background: black;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.season-item__content {
+  flex-grow: 1;
+  padding: 12px;
+}
+
+.episode-info {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.episode-info-title {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.reactions {
+  position: absolute;
+  right: 10px;
+  bottom: -24px;
+  overflow: visible;
+  z-index: 3;
+  border: 1px solid lightgray;
+  padding: 5px;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  font-size: larger;
+}
+
+.badges {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-self: center;
+  margin-top: auto;
+}
+
+.badges > .badge {
+  margin: 2px;
+  font-weight: 400;
+}

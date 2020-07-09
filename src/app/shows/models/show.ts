@@ -66,4 +66,26 @@ export interface ShowSeasonDetail {
   posterImage: string;
   specials: boolean;
 
+  episodes: ShowEpisodeDetail[];
+
+}
+
+export interface ShowEpisodeDetail {
+
+  id: number;
+  airDate?: number;
+  episodeNumber: number;
+  overview?: string;
+  title?: string;
+  screenshotImage?: string;
+
+  imdbId?: string;
+  imdbRating?: number;
+
+  tmdbId: number;
+  tmdbRating: number;
+  tmdbVotes: number;
+
+  productionCode: string;
+
 }

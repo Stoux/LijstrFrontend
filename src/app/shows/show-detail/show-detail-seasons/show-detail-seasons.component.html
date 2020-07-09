@@ -2,7 +2,7 @@
 
   <div *ngFor="let season of show.seasonsIncludingSpecials" class="season-item">
 
-    <div class="season-item__inner" (click)="toSeason($event, season)">
+    <div class="season-item__content" (click)="toSeason($event, season)">
         <figure class="ratio">
           <div style="padding-bottom: 132%;"></div>
           <img src="https://image.tmdb.org/t/p/w500{{season.posterImage}}" />
