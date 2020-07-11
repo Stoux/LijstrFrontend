@@ -81,6 +81,7 @@ export interface ShowEpisodeDetail {
 
   imdbId?: string;
   imdbRating?: number;
+  imdbVotes?: number;
 
   tmdbId: number;
   tmdbRating: number;

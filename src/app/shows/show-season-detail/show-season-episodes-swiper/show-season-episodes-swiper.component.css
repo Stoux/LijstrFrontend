@@ -118,9 +118,8 @@
   align-items: baseline;
 }
 
-.reactions {
+.card-appendix {
   position: absolute;
-  right: 10px;
   bottom: -24px;
   overflow: visible;
   z-index: 3;
@@ -130,6 +129,23 @@
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
   font-size: larger;
 }
+
+.card-appendix.reactions {
+  right: 10px;
+}
+
+
+.card-appendix.comments {
+  left: 10px;
+  display: flex;
+  align-items: baseline;
+}
+
+.comments > img {
+  margin-left: 4px;
+  max-height: 14px;
+}
+
 
 .badges {
   display: flex;

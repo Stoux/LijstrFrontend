@@ -1,0 +1,30 @@
+<table class="table table-striped details">
+  <tbody>
+
+  <tr>
+    <th>Episodes</th>
+    <td>{{ season.episodes.length }}</td>
+  </tr>
+  <tr>
+    <th>Datums</th>
+    <td>
+      {{ season.episodes[0].airDate | date:"d MMMM yyyy" }} -
+      {{ season.episodes[season.episodes.length - 1].airDate | date:"d MMMM yyyy" }}
+    </td>
+  </tr>
+  <tr>
+    <th>Lijstr rating</th>
+    <td>{{ avgLijstrRating }}</td>
+  </tr>
+  <tr>
+    <th>IMDB rating <small class="rating-description">(gem. van episodes)</small></th>
+    <td>{{ avgImdbRating }}</td>
+  </tr>
+  <tr>
+    <th title="The Movie Database">TMDB rating <small class="rating-description">(gem. van episodes)</small></th>
+    <td>{{ avgTmdbRating }}</td>
+  </tr>
+
+
+  </tbody>
+</table>

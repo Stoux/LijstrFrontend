@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-9">
       <h1 class="title">
-        <a href="#">
+        <a href="#" (click)="backToShow($event)" title="Terug naar de serie">
           <!-- TODO: Link to show overview -->
           {{ show.title }}
         </a>
@@ -20,7 +20,7 @@
         <p>{{ season.overview ? season.overview : 'Er is geen beschrijving van dit seizoen.' }}</p>
       </blockquote>
 
-      <!-- TODO: Table with general rating, # of episodes, first episode date, last episode date? -->
+      <lijstr-show-season-table [season]="season"></lijstr-show-season-table>
 
     </div>
     <div class="col-sm-3">
