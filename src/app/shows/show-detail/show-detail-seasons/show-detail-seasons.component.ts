@@ -35,11 +35,9 @@ export class ShowDetailSeasonsComponent implements OnInit {
   toSeason(event: Event, season: ShowSeasonDetail) {
     event.preventDefault();
     console.log(event);
-    this.router.navigate(['seasons', season.seasonNumber], {
-      relativeTo: this.route, state: {
-        show: this.show,
-        season,
-      }
+    const newRoute = season.specials ? [ 'specials' ] : [ 'seasons', season.seasonNumber ];
+    this.router.navigate(newRoute, {
+      relativeTo: this.route,
     });
   }
 
