@@ -1,0 +1,22 @@
+.episode-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.episode-info {
+  flex-grow: 1;
+}
+
+.episode-reactions {
+  align-self: center;
+  margin-left: 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons .btn {
+  margin-top: 12px;
+}

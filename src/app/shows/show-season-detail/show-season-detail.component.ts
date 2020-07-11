@@ -12,9 +12,12 @@ export class ShowSeasonDetailComponent implements OnInit {
   public show: ShowDetail;
   public season: ShowSeasonDetail;
 
+  public showingEpisode = false;
+
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log(this.route.children);
     this.route.data.subscribe(
       (data: {show: ShowDetail, season: ShowSeasonDetail}) => {
         this.show = data.show;
@@ -35,5 +38,16 @@ export class ShowSeasonDetailComponent implements OnInit {
 
     this.router.navigate(['shows', this.show.id]);
   }
+
+  public backToSeason(event?: MouseEvent) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+
+    this.router.navigate([ '.' ], {
+      relativeTo: this.route,
+    });
+  }
+
 
 }

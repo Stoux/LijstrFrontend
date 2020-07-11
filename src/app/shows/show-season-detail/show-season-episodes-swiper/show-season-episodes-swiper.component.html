@@ -2,7 +2,7 @@
 
   <div *ngFor="let episode of season.episodes" class="season-item">
 
-    <div class="season-item__inner">
+    <div class="season-item__inner" (click)="toEpisode(episode)">
       <div class="screenshot-container">
         <img class="screenshot" [class.spoiler]="!season.specials && episode.episodeNumber > 4" *ngIf="episode.screenshotImage"
              src="https://image.tmdb.org/t/p/w500{{ episode.screenshotImage }}" />
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="card-appendix comments" *ngIf="true">
-      8 <img class="loading" src="/assets/comment.png"/>
+      8 <span class="glyphicon glyphicon-comment"></span>
     </div>
     <div class="card-appendix reactions" *ngIf="true">
       🙃🙃

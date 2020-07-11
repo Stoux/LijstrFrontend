@@ -1,0 +1,47 @@
+<div class="container" *ngIf="episode" #body>
+
+  <!-- https://github.com/dmacfarlane/angular-mentions#readme -->
+
+  <div class="episode-header">
+    <div class="episode-info">
+      <h1>
+        <span style="color: #777777;">
+          S{{ season.seasonNumber | number: "2.0-0" }}E{{ episode.episodeNumber | number: "2.0-0" }}
+        </span>
+        {{ episode.title }}
+      </h1>
+      <p>{{ episode.overview }}</p>
+    </div>
+    <div class="episode-reactions" *ngIf="userMeta">
+      <button class="btn btn-warning" *ngIf="!userMeta.seen" title="Als gezien markeren?" (click)="markAsSeen()">
+        <span class="glyphicon glyphicon-eye-open"></span>
+        Gezien?
+      </button>
+      <button class="btn btn-success" *ngIf="userMeta.seen" title="Als niet gezien markeren?" (click)="markAsNotSeen()">
+        <span class="glyphicon glyphicon-check"></span>
+        Gezien!
+      </button>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" *ngIf="notSeenPreviousEpisodes">
+    <p>
+      Er zijn nog {{ notSeenPreviousEpisodes }} vorige episodes die nog op 'Niet geien' staan. Wil je ze allemaal automatisch aanpassen naar 'Gezien'?
+    </p>
+    <div class="buttons">
+      <div style="flex-grow: 1">
+        <button class="btn btn-danger" (click)="notSeenPreviousEpisodes = undefined">
+          Niet aanpassen
+        </button>
+      </div>
+      <button class="btn btn-success" (click)="markPreviousEpisodesAsSeen()">
+        Aanpassen naar 'Gezien'
+      </button>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div style="height: 1000px"></div>

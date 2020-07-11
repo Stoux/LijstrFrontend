@@ -100,6 +100,20 @@ export class UserService {
   }
 
   /**
+   * Check if the current user has access to tracking shows.
+   */
+  isShowUser(): boolean {
+    return this.hasRole('ROLE_SHOW_USER');
+  }
+
+  /**
+   * Check if the current user is a show mod.
+   */
+  isShowMod(): boolean {
+    return this.hasRole('ROLE_SHOW_MOD');
+  }
+
+  /**
    * Observable feed of the current state of the logged in user.
    */
   userChangeFeed(): Observable<FullUser> {

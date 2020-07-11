@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { ShowSeasonDetail } from '../models/show';
 import { ShowDetailService } from '../services/show-detail.service';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { finalize, shareReplay } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

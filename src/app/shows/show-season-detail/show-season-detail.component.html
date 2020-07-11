@@ -3,15 +3,20 @@
     <div class="col-sm-9">
       <h1 class="title">
         <a href="#" (click)="backToShow($event)" title="Terug naar de serie">
-          <!-- TODO: Link to show overview -->
           {{ show.title }}
         </a>
         -
-        <ng-template [ngIf]="season.specials">
-          Specials
+        <ng-template #seasonTitle>
+          {{ season.specials ? 'Specials' : 'Seizoen ' + ( season.seasonNumber | number:'2.0-0' ) }}
         </ng-template>
-        <ng-template [ngIf]="!season.specials">
-          S{{ season.seasonNumber | number:'2.0-0' }}
+
+        <ng-template [ngIf]="!showingEpisode">
+          <ng-template [ngTemplateOutlet]="seasonTitle"></ng-template>
+        </ng-template>
+        <ng-template [ngIf]="showingEpisode">
+          <a href="#" (click)="backToSeason($event)" title="Toon seizoen informatie">
+            <ng-template [ngTemplateOutlet]="seasonTitle"></ng-template>
+          </a>
         </ng-template>
       </h1>
 
@@ -50,6 +55,8 @@ TODO: Swiper for episodes
 
 <hr />
 
-<div style="height: 500px;">
+<router-outlet #routerOutlet (activate)="showingEpisode = true" (deactivate)="showingEpisode = false"></router-outlet>
 
+<div style="height: 500px;" *ngIf="!showingEpisode">
+  Season stuff
 </div>

@@ -90,3 +90,12 @@ export interface ShowEpisodeDetail {
   productionCode: string;
 
 }
+
+export interface ShowEpisodeUserMeta {
+
+  user: number;
+  seen: boolean;
+  seenOn?: number;
+  reaction?: string;
+
+}

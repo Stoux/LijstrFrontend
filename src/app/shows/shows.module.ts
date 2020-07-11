@@ -11,6 +11,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { ShowSeasonDetailComponent } from './show-season-detail/show-season-detail.component';
 import { ShowSeasonEpisodesSwiperComponent } from './show-season-detail/show-season-episodes-swiper/show-season-episodes-swiper.component';
 import { ShowSeasonTableComponent } from './show-season-detail/show-season-table/show-season-table.component';
+import { ShowSeasonEpisodeComponent } from './show-season-detail/show-season-episode/show-season-episode.component';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { ShowSeasonTableComponent } from './show-season-detail/show-season-table
     ShowDetailSeasonsComponent,
     ShowSeasonDetailComponent,
     ShowSeasonEpisodesSwiperComponent,
-    ShowSeasonTableComponent
+    ShowSeasonTableComponent,
+    ShowSeasonEpisodeComponent,
   ],
 })
 export class ShowsModule { }

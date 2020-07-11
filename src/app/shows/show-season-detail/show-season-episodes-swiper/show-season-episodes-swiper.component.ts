@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { ShowSeasonDetail } from '../../models/show';
+import { ShowEpisodeDetail, ShowSeasonDetail } from '../../models/show';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'lijstr-show-season-episodes-swiper',
@@ -25,9 +26,8 @@ export class ShowSeasonEpisodesSwiperComponent implements OnInit {
     watchSlidesVisibility: true,
   };
 
-  constructor() {
-
-  }
+  constructor(private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -37,5 +37,10 @@ export class ShowSeasonEpisodesSwiperComponent implements OnInit {
     return `https://image.tmdb.org/t/p/${size}${this.season.posterImage}`;
   }
 
+  public toEpisode(episode: ShowEpisodeDetail) {
+    this.router.navigate([ 'episodes', episode.episodeNumber ], {
+      relativeTo: this.route,
+    });
+  }
 
 }
