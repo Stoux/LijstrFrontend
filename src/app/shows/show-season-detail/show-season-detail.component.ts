@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShowDetail, ShowSeasonDetail } from '../models/show';
+import { SeenMap, ShowSeenStatusService } from '../services/show-seen-status.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'lijstr-show-season-detail',
@@ -12,9 +14,14 @@ export class ShowSeasonDetailComponent implements OnInit {
   public show: ShowDetail;
   public season: ShowSeasonDetail;
 
+  public seenMap: SeenMap;
   public showingEpisode = false;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private seenStatusService: ShowSeenStatusService
+  ) { }
 
   ngOnInit(): void {
     console.log(this.route.children);
@@ -22,6 +29,7 @@ export class ShowSeasonDetailComponent implements OnInit {
       (data: {show: ShowDetail, season: ShowSeasonDetail}) => {
         this.show = data.show;
         this.season = data.season;
+        this.seenStatusService.getSeenStatus(this.show.id).subscribe(value => this.seenMap = value);
       }
     );
   }

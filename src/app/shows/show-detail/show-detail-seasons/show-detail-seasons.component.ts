@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ShowDetail, ShowSeasonDetail } from '../../models/show';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SeenMap } from '../../services/show-seen-status.service';
 
 @Component({
   selector: 'lijstr-show-detail-seasons',
@@ -11,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ShowDetailSeasonsComponent implements OnInit {
 
   @Input() show: ShowDetail;
+  @Input() seenStatus: SeenMap | null;
 
   config: SwiperConfigInterface = {
     direction: 'horizontal',
@@ -38,6 +40,22 @@ export class ShowDetailSeasonsComponent implements OnInit {
     this.router.navigate(newRoute, {
       relativeTo: this.route,
     });
+  }
+
+  getSeenPercentage(season: ShowSeasonDetail) {
+    if (!this.seenStatus || !this.seenStatus.hasOwnProperty(season.id)) {
+      return 0.0;
+    }
+
+    const seasonSeenStatus = Object.values(this.seenStatus[season.id]);
+    const total = seasonSeenStatus.length;
+    const seen = seasonSeenStatus.filter(value => value === true).length;
+
+    if (total === 0 || seen === 0) {
+      return 0.0;
+    }
+
+    return seen / (total / 100.0);
   }
 
 }

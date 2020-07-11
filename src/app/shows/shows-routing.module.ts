@@ -26,7 +26,8 @@ const routes: Routes = [
             component: ShowDetailComponent,
             data: { resolveTitle: 'showDetail.title' },
             resolve: {
-              showDetail: ShowDetailResolverService
+              showDetail: ShowDetailResolverService,
+
             }
           },
           {

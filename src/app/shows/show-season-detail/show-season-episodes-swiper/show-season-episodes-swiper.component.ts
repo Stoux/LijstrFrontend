@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { ShowEpisodeDetail, ShowSeasonDetail } from '../../models/show';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SeenMap } from '../../services/show-seen-status.service';
 
 @Component({
   selector: 'lijstr-show-season-episodes-swiper',
@@ -11,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ShowSeasonEpisodesSwiperComponent implements OnInit {
 
   @Input() season: ShowSeasonDetail;
+  @Input() seenMap: SeenMap;
 
   config: SwiperConfigInterface = {
     direction: 'horizontal',
@@ -42,5 +44,15 @@ export class ShowSeasonEpisodesSwiperComponent implements OnInit {
       relativeTo: this.route,
     });
   }
+
+  public hasSeenEpisode(episode: ShowEpisodeDetail) {
+    if (!this.seenMap || !this.seenMap.hasOwnProperty(this.season.id)) {
+      return false;
+    }
+
+    const episodes = this.seenMap[this.season.id];
+    return episodes.hasOwnProperty(episode.id) ? episodes[episode.id] : false;
+  }
+
 
 }

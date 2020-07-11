@@ -3,6 +3,8 @@ import { ShowDetail, ShowEpisodeDetail, ShowEpisodeUserMeta, ShowSeasonDetail } 
 import { ActivatedRoute } from '@angular/router';
 import { ShowDetailService } from '../../services/show-detail.service';
 import { Observable} from 'rxjs';
+import { ShowSeenStatusService } from '../../services/show-seen-status.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'lijstr-show-season-episode',
@@ -23,7 +25,11 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
   userMeta: ShowEpisodeUserMeta;
   comments: any[];
 
-  constructor(private route: ActivatedRoute, private showService: ShowDetailService) {
+  constructor(
+    private route: ActivatedRoute,
+    private showService: ShowDetailService,
+    private seenStatusService: ShowSeenStatusService
+  ) {
   }
 
   ngOnInit(): void {
@@ -84,12 +90,13 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
   markPreviousEpisodesAsSeen(): void {
     this.showService.updateNotSeenEpisodes(this.show.id, this.season.seasonNumber, this.episode.episodeNumber).subscribe(() => {
       this.notSeenPreviousEpisodes = undefined;
+      this.seenStatusService.invalidateSeenStatus(this.show.id);
     });
   }
 
   markAsNotSeen(): void {
     this.notSeenPreviousEpisodes = undefined;
-    this.updateMeta(false, this.userMeta.reaction);
+    this.updateMeta(false, this.userMeta.reaction).subscribe(() => {});
   }
 
   // updateReaction(reaction): void {
@@ -101,12 +108,12 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       seen, reaction
     });
 
-    updateObservable.subscribe(
-      meta => this.userMeta = meta,
-      error => console.log(error) // TODO
+    return updateObservable.pipe(
+      tap(meta => {
+        this.userMeta = meta;
+        this.seenStatusService.invalidateSeenStatus(this.show.id);
+      })
     );
-
-    return updateObservable;
   }
 
 

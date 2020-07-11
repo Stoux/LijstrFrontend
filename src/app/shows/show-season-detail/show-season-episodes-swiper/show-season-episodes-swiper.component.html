@@ -4,10 +4,10 @@
 
     <div class="season-item__inner" (click)="toEpisode(episode)">
       <div class="screenshot-container">
-        <img class="screenshot" [class.spoiler]="!season.specials && episode.episodeNumber > 4" *ngIf="episode.screenshotImage"
+        <img class="screenshot" [class.spoiler]="!season.specials && !hasSeenEpisode(episode)" *ngIf="episode.screenshotImage"
              src="https://image.tmdb.org/t/p/w500{{ episode.screenshotImage }}" />
         <div class="no-screenshot" *ngIf="!episode.screenshotImage">Helaasch. Geen plaatje.</div>
-        <ng-template [ngIf]="episode.episodeNumber < 5">
+        <ng-template [ngIf]="hasSeenEpisode(episode)">
           <div class="overlay"></div>
           <div class="overlay-status">&#10003;</div>
         </ng-template>
