@@ -85,5 +85,13 @@ export class ShowSeasonEpisodesSwiperComponent implements OnInit, OnChanges, Aft
     return episodes.hasOwnProperty(episode.id) ? episodes[episode.id] : false;
   }
 
+  public getReactionsForEpisode(episode: ShowEpisodeDetail) {
+    if (episode.userMetas) {
+      return episode.userMetas.map(meta => meta.reaction).filter(reaction => reaction !== undefined && reaction !== null);
+    } else {
+      return [];
+    }
+  }
+
 
 }

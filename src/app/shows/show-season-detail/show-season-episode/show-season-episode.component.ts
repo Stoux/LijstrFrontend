@@ -5,6 +5,7 @@ import { ShowDetailService } from '../../services/show-detail.service';
 import { Observable} from 'rxjs';
 import { ShowSeenStatusService } from '../../services/show-seen-status.service';
 import { tap } from 'rxjs/operators';
+import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Component({
   selector: 'lijstr-show-season-episode',
@@ -23,6 +24,7 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
 
   notSeenPreviousEpisodes: number;
   userMeta: ShowEpisodeUserMeta;
+  showReactionPicker: boolean;
   comments: any[];
 
   forceVisibleSummary: boolean;
@@ -45,6 +47,7 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       this.comments = undefined;
       this.notSeenPreviousEpisodes = undefined;
       this.forceVisibleSummary = false;
+      this.showReactionPicker = false;
       this.resolveEpisode();
     });
     this.route.data.subscribe((data: {userMeta: ShowEpisodeUserMeta}) => {
@@ -102,9 +105,17 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
     this.updateMeta(false, this.userMeta.reaction).subscribe(() => {});
   }
 
-  // updateReaction(reaction): void {
-  //   this.updateMeta(this.userMeta.seen, reaction);
-  // }
+  onClickedReactionEmoji(event: {emoji: EmojiData, $event: MouseEvent}) {
+    this.showReactionPicker = false;
+    this.updateReaction(event.emoji.colons);
+  }
+
+  /**
+   * @param emoji :colons: name
+   */
+  updateReaction(emoji: string): void {
+    this.updateMeta(this.userMeta.seen, emoji).subscribe(() => {});
+  }
 
   private updateMeta(seen: boolean, reaction: string): Observable<ShowEpisodeUserMeta> {
     const updateObservable = this.showService.updateEpisodeUserMeta(this.show.id, this.season.seasonNumber, this.episode.episodeNumber, {
@@ -118,6 +129,8 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       })
     );
   }
+
+  
 
 
 }

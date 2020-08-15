@@ -35,3 +35,5 @@ input.ng-valid.ng-touched, textarea.ng-valid.ng-touched {
 *[hidden] {
   display: none;
 }
+
+@import '~@ctrl/ngx-emoji-mart/picker';

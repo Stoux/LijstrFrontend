@@ -89,6 +89,9 @@ export interface ShowEpisodeDetail {
 
   productionCode: string;
 
+  comments: number;
+  userMetas: ShowEpisodeUserMeta[];
+
 }
 
 export interface ShowEpisodeUserMeta {

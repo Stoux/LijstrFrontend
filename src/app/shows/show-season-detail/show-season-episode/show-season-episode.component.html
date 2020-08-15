@@ -1,3 +1,6 @@
+
+<!-- TODO: Add arrows on the sides to switch to the next/prev episode -->
+
 <div class="container" *ngIf="episode" #body>
 
   <!-- https://github.com/dmacfarlane/angular-mentions#readme -->
@@ -14,7 +17,7 @@
         {{ episode.overview }}
       </p>
     </div>
-    <div class="episode-reactions" *ngIf="userMeta">
+    <div class="episode-watch-status" *ngIf="userMeta">
       <button class="btn btn-warning" *ngIf="!userMeta.seen" title="Als gezien markeren?" (click)="markAsSeen()">
         <span class="glyphicon glyphicon-eye-open"></span>
         Gezien?
@@ -23,7 +26,6 @@
         <span class="glyphicon glyphicon-check"></span>
         Gezien!
       </button>
-      <input type="text" />
     </div>
   </div>
 
@@ -43,7 +45,40 @@
     </div>
   </div>
 
+  <div class="episode-user-data">
 
+    <div *ngIf="userMeta && userMeta.seen" class="episode-user-data--my-reaction">
+      <span>Gezien op {{ userMeta.seenOn | date:"d MMM yyyy - HH:mm:ss" }} | Jouw reactie:</span>
+      <span *ngIf="userMeta.reaction">
+        <ngx-emoji [emoji]="userMeta.reaction" (emojiClick)="showReactionPicker = !showReactionPicker"></ngx-emoji>
+      </span>
+      <span *ngIf="!userMeta.reaction">
+        geen
+      </span>
+
+      <button class="btn btn-primary" title="Pas je reactie aan" (click)="showReactionPicker = !showReactionPicker">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <button class="btn btn-danger" *ngIf="userMeta.reaction" title="Verwijder je reactie" (click)="updateReaction(null)">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button>
+    </div>
+
+    <emoji-mart title="Kies is wat leuks." emoji="point_up" *ngIf="showReactionPicker"
+                [style]="{ position: 'absolute' }"
+                (emojiSelect)="onClickedReactionEmoji($event)"></emoji-mart>
+
+    <div class="reactions">
+
+      <div class="reaction" *ngFor="let meta of showReactionPicker">
+
+      </div>
+
+    </div>
+
+
+
+  </div>
 
 
 

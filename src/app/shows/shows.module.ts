@@ -12,14 +12,18 @@ import { ShowSeasonDetailComponent } from './show-season-detail/show-season-deta
 import { ShowSeasonEpisodesSwiperComponent } from './show-season-detail/show-season-episodes-swiper/show-season-episodes-swiper.component';
 import { ShowSeasonTableComponent } from './show-season-detail/show-season-table/show-season-table.component';
 import { ShowSeasonEpisodeComponent } from './show-season-detail/show-season-episode/show-season-episode.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @NgModule({
-    imports: [
-        SharedModule,
-        ShowsRoutingModule,
-        NgxDatatableModule,
-        SwiperModule,
-    ],
+  imports: [
+    SharedModule,
+    ShowsRoutingModule,
+    NgxDatatableModule,
+    SwiperModule,
+    PickerModule,
+    EmojiModule,
+  ],
   declarations: [
     ShowsComponent,
     ShowListComponent,
@@ -32,4 +36,5 @@ import { ShowSeasonEpisodeComponent } from './show-season-detail/show-season-epi
     ShowSeasonEpisodeComponent,
   ],
 })
-export class ShowsModule { }
+export class ShowsModule {
+}
