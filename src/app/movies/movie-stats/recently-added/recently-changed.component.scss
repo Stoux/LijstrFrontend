@@ -2,7 +2,7 @@ li:not(:last-child) {
   border-bottom: 1px solid lightgray;
 }
 
-lijstr-movie-single-rating /deep/ *, blockquote {
+lijstr-movie-single-rating ::ng-deep *, blockquote {
   font-size: 0.95em;
 }
 

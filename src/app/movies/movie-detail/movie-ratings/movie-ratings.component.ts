@@ -7,7 +7,7 @@ import { MovieRatingsService } from '../../services/movie-ratings.service';
 @Component({
   selector: 'lijstr-movie-ratings',
   templateUrl: './movie-ratings.component.html',
-  styleUrls: ['./movie-ratings.component.css']
+  styleUrls: ['./movie-ratings.component.scss']
 })
 export class MovieRatingsComponent implements OnChanges {
 

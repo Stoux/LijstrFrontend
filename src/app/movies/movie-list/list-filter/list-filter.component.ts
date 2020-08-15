@@ -8,7 +8,7 @@ import { LijstrException } from '../../../core/exceptions';
 @Component({
   selector: 'lijstr-list-filter',
   templateUrl: './list-filter.component.html',
-  styleUrls: ['./list-filter.component.css']
+  styleUrls: ['./list-filter.component.scss']
 })
 export class ListFilterComponent implements OnInit, OnDestroy {
 

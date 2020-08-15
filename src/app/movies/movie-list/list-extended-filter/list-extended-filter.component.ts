@@ -7,7 +7,7 @@ import {ListPersonFilterComponent} from './list-person-filter/list-person-filter
 @Component({
   selector: 'lijstr-list-extended-filter',
   templateUrl: './list-extended-filter.component.html',
-  styleUrls: ['./list-extended-filter.component.css']
+  styleUrls: ['./list-extended-filter.component.scss']
 })
 export class ListExtendedFilterComponent implements OnInit {
 

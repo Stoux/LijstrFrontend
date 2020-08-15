@@ -18,7 +18,7 @@ import { User } from '../../../core/models/user';
 @Component({
   selector: 'lijstr-movie-timeline',
   templateUrl: 'movie-timeline.component.html',
-  styleUrls: ['movie-timeline.component.css'],
+  styleUrls: ['movie-timeline.component.scss'],
 })
 export class MovieTimelineComponent implements AfterViewInit, OnChanges {
 

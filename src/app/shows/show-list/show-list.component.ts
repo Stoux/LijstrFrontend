@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'lijstr-show-list',
   templateUrl: './show-list.component.html',
-  styleUrls: ['./show-list.component.css']
+  styleUrls: ['./show-list.component.scss']
 })
 export class ShowListComponent implements OnInit {
 

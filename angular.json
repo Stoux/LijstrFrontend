@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles/styles.css",
+              "src/styles/styles.scss",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/bootstrap/dist/css/bootstrap-theme.css",
@@ -94,7 +94,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles/styles.css",
+              "src/styles/styles.scss",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/bootstrap/dist/css/bootstrap-theme.css",
@@ -130,6 +130,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "LijstrFrontend"
+    }
+  },
+  "defaultProject": "LijstrFrontend",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

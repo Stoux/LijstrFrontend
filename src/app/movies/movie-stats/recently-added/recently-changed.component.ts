@@ -15,7 +15,7 @@ import {finalize} from 'rxjs/operators';
 @Component({
   selector: 'lijstr-recently-changed',
   templateUrl: 'recently-changed.component.html',
-  styleUrls: ['recently-changed.component.css']
+  styleUrls: ['recently-changed.component.scss']
 })
 export class RecentlyChangedComponent implements OnInit {
 

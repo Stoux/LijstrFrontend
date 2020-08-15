@@ -10,7 +10,7 @@ import { RedirectService } from '../../core/services/redirect.service';
 @Component({
   selector: 'lijstr-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent extends WithoutUserComponent implements OnInit {
 

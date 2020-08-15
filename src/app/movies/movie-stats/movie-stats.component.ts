@@ -15,7 +15,7 @@ export class UserWrapper {
 @Component({
   selector: 'lijstr-movie-stats',
   templateUrl: './movie-stats.component.html',
-  styleUrls: ['./movie-stats.component.css']
+  styleUrls: ['./movie-stats.component.scss']
 })
 export class MovieStatsComponent implements OnInit {
 

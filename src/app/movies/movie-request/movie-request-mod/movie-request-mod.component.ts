@@ -11,7 +11,7 @@ import {debounceTime, distinctUntilChanged, finalize} from 'rxjs/operators';
 @Component({
   selector: 'lijstr-movie-request-mod',
   templateUrl: './movie-request-mod.component.html',
-  styleUrls: ['./movie-request-mod.component.css'],
+  styleUrls: ['./movie-request-mod.component.scss'],
   providers: [
     OmdbApiService
   ]

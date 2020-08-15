@@ -11,7 +11,7 @@ import {finalize} from 'rxjs/operators';
 @Component({
   selector: 'lijstr-movie-request',
   templateUrl: './movie-request.component.html',
-  styleUrls: ['./movie-request.component.css']
+  styleUrls: ['./movie-request.component.scss']
 })
 export class MovieRequestComponent implements OnInit, OnDestroy {
 

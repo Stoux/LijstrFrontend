@@ -12,7 +12,7 @@ import { MovieUsersService } from '../services/movie-users.service';
 @Component({
   selector: 'lijstr-movie-outstanding',
   templateUrl: './movie-outstanding.component.html',
-  styleUrls: ['./movie-outstanding.component.css']
+  styleUrls: ['./movie-outstanding.component.scss']
 })
 export class MovieOutstandingComponent implements OnInit, OnDestroy {
 

@@ -7,7 +7,7 @@ import { SeenMap } from '../../services/show-seen-status.service';
 @Component({
   selector: 'lijstr-show-season-episodes-swiper',
   templateUrl: './show-season-episodes-swiper.component.html',
-  styleUrls: ['./show-season-episodes-swiper.component.css']
+  styleUrls: ['./show-season-episodes-swiper.component.scss']
 })
 export class ShowSeasonEpisodesSwiperComponent implements OnInit, OnChanges, AfterViewInit {
 

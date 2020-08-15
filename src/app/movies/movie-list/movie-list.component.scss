@@ -12,7 +12,7 @@
   margin-top: 0;
 }
 
-.list-options > *, .list-options > lijstr-list-filter /deep/ > * {
+.list-options > *, .list-options > lijstr-list-filter ::ng-deep > * {
   float: right;
   margin-left: 5px;
 }

@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'lijstr-movie-detail-poster',
   templateUrl: './movie-detail-poster.component.html',
-  styleUrls: ['./movie-detail-poster.component.css']
+  styleUrls: ['./movie-detail-poster.component.scss']
 })
 export class MovieDetailPosterComponent {
 

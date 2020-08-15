@@ -5,7 +5,7 @@ import { DecimalPipe } from '@angular/common';
 @Component({
   selector: 'lijstr-show-season-table',
   templateUrl: './show-season-table.component.html',
-  styleUrls: ['./show-season-table.component.css']
+  styleUrls: ['./show-season-table.component.scss']
 })
 export class ShowSeasonTableComponent implements OnInit {
 

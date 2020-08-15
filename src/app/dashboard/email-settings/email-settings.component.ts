@@ -5,7 +5,7 @@ import { DayOfWeek, EmailSettings, UpdateInterval } from '../../core/models/user
 @Component({
   selector: 'lijstr-email-settings',
   templateUrl: './email-settings.component.html',
-  styleUrls: ['./email-settings.component.css']
+  styleUrls: ['./email-settings.component.scss']
 })
 export class EmailSettingsComponent implements OnInit {
 

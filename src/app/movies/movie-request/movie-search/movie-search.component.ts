@@ -6,7 +6,7 @@ import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } f
 @Component({
   selector: 'lijstr-movie-search',
   templateUrl: './movie-search.component.html',
-  styleUrls: ['./movie-search.component.css']
+  styleUrls: ['./movie-search.component.scss']
 })
 export class MovieSearchComponent implements OnInit {
 

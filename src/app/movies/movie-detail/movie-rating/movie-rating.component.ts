@@ -12,7 +12,7 @@ import {finalize} from 'rxjs/operators';
 @Component({
   selector: 'lijstr-movie-rating',
   templateUrl: './movie-rating.component.html',
-  styleUrls: ['./movie-rating.component.css']
+  styleUrls: ['./movie-rating.component.scss']
 })
 export class MovieRatingComponent implements OnChanges {
 

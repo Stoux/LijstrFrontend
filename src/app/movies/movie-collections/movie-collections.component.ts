@@ -9,7 +9,7 @@ import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'lijstr-movie-collections',
   templateUrl: './movie-collections.component.html',
-  styleUrls: ['./movie-collections.component.css']
+  styleUrls: ['./movie-collections.component.scss']
 })
 export class MovieCollectionsComponent implements OnInit {
 

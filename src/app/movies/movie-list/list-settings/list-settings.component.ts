@@ -11,7 +11,7 @@ class OrderedColumn {
 @Component({
   selector: 'lijstr-list-settings',
   templateUrl: './list-settings.component.html',
-  styleUrls: ['./list-settings.component.css']
+  styleUrls: ['./list-settings.component.scss']
 })
 export class ListSettingsComponent implements OnInit {
 

@@ -7,7 +7,7 @@ import {finalize} from 'rxjs/operators';
 @Component({
   selector: 'lijstr-movie-watchlist-icon',
   templateUrl: './movie-watchlist-icon.component.html',
-  styleUrls: ['./movie-watchlist-icon.component.css']
+  styleUrls: ['./movie-watchlist-icon.component.scss']
 })
 export class MovieWatchlistIconComponent implements OnChanges {
 

@@ -2,6 +2,6 @@
   height: 250px;
 }
 
-:host /deep/ .panel-body > * > * {
+:host ::ng-deep .panel-body > * > * {
   margin-bottom: 0;
 }

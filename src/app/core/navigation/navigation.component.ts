@@ -5,7 +5,7 @@ import { MovieOutstandingService } from '../services/section/movie-outstanding.s
 @Component({
   selector: 'lijstr-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css']
+  styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
 

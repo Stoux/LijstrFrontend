@@ -4,7 +4,7 @@ import { MovieDetail } from '../../models/movie';
 @Component({
   selector: 'lijstr-movie-detail-summary',
   templateUrl: './movie-detail-summary.component.html',
-  styleUrls: ['./movie-detail-summary.component.css']
+  styleUrls: ['./movie-detail-summary.component.scss']
 })
 export class MovieDetailSummaryComponent {
 

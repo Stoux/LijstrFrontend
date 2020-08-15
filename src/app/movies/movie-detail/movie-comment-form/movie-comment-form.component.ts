@@ -8,7 +8,7 @@ import {finalize} from 'rxjs/operators';
 @Component({
   selector: 'lijstr-movie-comment-form',
   templateUrl: './movie-comment-form.component.html',
-  styleUrls: ['./movie-comment-form.component.css']
+  styleUrls: ['./movie-comment-form.component.scss']
 })
 export class MovieCommentFormComponent implements OnChanges {
 

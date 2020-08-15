@@ -4,7 +4,7 @@ import { ShowDetail } from '../../models/show';
 @Component({
   selector: 'lijstr-show-detail-table',
   templateUrl: './show-detail-table.component.html',
-  styleUrls: ['./show-detail-table.component.css']
+  styleUrls: ['./show-detail-table.component.scss']
 })
 export class ShowDetailTableComponent implements OnInit {
 

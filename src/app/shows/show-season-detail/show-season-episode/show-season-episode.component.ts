@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 @Component({
   selector: 'lijstr-show-season-episode',
   templateUrl: './show-season-episode.component.html',
-  styleUrls: ['./show-season-episode.component.css']
+  styleUrls: ['./show-season-episode.component.scss']
 })
 export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
 

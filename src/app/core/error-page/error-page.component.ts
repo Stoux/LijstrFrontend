@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'lijstr-error-page',
   templateUrl: 'error-page.component.html',
-  styleUrls: ['error-page.component.css']
+  styleUrls: ['error-page.component.scss']
 })
 export class ErrorPageComponent implements OnInit {
 

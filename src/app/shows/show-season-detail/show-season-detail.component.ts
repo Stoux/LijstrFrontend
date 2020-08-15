@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'lijstr-show-season-detail',
   templateUrl: './show-season-detail.component.html',
-  styleUrls: ['./show-season-detail.component.css']
+  styleUrls: ['./show-season-detail.component.scss']
 })
 export class ShowSeasonDetailComponent implements OnInit {
 

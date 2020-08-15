@@ -10,7 +10,7 @@ export interface RowCaller {
 @Component({
   selector: 'lijstr-list-pager',
   templateUrl: './list-pager.component.html',
-  styleUrls: ['./list-pager.component.css']
+  styleUrls: ['./list-pager.component.scss']
 })
 export class ListPagerComponent implements OnInit {
 

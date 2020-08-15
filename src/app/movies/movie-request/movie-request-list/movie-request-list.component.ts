@@ -7,7 +7,7 @@ import { SavedMovieRequest } from '../../models/requests';
 @Component({
   selector: 'lijstr-movie-request-list',
   templateUrl: './movie-request-list.component.html',
-  styleUrls: ['./movie-request-list.component.css']
+  styleUrls: ['./movie-request-list.component.scss']
 })
 export class MovieRequestListComponent implements OnInit {
 

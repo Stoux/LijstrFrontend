@@ -8,7 +8,7 @@ import {catchError, debounceTime, distinctUntilChanged, map, switchMap, tap} fro
 @Component({
   selector: 'lijstr-list-person-filter',
   templateUrl: './list-person-filter.component.html',
-  styleUrls: ['./list-person-filter.component.css']
+  styleUrls: ['./list-person-filter.component.scss']
 })
 export class ListPersonFilterComponent implements OnInit, MovieListFilter {
 

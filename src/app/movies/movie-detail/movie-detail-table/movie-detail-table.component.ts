@@ -5,7 +5,7 @@ import { User } from '../../../core/models/user';
 @Component({
   selector: 'lijstr-movie-detail-table',
   templateUrl: './movie-detail-table.component.html',
-  styleUrls: ['./movie-detail-table.component.css']
+  styleUrls: ['./movie-detail-table.component.scss']
 })
 export class MovieDetailTableComponent {
 

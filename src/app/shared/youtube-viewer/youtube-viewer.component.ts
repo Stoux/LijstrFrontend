@@ -4,7 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'lijstr-youtube-viewer',
   templateUrl: './youtube-viewer.component.html',
-  styleUrls: ['./youtube-viewer.component.css']
+  styleUrls: ['./youtube-viewer.component.scss']
 })
 export class YoutubeViewerComponent implements OnChanges {
 

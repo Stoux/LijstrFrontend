@@ -6,7 +6,7 @@ import { SeenMap, ShowSeenStatusService } from '../services/show-seen-status.ser
 @Component({
   selector: 'lijstr-show-detail',
   templateUrl: './show-detail.component.html',
-  styleUrls: ['./show-detail.component.css']
+  styleUrls: ['./show-detail.component.scss']
 })
 export class ShowDetailComponent implements OnInit {
 

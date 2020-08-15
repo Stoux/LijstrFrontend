@@ -7,7 +7,7 @@ import { SeenMap } from '../../services/show-seen-status.service';
 @Component({
   selector: 'lijstr-show-detail-seasons',
   templateUrl: './show-detail-seasons.component.html',
-  styleUrls: ['./show-detail-seasons.component.css']
+  styleUrls: ['./show-detail-seasons.component.scss']
 })
 export class ShowDetailSeasonsComponent implements OnInit {
 

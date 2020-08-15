@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'lijstr-endpoint-debugger',
   templateUrl: './endpoint-debugger.component.html',
-  styleUrls: ['./endpoint-debugger.component.css']
+  styleUrls: ['./endpoint-debugger.component.scss']
 })
 export class EndpointDebuggerComponent {
 
