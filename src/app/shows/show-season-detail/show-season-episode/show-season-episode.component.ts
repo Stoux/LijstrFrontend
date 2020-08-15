@@ -25,6 +25,8 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
   userMeta: ShowEpisodeUserMeta;
   comments: any[];
 
+  forceVisibleSummary: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private showService: ShowDetailService,
@@ -42,6 +44,7 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       this.episodeNumber = params.episodeNumber;
       this.comments = undefined;
       this.notSeenPreviousEpisodes = undefined;
+      this.forceVisibleSummary = false;
       this.resolveEpisode();
     });
     this.route.data.subscribe((data: {userMeta: ShowEpisodeUserMeta}) => {

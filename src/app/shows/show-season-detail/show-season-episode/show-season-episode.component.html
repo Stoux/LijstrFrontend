@@ -10,7 +10,9 @@
         </span>
         {{ episode.title }}
       </h1>
-      <p>{{ episode.overview }}</p>
+      <p [class.is-hidden]="(userMeta && !userMeta.seen) && !forceVisibleSummary" (click)="forceVisibleSummary = true">
+        {{ episode.overview }}
+      </p>
     </div>
     <div class="episode-reactions" *ngIf="userMeta">
       <button class="btn btn-warning" *ngIf="!userMeta.seen" title="Als gezien markeren?" (click)="markAsSeen()">
@@ -21,6 +23,7 @@
         <span class="glyphicon glyphicon-check"></span>
         Gezien!
       </button>
+      <input type="text" />
     </div>
   </div>
 
@@ -39,6 +42,8 @@
       </button>
     </div>
   </div>
+
+
 
 
 

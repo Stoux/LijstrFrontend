@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { SwiperComponent, SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { ShowEpisodeDetail, ShowSeasonDetail } from '../../models/show';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SeenMap } from '../../services/show-seen-status.service';
@@ -9,7 +9,9 @@ import { SeenMap } from '../../services/show-seen-status.service';
   templateUrl: './show-season-episodes-swiper.component.html',
   styleUrls: ['./show-season-episodes-swiper.component.css']
 })
-export class ShowSeasonEpisodesSwiperComponent implements OnInit {
+export class ShowSeasonEpisodesSwiperComponent implements OnInit, OnChanges, AfterViewInit {
+
+  @ViewChild('swiper') swiper: SwiperComponent;
 
   @Input() season: ShowSeasonDetail;
   @Input() seenMap: SeenMap;
@@ -22,8 +24,8 @@ export class ShowSeasonEpisodesSwiperComponent implements OnInit {
     centeredSlides: false,
     slidesPerView: 'auto',
     centerInsufficientSlides: false,
-    slidesOffsetBefore: 200,
-    // slidesOffsetAfter: 542,
+    slidesOffsetBefore: 542,
+    slidesOffsetAfter: 542,
     watchSlidesProgress: true,
     watchSlidesVisibility: true,
   };
@@ -32,7 +34,36 @@ export class ShowSeasonEpisodesSwiperComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const seenMap = changes.seenMap;
+    if (seenMap.currentValue && this.swiper) {
+      this.slideToFirstNotSeen();
+    }
+
+  }
+
+  ngAfterViewInit() {
+    this.slideToFirstNotSeen();
+  }
+
+  private slideToFirstNotSeen() {
+    if (!this.swiper || !this.seenMap || !this.seenMap.hasOwnProperty(this.season.id)) {
+      return;
+    }
+
+    const seenMap = this.seenMap[this.season.id];
+    let index = 0;
+    for (const episode of this.season.episodes) {
+      if (!seenMap.hasOwnProperty(episode.id) || seenMap[episode.id] === false) {
+        this.swiper.directiveRef.setIndex(index);
+      }
+      index++;
+    }
+  }
+
 
   public getPosterURL(): string {
     const size = 'w500';

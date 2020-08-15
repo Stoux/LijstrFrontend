@@ -10,7 +10,15 @@
 .episode-reactions {
   align-self: center;
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
 }
+
+.is-hidden {
+  filter: blur(4px);
+  cursor: pointer;
+}
+
 
 .buttons {
   display: flex;
