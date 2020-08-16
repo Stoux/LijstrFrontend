@@ -4,8 +4,6 @@ import { User } from '../../core/models/user';
 import { LijstrException } from '../../core/exceptions';
 import { first } from 'rxjs/operators';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { User } from '../../core/models/user';
-import { Observable } from 'rxjs';
 
 export abstract class BaseUsersService implements Resolve<User[]> {
 
