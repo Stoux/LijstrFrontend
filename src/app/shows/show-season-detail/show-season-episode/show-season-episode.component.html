@@ -70,7 +70,14 @@
 
     <div class="reactions">
 
-      <div class="reaction" *ngFor="let meta of showReactionPicker">
+      <div class="reaction" *ngFor="let reaction of getAllReactions()">
+
+        <ng-template [ngIf]="reaction.meta.reaction">
+          <strong>{{ reaction.user.displayName }}</strong>: <ngx-emoji [size]="16" [emoji]="reaction.meta.reaction"></ngx-emoji>
+        </ng-template>
+        <ng-template [ngIf]="!reaction.meta.reaction">
+          <strong>{{ reaction.user.displayName}}</strong> heeft de episode gezien.
+        </ng-template>
 
       </div>
 

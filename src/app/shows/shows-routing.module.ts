@@ -9,6 +9,7 @@ import { ShowDetail, ShowSeasonDetail } from './models/show';
 import { ShowSeasonDetailResolverService } from './show-season-detail/show-season-detail-resolver.service';
 import { ShowSeasonEpisodeComponent } from './show-season-detail/show-season-episode/show-season-episode.component';
 import { ShowEpisodeUserMetaResolver } from './show-season-detail/resolvers/show-episode-user-meta-resolver.service';
+import { ShowUsersService } from './services/show-users.service';
 
 
 const routes: Routes = [
@@ -64,6 +65,7 @@ const routes: Routes = [
                 component: ShowSeasonEpisodeComponent,
                 resolve: {
                   userMeta: ShowEpisodeUserMetaResolver,
+                  users: ShowUsersService,
                 }
               }
             ]

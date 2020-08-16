@@ -6,6 +6,7 @@ import { Observable} from 'rxjs';
 import { ShowSeenStatusService } from '../../services/show-seen-status.service';
 import { tap } from 'rxjs/operators';
 import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { User } from '../../../core/models/user';
 
 @Component({
   selector: 'lijstr-show-season-episode',
@@ -26,6 +27,7 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
   userMeta: ShowEpisodeUserMeta;
   showReactionPicker: boolean;
   comments: any[];
+  showUsers: User[];
 
   forceVisibleSummary: boolean;
 
@@ -50,8 +52,9 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       this.showReactionPicker = false;
       this.resolveEpisode();
     });
-    this.route.data.subscribe((data: {userMeta: ShowEpisodeUserMeta}) => {
+    this.route.data.subscribe((data: {userMeta: ShowEpisodeUserMeta, users: User[]}) => {
       this.userMeta = data.userMeta;
+      this.showUsers = data.users;
     });
   }
 
@@ -130,7 +133,20 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  
+  public getAllReactions() {
+    return this.episode.userMetas
+      .filter(meta => meta.seen)
+      .filter(meta => !this.userMeta || this.userMeta.user !== meta.user)
+      .map(meta => {
+      console.log(meta.user, this.showUsers.find(user => user.id === meta.user));
+      return {
+        meta,
+        user: this.showUsers.find(user => user.id === meta.user),
+      };
+    });
+  }
+
+
 
 
 }
