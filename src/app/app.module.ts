@@ -1,6 +1,6 @@
 import * as Raven from 'raven-js';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule, Injectable } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -14,6 +14,7 @@ import { UserService } from './core/services/user.service';
 import { filter, first } from 'rxjs/operators';
 
 
+@Injectable()
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err: any): void {
     Raven.captureException(err.originalError || err);

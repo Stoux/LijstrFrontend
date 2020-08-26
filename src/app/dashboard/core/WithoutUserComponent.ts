@@ -1,10 +1,11 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnInit, OnDestroy, Directive } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../core/services/user.service';
 import { Router } from '@angular/router';
 import { RedirectService } from '../../core/services/redirect.service';
 import {filter} from 'rxjs/operators';
 
+@Directive()
 export abstract class WithoutUserComponent implements OnInit, OnDestroy {
 
   private userSubscription: Subscription;
