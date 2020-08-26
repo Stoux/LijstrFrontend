@@ -44,21 +44,30 @@
 
 <lijstr-show-season-episodes-swiper [season]="season" [seenMap]="seenMap"></lijstr-show-season-episodes-swiper>
 
-<!--
-TODO: Swiper for episodes
-- Episode progress
-- Easy ability to mark a episode as watched
-- Show reactions & add ability to leave a reaction
--->
-
-<!--
-
--->
-
 <hr />
 
 <router-outlet #routerOutlet (activate)="showingEpisode = true" (deactivate)="showingEpisode = false"></router-outlet>
 
-<div style="height: 500px;" *ngIf="!showingEpisode">
-  Season stuff
+<div class="container" style="min-height: 500px;" *ngIf="!showingEpisode">
+
+  <div class="row">
+
+    <div class="col-xs-12" [class.col-md-8]="isShowUser">
+
+      <h4>Ratings</h4>
+
+      <span *ngFor="let user of users">
+        {{ user.displayName }}
+      </span>
+
+
+    </div>
+
+    <div class="col-xs-12 col-md-4" *ngIf="isShowUser">
+      <h4>Jouw rating</h4>
+
+    </div>
+
+
+  </div>
 </div>

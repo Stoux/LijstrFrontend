@@ -12,7 +12,11 @@ import { EditorComponent } from './components/editor/editor.component';
 @NgModule({
   imports: [
     CommonModule,
-    QuillModule.forRoot(),
+    QuillModule.forRoot({
+      format: 'object',
+      trackChanges: 'all',
+    }),
+    FormsModule,
   ],
   declarations: [
     LoadingComponent,

@@ -53,3 +53,26 @@
 
 
 }
+
+.comments {
+
+
+  &__header {
+    margin: 16px 0;
+    display: flex;
+    flex-direction: row;
+
+    &--title {
+      flex-grow: 1;
+    }
+
+  }
+
+
+}
+
+.comment {
+  padding: 8px;
+  border: 1px solid ;
+}
+

@@ -1,24 +1,67 @@
-import { QuillConfig, QuillEditorComponent } from 'ngx-quill';
+import { QuillConfig, QuillEditorComponent, QuillModules } from 'ngx-quill';
 import { User } from '../../core/models/user';
+
+import 'quill-mention';
+import 'quill-emoji/dist/quill-emoji';
+
+export interface QuillOperations {
+  ops: (QuillTextOperation | QuillEmojiOperation | QuillListOperation)[];
+}
+
+/**
+ * Specifies that a text operation should be added.
+ */
+export interface QuillTextOperation {
+  insert: string;
+  attributes?: {
+    underline?: boolean,
+    strike?: boolean;
+    italic?: boolean;
+    bold?: boolean;
+    script?: 'super' | 'sub',
+    link?: string,
+  };
+}
+
+/**
+ * Specifies that an emoji should be inserted.
+ */
+export interface QuillEmojiOperation {
+  insert: {
+    emoji: string;
+  };
+}
+
+/**
+ * Note that the content (insert) of this is always just a new line.
+ * This operation applies to the previous <strong>line</strong>, look for the previous '\n' in any of the inserts before this.
+ */
+export interface QuillListOperation {
+  insert: '\n';
+  attributes: {
+    list: 'ordered' | 'bullet';
+  };
+}
+
+
 
 interface BuildOptions {
   withMentions?: {
     users: User[],
     editor: () => QuillEditorComponent
   };
+  withEmojis?: boolean;
 }
 
-export function buildQuillConfig(options: BuildOptions): QuillConfig {
-  const config: QuillConfig = {
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        [{list: 'ordered'}, {list: 'bullet'}],
-        [{script: 'sub'}, {script: 'super'}],
-        ['link'],
-        ['clean'],
-      ]
-    },
+export function buildQuillModules(options: BuildOptions): QuillModules {
+  const config: QuillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{list: 'ordered'}, {list: 'bullet'}],
+      [{script: 'sub'}, {script: 'super'}],
+      ['link'],
+      ['clean'],
+    ]
   };
 
   if (options) {
@@ -33,7 +76,7 @@ export function buildQuillConfig(options: BuildOptions): QuillConfig {
       });
 
       // Add the module
-      config.modules.mention = {
+      config.mention = {
         // Names can contain any a-z & spaces
         allowedChars: /^[a-zA-Z\s]*$/,
         dataAttributes: ['id', 'displayName', 'denotationChar', 'link', 'target'],
@@ -54,6 +97,12 @@ export function buildQuillConfig(options: BuildOptions): QuillConfig {
           );
         },
       };
+    }
+
+    if (options.withEmojis) {
+      config['emoji-shortname'] = true;
+      config['emoji-textarea'] = true;
+      config['emoji-toolbar'] = true;
     }
   }
 

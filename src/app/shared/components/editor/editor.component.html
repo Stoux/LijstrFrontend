@@ -1,6 +1,32 @@
 
-<h1>Hallo?</h1>
-<pre><code>{{ current }}</code></pre>
+<!--<pre><code>{{ current | json }}</code></pre>-->
+<!--<quill-view [content]="current" format="object"></quill-view>-->
 
-<quill-editor (onContentChanged)="current = $event.html" [modules]="config.modules">
-</quill-editor>
+<div class="editor">
+
+  <quill-editor [(ngModel)]="current" (ngModelChange)="inputModelChange.emit(current)"
+                (onContentChanged)="onContentChanged($event)"
+                [modules]="modules"
+                [placeholder]="placeholder"></quill-editor>
+
+  <div class="editor__bar" *ngIf="(spoilers && spoilers.enable) || submitButton">
+
+    <div class="editor__spoiler" *ngIf="spoilers && spoilers.enable">
+      <input type="checkbox" id="spoilers" [(ngModel)]="isSpoiler">
+      <label for="spoilers">Bevat spoilers</label>
+    </div>
+
+    <div class="editor__bar--filler"></div>
+
+    <button class="btn btn-info"
+            (click)="emitSubmit()"
+            [disabled]="currentHtml === originalHtml || currentHtml === null"
+            *ngIf="submitButton">
+      {{ submitButton }}
+    </button>
+
+  </div>
+
+</div>
+
+

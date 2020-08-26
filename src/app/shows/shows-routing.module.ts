@@ -58,6 +58,7 @@ const routes: Routes = [
             resolve: {
               show: ShowDetailResolverService,
               season: ShowSeasonDetailResolverService,
+              users: ShowUsersService,
             },
             children: [
               {

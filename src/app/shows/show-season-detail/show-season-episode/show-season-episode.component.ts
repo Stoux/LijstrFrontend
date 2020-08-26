@@ -7,6 +7,8 @@ import { ShowSeenStatusService } from '../../services/show-seen-status.service';
 import { tap } from 'rxjs/operators';
 import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { User } from '../../../core/models/user';
+import { UserService } from '../../../core/services/user.service';
+import { SubmitEvent } from '../../../shared/components/editor/editor.component';
 
 @Component({
   selector: 'lijstr-show-season-episode',
@@ -30,11 +32,14 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
   showUsers: User[];
 
   forceVisibleSummary: boolean;
+  isShowUser: boolean;
+  showCommentForm: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private showService: ShowDetailService,
-    private seenStatusService: ShowSeenStatusService
+    private seenStatusService: ShowSeenStatusService,
+    private userService: UserService,
   ) {
   }
 
@@ -56,6 +61,7 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       this.userMeta = data.userMeta;
       this.showUsers = data.users;
     });
+    this.isShowUser = this.userService.isShowUser();
   }
 
 
@@ -73,6 +79,8 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
         break;
       }
     }
+
+    this.showCommentForm = false;
   }
 
   ngAfterViewInit(): void {
@@ -138,12 +146,15 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       .filter(meta => meta.seen)
       .filter(meta => !this.userMeta || this.userMeta.user !== meta.user)
       .map(meta => {
-      console.log(meta.user, this.showUsers.find(user => user.id === meta.user));
       return {
         meta,
         user: this.showUsers.find(user => user.id === meta.user),
       };
     });
+  }
+
+  public onSubmitComment(event: SubmitEvent): void {
+    // TODO: Post to endpoint
   }
 
 

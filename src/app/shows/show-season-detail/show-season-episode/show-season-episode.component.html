@@ -13,8 +13,8 @@
         </span>
         {{ episode.title }}
       </h1>
-      <p [class.is-hidden]="(userMeta && !userMeta.seen) && !forceVisibleSummary" (click)="forceVisibleSummary = true">
-        {{ episode.overview }}
+      <p [class.is-hidden]="(userMeta && !userMeta.seen) && !forceVisibleSummary && episode.overview" (click)="forceVisibleSummary = true">
+        {{ episode.overview ? episode.overview : 'Geen omschrijving.' }}
       </p>
     </div>
     <div class="episode-watch-status" *ngIf="userMeta">
@@ -47,7 +47,7 @@
 
   <div class="episode-user-data">
 
-    <div *ngIf="userMeta && userMeta.seen" class="episode-user-data--my-reaction">
+    <div *ngIf="isShowUser && userMeta && userMeta.seen" class="episode-user-data--my-reaction">
       <span>Gezien op {{ userMeta.seenOn | date:"d MMM yyyy - HH:mm:ss" }} | Jouw reactie:</span>
       <span *ngIf="userMeta.reaction">
         <ngx-emoji [emoji]="userMeta.reaction" (emojiClick)="showReactionPicker = !showReactionPicker"></ngx-emoji>
@@ -68,16 +68,50 @@
                 [style]="{ position: 'absolute' }"
                 (emojiSelect)="onClickedReactionEmoji($event)"></emoji-mart>
 
-    <div class="reactions">
+    <div class="row">
 
-      <div class="reaction" *ngFor="let reaction of getAllReactions()">
+      <div class="reactions col-xs-12">
 
-        <ng-template [ngIf]="reaction.meta.reaction">
-          <strong>{{ reaction.user.displayName }}</strong>: <ngx-emoji [size]="16" [emoji]="reaction.meta.reaction"></ngx-emoji>
-        </ng-template>
-        <ng-template [ngIf]="!reaction.meta.reaction">
-          <strong>{{ reaction.user.displayName}}</strong> heeft de episode gezien.
-        </ng-template>
+        <div class="reaction" *ngFor="let reaction of getAllReactions()">
+
+          <ng-template [ngIf]="reaction.meta.reaction">
+            <strong>{{ reaction.user.displayName }}</strong>: <ngx-emoji [size]="16" [emoji]="reaction.meta.reaction"></ngx-emoji>
+          </ng-template>
+          <ng-template [ngIf]="!reaction.meta.reaction">
+            <strong>{{ reaction.user.displayName}}</strong> heeft de episode gezien.
+          </ng-template>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="comments__header">
+      <h4 class="comments__header--title">Opmerkingen</h4>
+      <button class="btn btn-info" *ngIf="isShowUser && !showCommentForm" (click)="showCommentForm = true">
+        Opmerking toevoegen?
+      </button>
+    </div>
+
+    <p *ngIf="!isShowUser || !userMeta || !userMeta.seen">Pas op voor spoilers!</p>
+
+    <div class="row comments">
+
+      <div class="col-xs-12" *ngIf="isShowUser && showCommentForm">
+
+        <div class="panel panel-default">
+
+          <div class="panel-body">
+
+            <lijstr-editor [mentions]="showUsers"
+                           (submitPressed)="onSubmitComment($event)"
+                           submitButton="Opmerking plaatsen"
+                           placeholder="Schrijf een opmerking over deze episode"></lijstr-editor>
+
+          </div>
+
+        </div>
 
       </div>
 

@@ -4,6 +4,9 @@ import { FullUser } from '../models/user';
 import { ApiService } from './api.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 
+/**
+ * Service for the currently logged in user.
+ */
 @Injectable()
 export class UserService {
 
