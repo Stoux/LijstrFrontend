@@ -6,15 +6,19 @@ import { YoutubeViewerComponent } from './youtube-viewer/youtube-viewer.componen
 import { ImdbService } from './services/imdb.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormatPermissionPipe } from './pipes/format-permission.pipe';
+import { QuillModule } from 'ngx-quill';
+import { EditorComponent } from './components/editor/editor.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    QuillModule.forRoot(),
   ],
   declarations: [
     LoadingComponent,
     YoutubeViewerComponent,
     FormatPermissionPipe,
+    EditorComponent,
   ],
   exports: [
     CommonModule,
@@ -23,6 +27,7 @@ import { FormatPermissionPipe } from './pipes/format-permission.pipe';
     YoutubeViewerComponent,
     NgSelectModule,
     FormatPermissionPipe,
+    EditorComponent,
   ],
   providers: [
     ImdbService
