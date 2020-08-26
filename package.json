@@ -21,15 +21,16 @@
     "@angular/platform-browser-dynamic": "~10.0.12",
     "@angular/router": "~10.0.12",
     "@ctrl/ngx-emoji-mart": "^4.0.2",
-    "@ng-select/ng-select": "^3.7.2",
-    "@swimlane/ngx-datatable": "^16.0.3",
+    "@ng-select/ng-select": "^5.0.1",
+    "@swimlane/ngx-datatable": "^17.1.0",
     "bootstrap": "^3.4.1",
     "ngx-bootstrap": "^5.5.0",
     "ngx-swiper-wrapper": "^9.0.1",
     "raven-js": "^3.27.2",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.10.3",
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.7",
