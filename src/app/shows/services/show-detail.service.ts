@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../core/services/api.service';
-import { Observable } from 'rxjs';
-import { ShowDetail, ShowEpisodeUserMeta, ShowSeasonDetail } from '../models/show';
+import { Observable, pipe } from 'rxjs';
+import { ShowDetail, ShowEpisodeComment, ShowEpisodeUserMeta, ShowSeasonDetail } from '../models/show';
+import { QuillOperations } from '../../shared/config/quill-config';
+import { Page } from '../../shared/classes/paging';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +58,46 @@ export class ShowDetailService {
   updateNotSeenEpisodes(showId: number, seasonNumber: number, episodeNumber: number): Observable<void> {
     return this.api.put(`${this.buildPath(showId, seasonNumber, episodeNumber)}/update-not-seen`);
   }
+
+  /**
+   * Add a comment to the given show as the current user.
+   */
+  placeComment(episodeId: number, data: { comment: QuillOperations, spoilers?: boolean }): Observable<ShowEpisodeComment> {
+    return this.api.post<ShowEpisodeComment>(`/shows/episodes/${episodeId}/comments`, {
+      comment: JSON.stringify(data.comment),
+      spoilers: data.spoilers,
+    }).pipe(
+      tap(comment => ShowDetailService.transformCommentToOps(comment))
+    );
+  }
+
+  /**
+   * Fetch comments for a given episode
+   * @param episodeId ID of the episode (not number)
+   * @param page The page to fetch (zero indexed)
+   * @param limit Number of items per page
+   */
+  getComments(episodeId: number, page: number = 0, limit: number = 5 ): Observable<Page<ShowEpisodeComment>> {
+    return this.api.get<Page<ShowEpisodeComment>>(`/shows/episodes/${episodeId}/comments`, true, {
+      page,
+      perPage: limit,
+    }).pipe(
+      tap(result => {
+        result.content.forEach(ShowDetailService.transformCommentToOps);
+      })
+    );
+  }
+
+  private static transformCommentToOps(comment: ShowEpisodeComment): void {
+    if (typeof comment.comment === 'string') {
+      const result = JSON.parse(comment.comment as string);
+      if (result && result.ops) {
+        comment.comment = result as QuillOperations;
+      }
+    }
+  }
+
+
 
 
   private buildPath(showId: number, seasonNumber?: number, episodeNumber?: number): string {

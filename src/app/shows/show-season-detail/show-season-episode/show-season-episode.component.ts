@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ShowDetail, ShowEpisodeDetail, ShowEpisodeUserMeta, ShowSeasonDetail } from '../../models/show';
-import { ActivatedRoute } from '@angular/router';
+import { ShowDetail, ShowEpisodeComment, ShowEpisodeDetail, ShowEpisodeUserMeta, ShowSeasonDetail } from '../../models/show';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShowDetailService } from '../../services/show-detail.service';
 import { Observable} from 'rxjs';
 import { ShowSeenStatusService } from '../../services/show-seen-status.service';
@@ -28,14 +28,20 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
   notSeenPreviousEpisodes: number;
   userMeta: ShowEpisodeUserMeta;
   showReactionPicker: boolean;
-  comments: any[];
   showUsers: User[];
 
   forceVisibleSummary: boolean;
   isShowUser: boolean;
+  currentUserId: number;
   showCommentForm: boolean;
 
+  comments: ShowEpisodeComment[];
+  commentsPage = 0;
+  totalCommentPages = 1;
+  loadingComments: boolean;
+
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private showService: ShowDetailService,
     private seenStatusService: ShowSeenStatusService,
@@ -55,6 +61,8 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       this.notSeenPreviousEpisodes = undefined;
       this.forceVisibleSummary = false;
       this.showReactionPicker = false;
+      this.showCommentForm = false;
+      this.loadingComments = false;
       this.resolveEpisode();
     });
     this.route.data.subscribe((data: {userMeta: ShowEpisodeUserMeta, users: User[]}) => {
@@ -62,6 +70,7 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       this.showUsers = data.users;
     });
     this.isShowUser = this.userService.isShowUser();
+    this.currentUserId = this.userService.getCurrentUserId();
   }
 
 
@@ -80,7 +89,10 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.showCommentForm = false;
+    // Fetch first comments
+    // TODO: Move first page of comments to route resolver
+    this.commentsPage = -1;
+    this.fetchPageOfComments();
   }
 
   ngAfterViewInit(): void {
@@ -153,11 +165,90 @@ export class ShowSeasonEpisodeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public onSubmitComment(event: SubmitEvent): void {
-    // TODO: Post to endpoint
+  public fetchPageOfComments() {
+    this.commentsPage++;
+    this.loadingComments = true;
+    this.showService.getComments(this.episode.id, this.commentsPage).subscribe(page => {
+      if (this.comments === undefined) {
+        this.comments = page.content;
+      } else {
+        this.comments.push(...page.content);
+      }
+      this.totalCommentPages = page.totalPages;
+      this.loadingComments = false;
+    });
+  }
+
+  public async onSubmitComment(event: SubmitEvent) {
+    const comment = await this.showService.placeComment(this.episode.id, {
+      comment: event.data,
+      spoilers: event.isSpoiler,
+    }).toPromise();
+
+    // Prepend the comment to the list
+    this.comments.unshift(comment);
+
+    this.showCommentForm = false;
+    event.unlockButton(true);
+  }
+
+  public getUserName(userId: number) {
+    const found = this.showUsers.find(user => user.id === userId);
+    return found ? found.displayName : '?';
+  }
+
+  get hideSpoilers(): boolean {
+    return (this.userMeta && !this.userMeta.seen) && !this.forceVisibleSummary && !!this.episode.overview;
   }
 
 
+  public goToPreviousEpisode() {
+    // TODO: Optimize this?
+    // TODO: Load this on episode load to hide/show buttons
+    let previousEpisodeSeason;
+    let previousEpisode;
+    for (const season of this.show.seasonsIncludingSpecials) {
+      for (const episode of season.episodes) {
+        if (episode.id === this.episode.id) {
+          this.navigateToEpisode(previousEpisodeSeason, previousEpisode);
+          return;
+        } else {
+          previousEpisodeSeason = season;
+          previousEpisode = episode;
+        }
+      }
+    }
+  }
+
+  public goToNextEpisode() {
+    // TODO: Optimize this?
+    // TODO: Load this on episode load to hide/show buttons
+    let nextEpisode = false;
+    for (const season of this.show.seasonsIncludingSpecials) {
+      for (const episode of season.episodes) {
+        if (nextEpisode) {
+          this.navigateToEpisode(season, episode);
+          return;
+        }
+
+        if (episode.id === this.episode.id) {
+          nextEpisode = true;
+        }
+      }
+    }
+  }
+
+  private navigateToEpisode(season: ShowSeasonDetail, episode: ShowEpisodeDetail) {
+    if (season === undefined || episode === undefined) {
+      return;
+    }
+
+    this.router.navigate([
+      'shows', this.show.id,
+      'seasons', season.seasonNumber,
+      'episodes', episode.episodeNumber
+    ]);
+  }
 
 
 }

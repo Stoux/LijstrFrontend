@@ -65,7 +65,12 @@ export class EditorComponent implements OnInit {
     this.submitPressed.emit({
       data: this.current,
       isSpoiler: this.isSpoiler,
-      unlockButton: () => this.isSubmitting = false,
+      unlockButton: (wipeContent) => {
+        this.isSubmitting = false;
+        if (wipeContent) {
+          this.current = {ops: []};
+        }
+      },
     });
   }
 
@@ -74,5 +79,5 @@ export class EditorComponent implements OnInit {
 export interface SubmitEvent {
   data: QuillOperations;
   isSpoiler: boolean;
-  unlockButton: () => void;
+  unlockButton: (wipeContent?: boolean) => void;
 }

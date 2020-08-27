@@ -56,7 +56,6 @@
 
 .comments {
 
-
   &__header {
     margin: 16px 0;
     display: flex;
@@ -66,6 +65,12 @@
       flex-grow: 1;
     }
 
+  }
+
+  .is-own-comment {
+    .panel {
+      border-color: green;
+    }
   }
 
 

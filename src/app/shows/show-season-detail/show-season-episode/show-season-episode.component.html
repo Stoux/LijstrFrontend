@@ -1,113 +1,90 @@
 
-<!-- TODO: Add arrows on the sides to switch to the next/prev episode -->
 
-<div class="container" *ngIf="episode" #body>
+<div class="container--sides">
 
-  <!-- https://github.com/dmacfarlane/angular-mentions#readme -->
+  <div class="container__arrow">
+    <div class="container__arrow--item">
+      <span class="swiper-button-prev" (click)="goToPreviousEpisode()"></span>
+    </div>
+  </div>
 
-  <div class="episode-header">
-    <div class="episode-info">
-      <h1>
+  <div class="container" *ngIf="episode" #body>
+
+    <div class="episode-header">
+      <div class="episode-info">
+        <h1>
         <span style="color: #777777;">
           S{{ season.seasonNumber | number: "2.0-0" }}E{{ episode.episodeNumber | number: "2.0-0" }}
         </span>
-        {{ episode.title }}
-      </h1>
-      <p [class.is-hidden]="(userMeta && !userMeta.seen) && !forceVisibleSummary && episode.overview" (click)="forceVisibleSummary = true">
-        {{ episode.overview ? episode.overview : 'Geen omschrijving.' }}
-      </p>
-    </div>
-    <div class="episode-watch-status" *ngIf="userMeta">
-      <button class="btn btn-warning" *ngIf="!userMeta.seen" title="Als gezien markeren?" (click)="markAsSeen()">
-        <span class="glyphicon glyphicon-eye-open"></span>
-        Gezien?
-      </button>
-      <button class="btn btn-success" *ngIf="userMeta.seen" title="Als niet gezien markeren?" (click)="markAsNotSeen()">
-        <span class="glyphicon glyphicon-check"></span>
-        Gezien!
-      </button>
-    </div>
-  </div>
-
-  <div class="alert alert-warning" *ngIf="notSeenPreviousEpisodes">
-    <p>
-      Er zijn nog {{ notSeenPreviousEpisodes }} vorige episodes die nog op 'Niet geien' staan. Wil je ze allemaal automatisch aanpassen naar 'Gezien'?
-    </p>
-    <div class="buttons">
-      <div style="flex-grow: 1">
-        <button class="btn btn-danger" (click)="notSeenPreviousEpisodes = undefined">
-          Niet aanpassen
+          {{ episode.title }}
+        </h1>
+        <p [class.is-hidden]="hideSpoilers" (click)="forceVisibleSummary = true">
+          {{ episode.overview ? episode.overview : 'Geen omschrijving.' }}
+        </p>
+      </div>
+      <div class="episode-watch-status" *ngIf="userMeta">
+        <button class="btn btn-warning" *ngIf="!userMeta.seen" title="Als gezien markeren?" (click)="markAsSeen()">
+          <span class="glyphicon glyphicon-eye-open"></span>
+          Gezien?
+        </button>
+        <button class="btn btn-success" *ngIf="userMeta.seen" title="Als niet gezien markeren?" (click)="markAsNotSeen()">
+          <span class="glyphicon glyphicon-check"></span>
+          Gezien!
         </button>
       </div>
-      <button class="btn btn-success" (click)="markPreviousEpisodesAsSeen()">
-        Aanpassen naar 'Gezien'
-      </button>
     </div>
-  </div>
 
-  <div class="episode-user-data">
+    <div class="alert alert-warning" *ngIf="notSeenPreviousEpisodes">
+      <p>
+        Er zijn nog {{ notSeenPreviousEpisodes }} vorige episodes die nog op 'Niet geien' staan. Wil je ze allemaal automatisch aanpassen naar 'Gezien'?
+      </p>
+      <div class="buttons">
+        <div style="flex-grow: 1">
+          <button class="btn btn-danger" (click)="notSeenPreviousEpisodes = undefined">
+            Niet aanpassen
+          </button>
+        </div>
+        <button class="btn btn-success" (click)="markPreviousEpisodesAsSeen()">
+          Aanpassen naar 'Gezien'
+        </button>
+      </div>
+    </div>
 
-    <div *ngIf="isShowUser && userMeta && userMeta.seen" class="episode-user-data--my-reaction">
-      <span>Gezien op {{ userMeta.seenOn | date:"d MMM yyyy - HH:mm:ss" }} | Jouw reactie:</span>
-      <span *ngIf="userMeta.reaction">
+    <div class="episode-user-data">
+
+      <div *ngIf="isShowUser && userMeta && userMeta.seen" class="episode-user-data--my-reaction">
+        <span>Gezien op {{ userMeta.seenOn | date:"d MMM yyyy - HH:mm:ss" }} | Jouw reactie:</span>
+        <span *ngIf="userMeta.reaction">
         <ngx-emoji [emoji]="userMeta.reaction" (emojiClick)="showReactionPicker = !showReactionPicker"></ngx-emoji>
       </span>
-      <span *ngIf="!userMeta.reaction">
+        <span *ngIf="!userMeta.reaction">
         geen
       </span>
 
-      <button class="btn btn-primary" title="Pas je reactie aan" (click)="showReactionPicker = !showReactionPicker">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </button>
-      <button class="btn btn-danger" *ngIf="userMeta.reaction" title="Verwijder je reactie" (click)="updateReaction(null)">
-        <span class="glyphicon glyphicon-trash"></span>
-      </button>
-    </div>
-
-    <emoji-mart title="Kies is wat leuks." emoji="point_up" *ngIf="showReactionPicker"
-                [style]="{ position: 'absolute' }"
-                (emojiSelect)="onClickedReactionEmoji($event)"></emoji-mart>
-
-    <div class="row">
-
-      <div class="reactions col-xs-12">
-
-        <div class="reaction" *ngFor="let reaction of getAllReactions()">
-
-          <ng-template [ngIf]="reaction.meta.reaction">
-            <strong>{{ reaction.user.displayName }}</strong>: <ngx-emoji [size]="16" [emoji]="reaction.meta.reaction"></ngx-emoji>
-          </ng-template>
-          <ng-template [ngIf]="!reaction.meta.reaction">
-            <strong>{{ reaction.user.displayName}}</strong> heeft de episode gezien.
-          </ng-template>
-
-        </div>
-
+        <button class="btn btn-primary" title="Pas je reactie aan" (click)="showReactionPicker = !showReactionPicker">
+          <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <button class="btn btn-danger" *ngIf="userMeta.reaction" title="Verwijder je reactie" (click)="updateReaction(null)">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
       </div>
 
-    </div>
+      <emoji-mart title="Kies is wat leuks." emoji="point_up" *ngIf="showReactionPicker"
+                  [style]="{ position: 'absolute' }"
+                  (emojiSelect)="onClickedReactionEmoji($event)"></emoji-mart>
 
-    <div class="comments__header">
-      <h4 class="comments__header--title">Opmerkingen</h4>
-      <button class="btn btn-info" *ngIf="isShowUser && !showCommentForm" (click)="showCommentForm = true">
-        Opmerking toevoegen?
-      </button>
-    </div>
+      <div class="row">
 
-    <p *ngIf="!isShowUser || !userMeta || !userMeta.seen">Pas op voor spoilers!</p>
+        <div class="reactions col-xs-12">
 
-    <div class="row comments">
+          <div class="reaction" *ngFor="let reaction of getAllReactions()">
 
-      <div class="col-xs-12" *ngIf="isShowUser && showCommentForm">
-
-        <div class="panel panel-default">
-
-          <div class="panel-body">
-
-            <lijstr-editor [mentions]="showUsers"
-                           (submitPressed)="onSubmitComment($event)"
-                           submitButton="Opmerking plaatsen"
-                           placeholder="Schrijf een opmerking over deze episode"></lijstr-editor>
+            <ng-template [ngIf]="reaction.meta.reaction">
+              <strong>{{ reaction.user.displayName }}</strong>: <ngx-emoji [size]="16" [emoji]="reaction.meta.reaction"></ngx-emoji>
+            </ng-template>
+            <ng-template [ngIf]="!reaction.meta.reaction">
+              <strong>{{ reaction.user.displayName}}</strong> heeft de episode gezien.
+            </ng-template>
 
           </div>
 
@@ -115,14 +92,90 @@
 
       </div>
 
+      <div class="comments__header">
+        <h4 class="comments__header--title">Opmerkingen</h4>
+        <button class="btn btn-info" *ngIf="isShowUser && !showCommentForm" (click)="showCommentForm = true">
+          Opmerking toevoegen?
+        </button>
+      </div>
+
+      <p *ngIf="!isShowUser || !userMeta || !userMeta.seen">Pas op voor spoilers!</p>
+
+      <div class="row comments">
+
+        <div class="col-xs-12" *ngIf="isShowUser && showCommentForm">
+
+          <div class="panel panel-default">
+
+            <div class="panel-body">
+
+              <lijstr-editor [mentions]="showUsers"
+                             (submitPressed)="onSubmitComment($event)"
+                             submitButton="Opmerking plaatsen"
+                             placeholder="Schrijf een opmerking over deze episode"></lijstr-editor>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <ng-template [ngIf]="comments !== undefined">
+          <div class="col-xs-12 col-md-10"
+               [class.col-md-offset-2]="currentUserId === comment.user"
+               [class.is-own-comment]="currentUserId === comment.user"
+               [class.is-hidden]="hideSpoilers && comment.spoilers"
+               (click)="forceVisibleSummary = true"
+               *ngFor="let comment of comments">
+
+            <div class="panel panel-default">
+
+              <div class="panel-body">
+
+                <p *ngIf="!comment.comment.ops">
+                  {{ comment.comment }}
+                </p>
+                <quill-view [content]="comment.comment" format="object" *ngIf="comment.comment.ops"></quill-view>
+
+              </div>
+
+              <div class="panel-footer">
+                <strong>{{ getUserName(comment.user) }} | {{comment.created | date:"d MMM yyyy - HH:mm:ss"}}</strong>
+                <small *ngIf="comment.created != comment.lastModified">
+                  (aangepast op {{comment.lastModified | date:"d MMM yyyy - HH:mm:ss"}})
+                </small>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <div class="col-xs-12" *ngIf="totalCommentPages > commentsPage + 1">
+
+          <button (click)="fetchPageOfComments()" [disabled]="loadingComments" class="btn btn-block">
+            Meer laden
+          </button>
+
+        </div>
+
+
+      </div>
+
+
+
     </div>
 
 
 
   </div>
 
-
+  <div class="container__arrow">
+    <div class="container__arrow--item">
+      <span class="swiper-button-next" (click)="goToNextEpisode()"></span>
+    </div>
+  </div>
 
 </div>
 
-<div style="height: 1000px"></div>
+
+
+<div style="height: 500px"></div>

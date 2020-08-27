@@ -7,6 +7,7 @@
   <quill-editor [(ngModel)]="current" (ngModelChange)="inputModelChange.emit(current)"
                 (onContentChanged)="onContentChanged($event)"
                 [modules]="modules"
+                [disabled]="isSubmitting"
                 [placeholder]="placeholder"></quill-editor>
 
   <div class="editor__bar" *ngIf="(spoilers && spoilers.enable) || submitButton">

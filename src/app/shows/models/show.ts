@@ -2,6 +2,7 @@
  * Model for a show used in the table / overview.
  */
 import { User } from '../../core/models/user';
+import { QuillOperations } from '../../shared/config/quill-config';
 
 export interface ShowSummary {
 
@@ -93,6 +94,18 @@ export interface ShowEpisodeDetail {
   userMetas: ShowEpisodeUserMeta[];
 
 }
+
+export interface ShowEpisodeComment {
+
+  id: number;
+  comment: string | QuillOperations;
+  spoilers: boolean;
+  created: number;
+  lastModified: number;
+  user: number;
+
+}
+
 
 export interface ShowEpisodeUserMeta {
 

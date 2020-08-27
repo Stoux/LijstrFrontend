@@ -117,6 +117,13 @@ export class UserService {
   }
 
   /**
+   * Get the current user ID (if any).
+   */
+  getCurrentUserId(): number {
+    return this.user ? this.user.id : undefined;
+  }
+
+  /**
    * Observable feed of the current state of the logged in user.
    */
   userChangeFeed(): Observable<FullUser> {

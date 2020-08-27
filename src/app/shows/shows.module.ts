@@ -14,16 +14,18 @@ import { ShowSeasonTableComponent } from './show-season-detail/show-season-table
 import { ShowSeasonEpisodeComponent } from './show-season-detail/show-season-episode/show-season-episode.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    ShowsRoutingModule,
-    NgxDatatableModule,
-    SwiperModule,
-    PickerModule,
-    EmojiModule,
-  ],
+    imports: [
+        SharedModule,
+        ShowsRoutingModule,
+        NgxDatatableModule,
+        SwiperModule,
+        PickerModule,
+        EmojiModule,
+        QuillModule,
+    ],
   declarations: [
     ShowsComponent,
     ShowListComponent,

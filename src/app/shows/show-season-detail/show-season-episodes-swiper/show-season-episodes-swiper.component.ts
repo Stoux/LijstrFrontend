@@ -28,6 +28,7 @@ export class ShowSeasonEpisodesSwiperComponent implements OnInit, OnChanges, Aft
     slidesOffsetAfter: 542,
     watchSlidesProgress: true,
     watchSlidesVisibility: true,
+    pagination: true,
   };
 
   constructor(private route: ActivatedRoute,

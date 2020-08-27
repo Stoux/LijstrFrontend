@@ -36,6 +36,35 @@ input.ng-valid.ng-touched, textarea.ng-valid.ng-touched {
   display: none;
 }
 
+.container {
+
+  &--sides {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &.is-boxed {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &__arrow {
+    position: relative;
+    padding: 16px 0;
+
+    &--item {
+      top: 50%;
+      bottom: 50%;
+      position: sticky;
+    }
+
+  }
+
+
+
+
+}
+
 @import '~@ctrl/ngx-emoji-mart/picker';
 @import '~quill/dist/quill.snow.css';
 @import '~quill-mention/dist/quill.mention.css';
